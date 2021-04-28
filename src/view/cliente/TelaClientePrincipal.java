@@ -47,7 +47,7 @@ public class TelaClientePrincipal extends JFrame {
 		this.setIconImage(iconeRafaelaBuffet);
 		setIconImage(iconeRafaelaBuffet);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(10, 10, 1024, 720);
+		setBounds(10, 10, 1366, 720);
 		telaClientePrincipal = new JPanel();
 		telaClientePrincipal.setBackground(new Color(173, 220, 253));
 		telaClientePrincipal.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -78,7 +78,7 @@ public class TelaClientePrincipal extends JFrame {
 			}
 		});
 		btnCadastrarCliente.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 15));
-		btnCadastrarCliente.setBounds(780, 11, 208, 50);
+		btnCadastrarCliente.setBounds(1100, 11, 208, 50);
 		telaClientePrincipal.add(btnCadastrarCliente);
 
 		JButton btnAlterarCliente = new JButton("Alterar Cliente");
@@ -91,7 +91,7 @@ public class TelaClientePrincipal extends JFrame {
 		});
 		btnAlterarCliente.setBackground(Color.WHITE);
 		btnAlterarCliente.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 15));
-		btnAlterarCliente.setBounds(780, 73, 208, 50);
+		btnAlterarCliente.setBounds(1100, 73, 208, 50);
 		telaClientePrincipal.add(btnAlterarCliente);
 
 		JButton btnDeletarCliente = new JButton("Deletar Cliente");
@@ -104,7 +104,7 @@ public class TelaClientePrincipal extends JFrame {
 			}
 		});
 		btnDeletarCliente.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 15));
-		btnDeletarCliente.setBounds(780, 135, 208, 50);
+		btnDeletarCliente.setBounds(1100, 135, 208, 50);
 		telaClientePrincipal.add(btnDeletarCliente);
 		
 		tableListClientes = new JTable();
@@ -116,7 +116,7 @@ public class TelaClientePrincipal extends JFrame {
 		JTableHeader th = tableListClientes.getTableHeader();
 		th.setPreferredSize(new Dimension(100, 40));
 		tableListClientes.getColumnModel().getColumn(0).setPreferredWidth(30);
-		tableListClientes.getColumnModel().getColumn(2).setPreferredWidth(180);
+		tableListClientes.getColumnModel().getColumn(1).setPreferredWidth(180);
 		tableListClientes.getColumnModel().getColumn(4).setPreferredWidth(30);
 		tableListClientes.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
 			private static final long serialVersionUID = 1L;
@@ -137,7 +137,7 @@ public class TelaClientePrincipal extends JFrame {
 		});
 		telaClientePrincipal.add(tableListClientes);
 		JScrollPane scroll = new JScrollPane(tableListClientes);
-		scroll.setBounds(10, 11, 760, 595);
+		scroll.setBounds(10, 11, 1037, 595);
 		telaClientePrincipal.add(scroll);
 	}
 }

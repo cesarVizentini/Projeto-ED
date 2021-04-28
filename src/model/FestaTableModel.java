@@ -35,12 +35,12 @@ public class FestaTableModel extends AbstractTableModel {
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		switch(columnIndex) {
 		case 0: return listar.getFesta(rowIndex).getId();
-		case 1: return listar.getFesta(rowIndex).getTema().getNome();
-		case 2: return listar.getFesta(rowIndex).getCliente().getNome();
+		case 1: return listar.getFesta(rowIndex).getTema();
+		case 2: return listar.getFesta(rowIndex).getCliente();
 		case 3: return listar.getFesta(rowIndex).getDataFesta();
 		case 4: return listar.getFesta(rowIndex).getHorarioInicio();
 		case 5: return listar.getFesta(rowIndex).getHorarioFinal();
-		case 6: return listar.getFesta(rowIndex).getEndereco().toString();
+		case 6: return listar.getFesta(rowIndex).toString();
 		case 7: return listar.getFesta(rowIndex).getValorCobrado();
 		}
 		return null;

@@ -47,7 +47,7 @@ public class TelaTemaPrincipal extends JFrame {
 		this.setIconImage(iconeRafaelaBuffet);
 		setIconImage(iconeRafaelaBuffet);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(10, 10, 1024, 720);
+		setBounds(10, 10, 1366, 720);
 		telaTemaPrincipal = new JPanel();
 		telaTemaPrincipal.setBackground(new Color(173, 220, 253));
 		telaTemaPrincipal.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -78,7 +78,7 @@ public class TelaTemaPrincipal extends JFrame {
 			}
 		});
 		btnCadastrarTema.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 15));
-		btnCadastrarTema.setBounds(819, 11, 160, 50);
+		btnCadastrarTema.setBounds(1100, 11, 208, 50);
 		telaTemaPrincipal.add(btnCadastrarTema);
 		
 		JButton btnAlterarTema = new JButton("Alterar Tema");
@@ -91,7 +91,7 @@ public class TelaTemaPrincipal extends JFrame {
 		});
 		btnAlterarTema.setBackground(Color.WHITE);
 		btnAlterarTema.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 15));
-		btnAlterarTema.setBounds(819, 70, 160, 50);
+		btnAlterarTema.setBounds(1100, 73, 208, 50);
 		telaTemaPrincipal.add(btnAlterarTema);
 		
 		JButton btnDeletarTema = new JButton("Deletar Tema");
@@ -104,7 +104,7 @@ public class TelaTemaPrincipal extends JFrame {
 			}
 		});
 		btnDeletarTema.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 15));
-		btnDeletarTema.setBounds(819, 131, 160, 50);
+		btnDeletarTema.setBounds(1100, 135, 208, 50);
 		telaTemaPrincipal.add(btnDeletarTema);
 		
 		tableListTemas = new JTable();
@@ -138,7 +138,7 @@ public class TelaTemaPrincipal extends JFrame {
 		});
 		telaTemaPrincipal.add(tableListTemas);
 		JScrollPane scroll = new JScrollPane(tableListTemas);
-		scroll.setBounds(10, 11, 760, 595);
+		scroll.setBounds(10, 11, 1037, 595);
 		telaTemaPrincipal.add(scroll);
 	}
 }

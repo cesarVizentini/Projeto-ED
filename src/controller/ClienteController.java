@@ -3,14 +3,12 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import model.Cliente;
 import model.ClienteTableModel;
 import persistence.ClienteDao;
-import view.cliente.TelaClienteCadastrar;
 import view.cliente.TelaClientePrincipal;
 
 public class ClienteController implements ActionListener {
@@ -47,11 +45,8 @@ public class ClienteController implements ActionListener {
 				}
 				cadastrar(tfNome.getText(), jftfDocumentoCPF.getText(), jftfTelefone.getText());
 				if (newTable) {
-					TelaClienteCadastrar telaClienteCadastrar = new TelaClienteCadastrar();
-					telaClienteCadastrar.setVisible(false);
-					telaClienteCadastrar.dispose();
 					TelaClientePrincipal telaClientePrincipal = new TelaClientePrincipal();
-					telaClientePrincipal.setVisible(false);
+					telaClientePrincipal.setVisible(true);
 					telaClientePrincipal.dispose();
 				}
 				ClienteTableModel clienteTableModel = new ClienteTableModel(lista);

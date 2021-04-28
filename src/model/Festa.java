@@ -1,33 +1,36 @@
 package model;
 
-import java.sql.Time;
-import java.util.Date;
-
-
 public class Festa {
 	
 	private int id;
-	private Tema Tema;
-	private Cliente Cliente;
-	private Date dataFesta;
-	private Time horarioInicio;
-	private Time horarioFinal;
-	private double valorCobrado;
+	private String tema;
+	private String cliente;
+	private String dataFesta;
+	private String horarioInicio;
+	private String horarioFinal;
+	private String logradouro;
+	private String nomeOficial;
+	private String numero;
+	private String complemento;
+	private String bairro;
+	private String cidade;
+	private String uf;
+	private String cep;
+	private double valorCobrado = 100.00;
 	private double desconto;
-	private Endereco Endereco;
+	private String endereco;
 	
-	public Festa(int id, Date dataFesta, Time horarioInicio, Time horarioFinal, double valorCobrado, double desconto, Tema Tema, Cliente Cliente, Endereco endereco) {
+	public Festa(int id, String tema, String cliente, String dataFesta, String horarioInicio, String horarioFinal, String endereco, double valorCobrado) {
 		this.id = id;
+		this.tema = tema;
+		this.cliente = cliente;
 		this.dataFesta = dataFesta;
 		this.horarioInicio = horarioInicio;
 		this.horarioFinal = horarioFinal;
+		this.endereco = endereco;
 		this.valorCobrado = valorCobrado;
-		this.desconto = desconto;
-		this.Cliente = Cliente;
-		this.Tema = Tema;
-		this.Endereco = endereco;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -36,45 +39,113 @@ public class Festa {
 		this.id = id;
 	}
 
-	public Tema getTema() {
-		return Tema;
+	public String getTema() {
+		return tema;
 	}
 
-	public void setTema(Tema tema) {
-		Tema = tema;
+	public void setTema(String tema) {
+		this.tema = tema;
 	}
 
-	public Cliente getCliente() {
-		return Cliente;
+	public String getCliente() {
+		return cliente;
 	}
 
-	public void setCliente(Cliente cliente) {
-		Cliente = cliente;
+	public void setCliente(String cliente) {
+		this.cliente = cliente;
 	}
 
-	public Date getDataFesta() {
+	public String getDataFesta() {
 		return dataFesta;
 	}
 	
-	public void setDataFesta(Date dataFesta) {
+	public void setDataFesta(String dataFesta) {
 		this.dataFesta = dataFesta;
 	}
 	
-	public Time getHorarioInicio() {
+	public String getHorarioInicio() {
 		return horarioInicio;
 	}
 	
-	public void setHorarioInicio(Time horarioInicio) {
+	public void setHorarioInicio(String horarioInicio) {
 		this.horarioInicio = horarioInicio;
 	}
 	
-	public Time getHorarioFinal() {
+	public String getHorarioFinal() {
 		return horarioFinal;
 	}
 	
-	public void setHorarioFinal(Time horarioFinal) {
+	public void setHorarioFinal(String horarioFinal) {
 		this.horarioFinal = horarioFinal;
 	}
+	
+	// Endereco da festa
+	
+	public String getLogradouro() {
+		return logradouro;
+	}
+
+	public void setLogradouro(String logradouro) {
+		this.logradouro = logradouro;
+	}
+
+	public String getNomeOficial() {
+		return nomeOficial;
+	}
+
+	public void setNomeOficial(String nomeOficial) {
+		this.nomeOficial = nomeOficial;
+	}
+
+	public String getNumero() {
+		return numero;
+	}
+
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
+
+	public String getComplemento() {
+		return complemento;
+	}
+
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
+	}
+
+	public String getBairro() {
+		return bairro;
+	}
+
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
+
+	public String getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+
+	public String getUf() {
+		return uf;
+	}
+
+	public void setUf(String uf) {
+		this.uf = uf;
+	}
+
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+	
+	// Fim Endereco da festa
 	
 	public double getValorCobrado() {
 		return valorCobrado;
@@ -91,13 +162,11 @@ public class Festa {
 	public void setDesconto(double desconto) {
 		this.desconto = desconto;
 	}
-
-	public Endereco getEndereco() {
-		return Endereco;
-	}
-
-	public void setEndereco(Endereco endereco) {
-		Endereco = endereco;
-	}
 	
+	@Override
+	public String toString() {
+		endereco = getLogradouro() + " " + getNomeOficial() + ", " + getNumero() + " - " + getComplemento() + " - "
+				+ getBairro() + ", " + getCidade() + " - " + getUf() + ", " + getCep();
+		return endereco;
+	}
 }

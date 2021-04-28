@@ -53,7 +53,7 @@ public class TelaTemaDeletar extends JFrame {
 		this.setIconImage(iconeRafaelaBuffet);
 		setIconImage(iconeRafaelaBuffet);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(10, 10, 1024, 720);
+		setBounds(10, 10, 1366, 720);
 		telaTemaDeletar = new JPanel();
 		telaTemaDeletar.setBackground(new Color(173, 220, 253));
 		telaTemaDeletar.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -62,12 +62,12 @@ public class TelaTemaDeletar extends JFrame {
 		
 		JSeparator separator = new JSeparator();
 		separator.setBackground(new Color(53, 65, 171));
-		separator.setBounds(10, 11, 969, 2);
+		separator.setBounds(10, 11, 1306, 2);
 		telaTemaDeletar.add(separator);
 		
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setBackground(new Color(53, 65, 171));
-		separator_1.setBounds(10, 660, 980, 2);
+		separator_1.setBounds(10, 659, 1306, 2);
 		telaTemaDeletar.add(separator_1);
 		
 		lblDeletarTema = new JLabel("Deletar Tema");
@@ -92,7 +92,7 @@ public class TelaTemaDeletar extends JFrame {
 		lblEscolherTema = new JLabel("Selecione um tema clicando na linha da coluna op\u00E7\u00F5es");
 		lblEscolherTema.setForeground(new Color(81, 107, 153));
 		lblEscolherTema.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 20));
-		lblEscolherTema.setBounds(200, 72, 634, 24);
+		lblEscolherTema.setBounds(359, 74, 634, 24);
 		telaTemaDeletar.add(lblEscolherTema);
 		
 		tableListTemas = new JTable();
@@ -126,7 +126,7 @@ public class TelaTemaDeletar extends JFrame {
 		});
 		telaTemaDeletar.add(tableListTemas);
 		JScrollPane scroll = new JScrollPane(tableListTemas);
-		scroll.setBounds(127, 107, 774, 497);
+		scroll.setBounds(175, 109, 1002, 497);
 		telaTemaDeletar.add(scroll);
 		
 		btnDeletarTema = new JButton("Deletar Tema");
@@ -154,9 +154,8 @@ public class TelaTemaDeletar extends JFrame {
 		});
 		btnDeletarTema.setBackground(new Color(60, 179, 113));
 		btnDeletarTema.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 15));
-		btnDeletarTema.setBounds(792, 626, 198, 23);
+		btnDeletarTema.setBounds(1118, 625, 198, 23);
 		telaTemaDeletar.add(btnDeletarTema);
-		
 	}
 
 }

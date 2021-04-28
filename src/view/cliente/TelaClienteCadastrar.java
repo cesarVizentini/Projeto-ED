@@ -44,7 +44,7 @@ public class TelaClienteCadastrar extends JFrame {
 		this.setIconImage(iconeRafaelaBuffet);
 		setIconImage(iconeRafaelaBuffet);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(10, 10, 1024, 720);
+		setBounds(10, 10, 700, 530);
 		telaClienteCadastrar = new JPanel();
 		telaClienteCadastrar.setBackground(new Color(173, 220, 253));
 		telaClienteCadastrar.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -53,12 +53,12 @@ public class TelaClienteCadastrar extends JFrame {
 
 		JSeparator separator = new JSeparator();
 		separator.setBackground(new Color(53, 65, 171));
-		separator.setBounds(10, 11, 980, 2);
+		separator.setBounds(10, 11, 660, 2);
 		telaClienteCadastrar.add(separator);
 
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setBackground(new Color(53, 65, 171));
-		separator_1.setBounds(10, 656, 980, 2);
+		separator_1.setBounds(10, 475, 660, 2);
 		telaClienteCadastrar.add(separator_1);
 
 		lblCadastrarCliente = new JLabel("Cadastrar Cliente");
@@ -130,13 +130,13 @@ public class TelaClienteCadastrar extends JFrame {
 		});
 		btnVoltar.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 15));
 		btnVoltar.setBackground(new Color(255, 102, 102));
-		btnVoltar.setBounds(10, 622, 106, 23);
+		btnVoltar.setBounds(10, 423, 106, 23);
 		telaClienteCadastrar.add(btnVoltar);
 		
 		btnCadastrarCliente = new JButton("Cadastrar Cliente");
 		btnCadastrarCliente.setBackground(new Color(60, 179, 113));
 		btnCadastrarCliente.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 15));
-		btnCadastrarCliente.setBounds(792, 622, 198, 23);
+		btnCadastrarCliente.setBounds(436, 423, 198, 23);
 		telaClienteCadastrar.add(btnCadastrarCliente);
 		
 		ClienteController clienteController = new ClienteController(tfNome, jftfTelefone, jftfDocumentoCPF);
