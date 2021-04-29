@@ -1,33 +1,28 @@
 package model;
 
-import java.sql.Time;
-import java.util.Date;
-
-
 public class Festa {
 	
 	private int id;
-	private Tema Tema;
-	private Cliente Cliente;
-	private Date dataFesta;
-	private Time horarioInicio;
-	private Time horarioFinal;
+	private String tema;
+	private String cliente;
+	private String dataFesta;
+	private String horarioInicio;
+	private String horarioFinal;
+	private String endereco;
 	private double valorCobrado;
 	private double desconto;
-	private Endereco Endereco;
 	
-	public Festa(int id, Date dataFesta, Time horarioInicio, Time horarioFinal, double valorCobrado, double desconto, Tema Tema, Cliente Cliente, Endereco endereco) {
+	public Festa(int id, String tema, String cliente, String dataFesta, String horarioInicio, String horarioFinal, String endereco, double valorCobrado) {
 		this.id = id;
+		this.tema = tema;
+		this.cliente = cliente;
 		this.dataFesta = dataFesta;
 		this.horarioInicio = horarioInicio;
 		this.horarioFinal = horarioFinal;
+		this.endereco = endereco;
 		this.valorCobrado = valorCobrado;
-		this.desconto = desconto;
-		this.Cliente = Cliente;
-		this.Tema = Tema;
-		this.Endereco = endereco;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -36,44 +31,52 @@ public class Festa {
 		this.id = id;
 	}
 
-	public Tema getTema() {
-		return Tema;
+	public String getTema() {
+		return tema;
 	}
 
-	public void setTema(Tema tema) {
-		Tema = tema;
+	public void setTema(String tema) {
+		this.tema = tema;
 	}
 
-	public Cliente getCliente() {
-		return Cliente;
+	public String getCliente() {
+		return cliente;
 	}
 
-	public void setCliente(Cliente cliente) {
-		Cliente = cliente;
+	public void setCliente(String cliente) {
+		this.cliente = cliente;
 	}
 
-	public Date getDataFesta() {
+	public String getDataFesta() {
 		return dataFesta;
 	}
 	
-	public void setDataFesta(Date dataFesta) {
+	public void setDataFesta(String dataFesta) {
 		this.dataFesta = dataFesta;
 	}
 	
-	public Time getHorarioInicio() {
+	public String getHorarioInicio() {
 		return horarioInicio;
 	}
 	
-	public void setHorarioInicio(Time horarioInicio) {
+	public void setHorarioInicio(String horarioInicio) {
 		this.horarioInicio = horarioInicio;
 	}
 	
-	public Time getHorarioFinal() {
+	public String getHorarioFinal() {
 		return horarioFinal;
 	}
 	
-	public void setHorarioFinal(Time horarioFinal) {
+	public void setHorarioFinal(String horarioFinal) {
 		this.horarioFinal = horarioFinal;
+	}
+	
+	public String getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
 	}
 	
 	public double getValorCobrado() {
@@ -92,12 +95,4 @@ public class Festa {
 		this.desconto = desconto;
 	}
 
-	public Endereco getEndereco() {
-		return Endereco;
-	}
-
-	public void setEndereco(Endereco endereco) {
-		Endereco = endereco;
-	}
-	
 }

@@ -46,4 +46,9 @@ public class Cliente {
 		this.telefone = telefone;
 	}
 
+	@Override
+	public String toString() {
+		return getNome();
+	}
+
 }

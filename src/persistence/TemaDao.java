@@ -117,7 +117,7 @@ public class TemaDao {
 		}
 	}
 
-	public void alterarCliente() {
+	public void alterarTema() {
 
 	}
 
@@ -140,7 +140,7 @@ public class TemaDao {
 //		return atualizou;
 //	}
 
-	public String mostraCliente() {
+	public String mostraTema() {
 		String mostra;
 		if (this.inicio == null) {
 			mostra = "Não há temas para mostrar, a lista está vazia!";

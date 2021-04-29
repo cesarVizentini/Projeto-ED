@@ -10,7 +10,6 @@ import javax.swing.JTextField;
 import model.Tema;
 import model.TemaTableModel;
 import persistence.TemaDao;
-import view.tema.TelaTemaCadastrar;
 import view.tema.TelaTemaPrincipal;
 
 public class TemaController implements ActionListener {
@@ -46,24 +45,33 @@ public class TemaController implements ActionListener {
 				}
 				cadastrar(tfNome.getText(), taDescricao.getText(), Double.parseDouble(jftfPreco.getText()));
 				if (newTable) {
-					TelaTemaCadastrar telaTemaCadastrar = new TelaTemaCadastrar();
-					telaTemaCadastrar.setVisible(false);
-					telaTemaCadastrar.dispose();
 					TelaTemaPrincipal telaTemaPrincipal = new TelaTemaPrincipal();
-					telaTemaPrincipal.setVisible(false);
+					telaTemaPrincipal.setVisible(true);
 					telaTemaPrincipal.dispose();
 				}
 				TemaTableModel temaTableModel = new TemaTableModel(lista);
 				temaTableModel.addRow();
+				TelaTemaPrincipal telaTemaPrincipal = new TelaTemaPrincipal();
+				telaTemaPrincipal.setVisible(true);
+				telaTemaPrincipal.dispose();
 			}
 		}
 	}
 
 	private boolean validaTela() {
 		boolean valida = true;
-		if (tfNome.getText().trim().equals("") || taDescricao.getText().trim().equals("")
-				|| jftfPreco.getText().trim().equals("")) {
+		if (tfNome.getText().trim().equals("") && taDescricao.getText().trim().equals("")
+				&& jftfPreco.getText().trim().equals("")) {
 			JOptionPane.showMessageDialog(null, "Por favor, preencha todos os campos acima para realizar o cadastro", "Informação", JOptionPane.INFORMATION_MESSAGE);
+			valida = false;
+		} else if (tfNome.getText().trim().equals("")) {
+			JOptionPane.showMessageDialog(null, "Por favor, preencha o nome do tema para realizar o cadastro", "Informação", JOptionPane.INFORMATION_MESSAGE);
+			valida = false;
+		} else if (taDescricao.getText().trim().equals("")) {
+			JOptionPane.showMessageDialog(null, "Por favor, preencha a descrição do tema para realizar o cadastro", "Informação", JOptionPane.INFORMATION_MESSAGE);
+			valida = false;
+		} else if (jftfPreco.getText().trim().equals("")) {
+			JOptionPane.showMessageDialog(null, "Por favor, preencha o preço do tema para realizar o cadastro", "Informação", JOptionPane.INFORMATION_MESSAGE);
 			valida = false;
 		}
 		return valida;

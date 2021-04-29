@@ -46,4 +46,10 @@ public class Tema {
 		this.descricao = descricao;
 	}
 
+	@Override
+	public String toString() {
+		return getNome();
+	}
+	
+	
 }

@@ -7,9 +7,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import model.Cliente;
+import model.Festa;
 import model.Tema;
 import persistence.ClienteDao;
+import persistence.FestaDao;
 import persistence.TemaDao;
 
 public class ArquivosDiretorios {
@@ -22,7 +25,8 @@ public class ArquivosDiretorios {
 		File diretorio = new File(path);
 		if (!diretorio.exists() || !diretorio.isDirectory()) {
 			if (diretorio.mkdir()) {
-				System.out.println("O Diretório DatabaseBuffetRafaela foi criado com sucesso! Caminho para acessar => C:\\DatabaseBuffetRafaela\\");
+				System.out.println(
+						"O Diretório DatabaseBuffetRafaela foi criado com sucesso! Caminho para acessar => C:\\DatabaseBuffetRafaela\\");
 			} else {
 				System.err.println("Erro ao criar diretório");
 			}
@@ -154,14 +158,14 @@ public class ArquivosDiretorios {
 	// ----------------------------------------------
 	// ---------------- TEMA DATABASE ---------------
 	// ----------------------------------------------
-	
+
 	public void salvarTema(Tema tema) throws IOException {
 		verificaDiretorio();
 		String path = "C:\\DatabaseBuffetRafaela\\tema.csv";
 		File file = new File(path);
 		if (verificarSeExistemDados("tema")) {
-			String salvar = tema.getId() + ";" + tema.getNome() + ";" + tema.getDescricao() + ";"
-					+ tema.getValor() + "\n";
+			String salvar = tema.getId() + ";" + tema.getNome() + ";" + tema.getDescricao() + ";" + tema.getValor()
+					+ "\n";
 			FileWriter writer = new FileWriter(file, true);
 			PrintWriter printer = new PrintWriter(writer);
 			printer.write(salvar);
@@ -170,8 +174,7 @@ public class ArquivosDiretorios {
 			writer.close();
 		} else {
 			String salvar = "Id;Nome;Descrição;Valor Aluguel (R$)\n";
-			salvar += tema.getId() + ";" + tema.getNome() + ";" + tema.getDescricao() + ";"
-					+ tema.getValor() + "\n";
+			salvar += tema.getId() + ";" + tema.getNome() + ";" + tema.getDescricao() + ";" + tema.getValor() + "\n";
 			FileWriter writer = new FileWriter(file);
 			PrintWriter printer = new PrintWriter(writer);
 			printer.write(salvar);
@@ -254,8 +257,7 @@ public class ArquivosDiretorios {
 		int posicao = 0;
 		Tema tema = temaDao.getTema(posicao);
 		do {
-			buffer.append(tema.getId() + ";" + tema.getNome() + ";" + tema.getDescricao() + ";"
-					+ tema.getValor());
+			buffer.append(tema.getId() + ";" + tema.getNome() + ";" + tema.getDescricao() + ";" + tema.getValor());
 			buffer.append("\n");
 			posicao++;
 			tema = temaDao.getTema(posicao);
@@ -263,16 +265,125 @@ public class ArquivosDiretorios {
 		preparo = buffer.toString();
 		return preparo;
 	}
-	
+
 	// --------------------------------------------------
 	// ---------------- END TEMA DATABASE ---------------
 	// --------------------------------------------------
-	
 
 	// ----------------------------------------------
 	// ---------------- FESTA DATABASE ---------------
 	// ----------------------------------------------
+	public void salvarFesta(Festa festa) throws IOException {
+		verificaDiretorio();
+		String path = "C:\\DatabaseBuffetRafaela\\festa.csv";
+		File file = new File(path);
+		if (verificarSeExistemDados("festa")) {
+			String salvar = festa.getId() + ";" + festa.getTema() + ";" + festa.getCliente() + ";"
+					+ festa.getDataFesta() + ";" + festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";"
+					+ festa.getEndereco().toString() + ";" + festa.getValorCobrado() + "\n";
+			FileWriter writer = new FileWriter(file, true);
+			PrintWriter printer = new PrintWriter(writer);
+			printer.write(salvar);
+			printer.flush();
+			printer.close();
+			writer.close();
+		} else {
+			String salvar = "Id;Tema;Cliente;Data;Horário de início;Horário de término;Endereço;Valor Total (R$)\n";
+			salvar += festa.getId() + ";" + festa.getTema() + ";" + festa.getCliente() + ";"
+					+ festa.getDataFesta() + ";" + festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";"
+					+ festa.getEndereco().toString() + ";" + festa.getValorCobrado() + "\n";
+			FileWriter writer = new FileWriter(file);
+			PrintWriter printer = new PrintWriter(writer);
+			printer.write(salvar);
+			printer.flush();
+			printer.close();
+			writer.close();
+		}
+		System.out.println("Festa salva com sucesso!");
+	}
 
+	public FestaDao getFestas(FestaDao festaDao) throws IOException, ParseException {
+		verificaDiretorio();
+		Festa festa;
+		String path = "C:\\DatabaseBuffetRafaela\\festa.csv";
+		File file = new File(path);
+		if (verificarSeExistemDados("festa")) {
+			FileInputStream stream = new FileInputStream(file);
+			InputStreamReader flow = new InputStreamReader(stream);
+			BufferedReader reader = new BufferedReader(flow);
+			String line = reader.readLine();
+			line = reader.readLine();
+			while (line != null) {
+				String[] auxs = line.split(";");				
+	            festa = new Festa(Integer.parseInt(auxs[0]), auxs[1], auxs[2], auxs[3], auxs[4], auxs[5], auxs[6], Double.parseDouble(auxs[7]));
+				festaDao.adicionarFesta(festa);
+				line = reader.readLine();
+			}
+			reader.close();
+			flow.close();
+			stream.close();
+			return festaDao;
+		} else {
+			System.err.println("Não existem cadastros!");
+			return null;
+		}
+	}
+
+	public void removerFesta(FestaDao festaDao, int id) throws IOException {
+		int indexFesta = festaDao.getIndex(id);
+		if (indexFesta != 0) {
+			verificaDiretorio();
+			String path = "C:\\DatabaseBuffetRafaela\\festa.csv";
+			File file = new File(path);
+			festaDao.removerFesta(indexFesta);
+			if (festaDao.getFesta(0) == null) {
+				file.delete();
+			} else {
+				String salvar = "Id;Tema;Cliente;Data;Horário de início;Horário de término;Endereço;Valor Total (R$)\n";
+				salvar += prepararFesta(festaDao);
+				FileWriter writer = new FileWriter(file);
+				PrintWriter printer = new PrintWriter(writer);
+				printer.write(salvar);
+				printer.flush();
+				printer.close();
+				writer.close();
+			}
+			System.out.println("Festa removida com sucesso!");
+		} else {
+			System.out.println("Festa não foi encontrada na base de dados");
+		}
+	}
+
+	public void atualizarFesta(FestaDao festaDao) throws IOException {
+		verificaDiretorio();
+		String path = "C:\\DatabaseBuffetRafaela\\tema.csv";
+		File file = new File(path);
+		String salvar = "Id;Tema;Cliente;Data;Horário de início;Horário de término;Endereço;Valor Total (R$)\n";
+		salvar += prepararFesta(festaDao);
+		FileWriter writer = new FileWriter(file);
+		PrintWriter printer = new PrintWriter(writer);
+		printer.write(salvar);
+		printer.flush();
+		printer.close();
+		writer.close();
+	}
+
+	private String prepararFesta(FestaDao festaDao) {
+		StringBuffer buffer = new StringBuffer();
+		String preparo;
+		int posicao = 0;
+		Festa festa = festaDao.getFesta(posicao);
+		do {
+			buffer.append(festa.getId() + ";" + festa.getTema() + ";" + festa.getCliente() + ";"
+					+ festa.getDataFesta() + ";" + festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";"
+					+ festa.getEndereco().toString() + ";" + festa.getValorCobrado());
+			buffer.append("\n");
+			posicao++;
+			festa = festaDao.getFesta(posicao);
+		} while (festa != null);
+		preparo = buffer.toString();
+		return preparo;
+	}
 	// --------------------------------------------------
 	// ---------------- END FESTA DATABASE --------------
 	// --------------------------------------------------

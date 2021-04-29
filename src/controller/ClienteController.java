@@ -3,14 +3,12 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import model.Cliente;
 import model.ClienteTableModel;
 import persistence.ClienteDao;
-import view.cliente.TelaClienteCadastrar;
 import view.cliente.TelaClientePrincipal;
 
 public class ClienteController implements ActionListener {
@@ -47,11 +45,8 @@ public class ClienteController implements ActionListener {
 				}
 				cadastrar(tfNome.getText(), jftfDocumentoCPF.getText(), jftfTelefone.getText());
 				if (newTable) {
-					TelaClienteCadastrar telaClienteCadastrar = new TelaClienteCadastrar();
-					telaClienteCadastrar.setVisible(false);
-					telaClienteCadastrar.dispose();
 					TelaClientePrincipal telaClientePrincipal = new TelaClientePrincipal();
-					telaClientePrincipal.setVisible(false);
+					telaClientePrincipal.setVisible(true);
 					telaClientePrincipal.dispose();
 				}
 				ClienteTableModel clienteTableModel = new ClienteTableModel(lista);
@@ -63,9 +58,18 @@ public class ClienteController implements ActionListener {
 	
 	private boolean validaTela() {
 		boolean valida = true;
-		if (tfNome.getText().trim().equals("") || jftfTelefone.getText().trim().equals("")
-				|| jftfDocumentoCPF.getText().trim().equals("")) {
+		if (tfNome.getText().trim().equals("") && jftfTelefone.getText().trim().equals("")
+				&& jftfDocumentoCPF.getText().trim().equals("")) {
 			JOptionPane.showMessageDialog(null, "Por favor, preencha todos os campos acima para realizar o cadastro", "Informação", JOptionPane.INFORMATION_MESSAGE);
+			valida = false;
+		} else if (tfNome.getText().trim().equals("")) {
+			JOptionPane.showMessageDialog(null, "Por favor, preencha o nome do cliente para realizar o cadastro", "Informação", JOptionPane.INFORMATION_MESSAGE);
+			valida = false;
+		} else if (jftfDocumentoCPF.getText().trim().equals("")) {
+			JOptionPane.showMessageDialog(null, "Por favor, preencha o documento do cliente para realizar o cadastro", "Informação", JOptionPane.INFORMATION_MESSAGE);
+			valida = false;
+		} else if (jftfTelefone.getText().trim().equals("")) {
+			JOptionPane.showMessageDialog(null, "Por favor, preencha o telefone do cliente para realizar o cadastro", "Informação", JOptionPane.INFORMATION_MESSAGE);
 			valida = false;
 		}
 		return valida;

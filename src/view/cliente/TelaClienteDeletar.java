@@ -53,7 +53,7 @@ public class TelaClienteDeletar extends JFrame {
 		this.setIconImage(iconeRafaelaBuffet);
 		setIconImage(iconeRafaelaBuffet);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(10, 10, 1024, 720);
+		setBounds(10, 10, 1366, 720);
 		telaClienteDeletar = new JPanel();
 		telaClienteDeletar.setBackground(new Color(173, 220, 253));
 		telaClienteDeletar.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -62,12 +62,12 @@ public class TelaClienteDeletar extends JFrame {
 
 		JSeparator separator = new JSeparator();
 		separator.setBackground(new Color(53, 65, 171));
-		separator.setBounds(10, 11, 980, 2);
+		separator.setBounds(10, 11, 1306, 2);
 		telaClienteDeletar.add(separator);
 
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setBackground(new Color(53, 65, 171));
-		separator_1.setBounds(10, 659, 980, 2);
+		separator_1.setBounds(10, 659, 1306, 2);
 		telaClienteDeletar.add(separator_1);
 
 		lblDeletarCliente = new JLabel("Deletar Cliente");
@@ -92,7 +92,7 @@ public class TelaClienteDeletar extends JFrame {
 		lblEscolherCliente = new JLabel("Selecione um cliente clicando na linha da coluna op\u00E7\u00F5es");
 		lblEscolherCliente.setForeground(new Color(81, 107, 153));
 		lblEscolherCliente.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 20));
-		lblEscolherCliente.setBounds(148, 72, 743, 24);
+		lblEscolherCliente.setBounds(340, 74, 660, 24);
 		telaClienteDeletar.add(lblEscolherCliente);
 
 		tableListClientes = new JTable();
@@ -104,7 +104,7 @@ public class TelaClienteDeletar extends JFrame {
 		JTableHeader th = tableListClientes.getTableHeader();
 		th.setPreferredSize(new Dimension(100, 40));
 		tableListClientes.getColumnModel().getColumn(0).setPreferredWidth(30);
-		tableListClientes.getColumnModel().getColumn(2).setPreferredWidth(180);
+		tableListClientes.getColumnModel().getColumn(1).setPreferredWidth(180);
 		tableListClientes.getColumnModel().getColumn(4).setPreferredWidth(30);
 		tableListClientes.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
 			private static final long serialVersionUID = 1L;
@@ -125,7 +125,7 @@ public class TelaClienteDeletar extends JFrame {
 		});
 		telaClienteDeletar.add(tableListClientes);
 		JScrollPane scroll = new JScrollPane(tableListClientes);
-		scroll.setBounds(117, 109, 774, 497);
+		scroll.setBounds(175, 109, 1002, 497);
 		telaClienteDeletar.add(scroll);
 
 		btnDeletarCliente = new JButton("Deletar Cliente");
@@ -153,7 +153,7 @@ public class TelaClienteDeletar extends JFrame {
 		});
 		btnDeletarCliente.setBackground(new Color(60, 179, 113));
 		btnDeletarCliente.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 15));
-		btnDeletarCliente.setBounds(792, 625, 198, 23);
+		btnDeletarCliente.setBounds(1118, 625, 198, 23);
 		telaClienteDeletar.add(btnDeletarCliente);
 	}
 

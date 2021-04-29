@@ -1,34 +1,26 @@
 package model;
 
 public class Endereco {
-
-	private int id;
+	
 	private String logradouro;
+	private String nomeOficial;
 	private String numero;
 	private String complemento;
 	private String bairro;
 	private String cidade;
-	private int cep;
 	private String uf;
-
-	public Endereco(int id, String logradouro, String numero, String complemento, String bairro, String cidade, int cep,
-			String uf) {
-		this.id = id;
+	private String cep;
+	
+	public Endereco(String logradouro, String nomeOficial, String numero, String complemento, String bairro,
+			String cidade, String uf, String cep) {
 		this.logradouro = logradouro;
+		this.nomeOficial = nomeOficial;
 		this.numero = numero;
 		this.complemento = complemento;
 		this.bairro = bairro;
 		this.cidade = cidade;
-		this.cep = cep;
 		this.uf = uf;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
+		this.cep = cep;
 	}
 
 	public String getLogradouro() {
@@ -37,6 +29,14 @@ public class Endereco {
 
 	public void setLogradouro(String logradouro) {
 		this.logradouro = logradouro;
+	}
+
+	public String getNomeOficial() {
+		return nomeOficial;
+	}
+
+	public void setNomeOficial(String nomeOficial) {
+		this.nomeOficial = nomeOficial;
 	}
 
 	public String getNumero() {
@@ -71,14 +71,6 @@ public class Endereco {
 		this.cidade = cidade;
 	}
 
-	public int getCep() {
-		return cep;
-	}
-
-	public void setCep(int cep) {
-		this.cep = cep;
-	}
-
 	public String getUf() {
 		return uf;
 	}
@@ -87,12 +79,18 @@ public class Endereco {
 		this.uf = uf;
 	}
 
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+
 	@Override
 	public String toString() {
-		return "Logradouro: " + logradouro + ", número: " + numero + ", complemento: "
-				+ complemento + ", bairro: " + bairro + ", cidade: " + cidade + ", CEP: " + cep + ", UF: " + uf;
+		return getLogradouro() + " " + getNomeOficial() + ", " + getNumero() + " - " + getComplemento() + " - "
+				+ getBairro() + ", " + getCidade() + " - " + getUf() + ", " + getCep();
 	}
-	
-	
 
 }
