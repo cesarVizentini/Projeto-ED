@@ -58,9 +58,18 @@ public class ClienteController implements ActionListener {
 	
 	private boolean validaTela() {
 		boolean valida = true;
-		if (tfNome.getText().trim().equals("") || jftfTelefone.getText().trim().equals("")
-				|| jftfDocumentoCPF.getText().trim().equals("")) {
+		if (tfNome.getText().trim().equals("") && jftfTelefone.getText().trim().equals("")
+				&& jftfDocumentoCPF.getText().trim().equals("")) {
 			JOptionPane.showMessageDialog(null, "Por favor, preencha todos os campos acima para realizar o cadastro", "Informação", JOptionPane.INFORMATION_MESSAGE);
+			valida = false;
+		} else if (tfNome.getText().trim().equals("")) {
+			JOptionPane.showMessageDialog(null, "Por favor, preencha o nome do cliente para realizar o cadastro", "Informação", JOptionPane.INFORMATION_MESSAGE);
+			valida = false;
+		} else if (jftfDocumentoCPF.getText().trim().equals("")) {
+			JOptionPane.showMessageDialog(null, "Por favor, preencha o documento do cliente para realizar o cadastro", "Informação", JOptionPane.INFORMATION_MESSAGE);
+			valida = false;
+		} else if (jftfTelefone.getText().trim().equals("")) {
+			JOptionPane.showMessageDialog(null, "Por favor, preencha o telefone do cliente para realizar o cadastro", "Informação", JOptionPane.INFORMATION_MESSAGE);
 			valida = false;
 		}
 		return valida;

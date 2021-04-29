@@ -375,7 +375,7 @@ public class TelaFestaCadastrar extends JFrame {
 
 		tfValorCobrado = new JTextField();
 		tfValorCobrado.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 12));
-		tfValorCobrado.setEditable(false);
+//		tfValorCobrado.setEditable(false);
 		tfValorCobrado.setColumns(10);
 		tfValorCobrado.setBounds(546, 314, 80, 20);
 		telaFestaCadastrar.add(tfValorCobrado);

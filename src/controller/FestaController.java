@@ -4,10 +4,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
+import model.Endereco;
 import model.Festa;
 import model.FestaTableModel;
 import persistence.FestaDao;
@@ -30,7 +33,6 @@ public class FestaController implements ActionListener {
 	private JTextField tfCEP;
 	private JTextField tfValorCobrado;
 	private FestaDao lista;
-	private String endereco;
 
 	public FestaController(JComboBox<Object> cbTema, JComboBox<Object> cbCliente, JDateChooser dcData,
 			JTextField tfHorarioInicial, JTextField tfHorarioFinal, JComboBox<String> cbLogradouro,
@@ -67,20 +69,20 @@ public class FestaController implements ActionListener {
 		boolean valido = validaTela();
 		if (valido) {
 			String cmd = e.getActionCommand();
-			if (cmd.equals("Cadastrar Cliente")) {
+			if (cmd.equals("Cadastrar Festa")) {
 				boolean newTable = false;
 				if (lista == null) {
 					newTable = true;
 				}
 				cadastrar(cbTema.getSelectedItem().toString(), cbCliente.getSelectedItem().toString(),
-						dcData.getDate().toString(), tfHorarioInicial.getText(), tfHorarioFinal.getText(),
+						converterData(dcData.getDate()), tfHorarioInicial.getText(), tfHorarioFinal.getText(),
 						cbLogradouro.getSelectedItem().toString(), tfNomeOficial.getText(), tfNumero.getText(),
 						tfComplemento.getText(), tfBairro.getText(), tfCidade.getText(),
 						cbUF.getSelectedItem().toString(), tfCEP.getText(),
 						Double.parseDouble(tfValorCobrado.getText()));
 				if (newTable) {
 					TelaFestaPrincipal telaFestaPrincipal = new TelaFestaPrincipal();
-					telaFestaPrincipal.setVisible(true);
+					telaFestaPrincipal.setVisible(false);
 					telaFestaPrincipal.dispose();
 				}
 				FestaTableModel festaTableModel = new FestaTableModel(lista);
@@ -89,20 +91,37 @@ public class FestaController implements ActionListener {
 		}
 	}
 
+	public String converterData(Date date) {
+		Date in = date;
+		String formato = "dd/MM/yyyy";
+		SimpleDateFormat formatter = new SimpleDateFormat(formato);
+	    return formatter.format(in);
+	}
+
 	private boolean validaTela() {
 		boolean valida = true;
-		if (cbTema.getSelectedItem().toString().trim().equals("") || cbCliente.getSelectedItem().toString().trim().equals("")
-				|| dcData.getDate().toString().trim().equals("")) {
+		if (cbTema.getSelectedItem().toString().trim().equals("")
+				&& cbCliente.getSelectedItem().toString().trim().equals("")
+				&& dcData.getDate().toString().trim().equals("")) {
 			JOptionPane.showMessageDialog(null, "Por favor, preencha todos os campos acima para realizar o cadastro",
 					"Informação", JOptionPane.INFORMATION_MESSAGE);
 			valida = false;
-		}
+		} else if (cbTema.getSelectedItem().toString().trim().equals("")) {
+			JOptionPane.showMessageDialog(null, "Por favor, selecione um tema para realizar o cadastro", "Informação", JOptionPane.INFORMATION_MESSAGE);
+			valida = false;
+		} else if (cbCliente.getSelectedItem().toString().trim().equals("")) {
+			JOptionPane.showMessageDialog(null, "Por favor, selecione um cliente para realizar o cadastro", "Informação", JOptionPane.INFORMATION_MESSAGE);
+			valida = false;
+		} else if (dcData.getDate().toString().trim().equals("")) {
+			JOptionPane.showMessageDialog(null, "Por favor, preencha a data da festa para realizar o cadastro", "Informação", JOptionPane.INFORMATION_MESSAGE);
+			valida = false;
+		} 
 		return valida;
 	}
 
 	private void cadastrar(String tema, String cliente, String dataFesta, String horarioInicio, String horarioFinal,
-			String cbLogradouro, String tfNomeOficial, String tfNumero, String tfComplemento, String tfBairro, String tfCidade, String cbUF,
-			String tfCEP, double valorCobrado) {
+			String cbLogradouro, String tfNomeOficial, String tfNumero, String tfComplemento, String tfBairro,
+			String tfCidade, String cbUF, String tfCEP, double valorCobrado) {
 		Festa ultimo;
 		int id = 0;
 		if (lista != null) {
@@ -112,17 +131,40 @@ public class FestaController implements ActionListener {
 			id = 1;
 			lista = new FestaDao();
 		}
-		Festa festa = new Festa(id, tema, cliente, dataFesta, horarioInicio, horarioFinal, endereco , valorCobrado);
+		Endereco endereco = new Endereco(cbLogradouro, tfNomeOficial, tfNumero, tfComplemento, tfBairro, tfCidade, cbUF,
+				tfCEP);
+		endereco.setLogradouro(cbLogradouro);
+		endereco.setNomeOficial(tfNomeOficial);
+		endereco.setNumero(tfNumero);
+		endereco.setComplemento(tfComplemento);
+		endereco.setBairro(tfBairro);
+		endereco.setCidade(tfCidade);
+		endereco.setUf(cbUF);
+		endereco.setCep(tfCEP);
+		Festa festa = new Festa(id, tema, cliente, dataFesta, horarioInicio, horarioFinal, endereco.toString(),
+				valorCobrado);
 		festa.setTema(tema);
 		festa.setCliente(cliente);
 		festa.setDataFesta(dataFesta);
 		festa.setHorarioInicio(horarioInicio);
 		festa.setHorarioFinal(horarioFinal);
-		festa.toString();
+		festa.setEndereco(endereco.toString());
 		festa.setValorCobrado(valorCobrado);
-	
-		lista.adicionarSalvarFesta(festa);
 
+		lista.adicionarSalvarFesta(festa);
+		
+//		cbLogradouro.setText("");
+//		tfNomeOficial.setText("");
+//		tfNumero.setText("");
+//		tfComplemento.setText("");
+//		tfBairro.setText("");
+//		tfCidade.setText("");
+//		cbUF.setText("");
+//		tfCEP.setText("");
+//		tema.setText("");
+//		cliente.setText("");
+//		dataFesta.setText("");
+//		valorCobrado.setText("");
 		tfHorarioInicial.setText("");
 		tfHorarioFinal.setText("");
 		tfValorCobrado.setText("");

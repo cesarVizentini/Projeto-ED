@@ -56,7 +56,7 @@ public class TelaFestaDeletar extends JFrame {
 		this.setIconImage(iconeRafaelaBuffet);
 		setIconImage(iconeRafaelaBuffet);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(10, 10, 1024, 720);
+		setBounds(10, 10, 1366, 720);
 		telaFestaDeletar = new JPanel();
 		telaFestaDeletar.setBackground(new Color(173, 220, 253));
 		telaFestaDeletar.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -65,12 +65,12 @@ public class TelaFestaDeletar extends JFrame {
 		
 		JSeparator separator = new JSeparator();
 		separator.setBackground(new Color(53, 65, 171));
-		separator.setBounds(10, 11, 980, 2);
+		separator.setBounds(10, 11, 1309, 2);
 		telaFestaDeletar.add(separator);
 		
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setBackground(new Color(53, 65, 171));
-		separator_1.setBounds(10, 660, 980, 2);
+		separator_1.setBounds(10, 660, 1309, 2);
 		telaFestaDeletar.add(separator_1);
 		
 		lblDeletarFesta = new JLabel("Deletar Festa");
@@ -143,7 +143,7 @@ public class TelaFestaDeletar extends JFrame {
 		});
 		btnDeletarFesta.setBackground(new Color(60, 179, 113));
 		btnDeletarFesta.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 15));
-		btnDeletarFesta.setBounds(792, 626, 198, 23);
+		btnDeletarFesta.setBounds(1121, 626, 198, 23);
 		telaFestaDeletar.add(btnDeletarFesta);
 		
 		btnVoltar = new JButton("< Voltar");

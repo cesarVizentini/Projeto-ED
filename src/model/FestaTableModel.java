@@ -40,7 +40,7 @@ public class FestaTableModel extends AbstractTableModel {
 		case 3: return listar.getFesta(rowIndex).getDataFesta();
 		case 4: return listar.getFesta(rowIndex).getHorarioInicio();
 		case 5: return listar.getFesta(rowIndex).getHorarioFinal();
-		case 6: return listar.getFesta(rowIndex).toString();
+		case 6: return listar.getFesta(rowIndex).getEndereco().toString();
 		case 7: return listar.getFesta(rowIndex).getValorCobrado();
 		}
 		return null;

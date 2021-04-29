@@ -8,17 +8,9 @@ public class Festa {
 	private String dataFesta;
 	private String horarioInicio;
 	private String horarioFinal;
-	private String logradouro;
-	private String nomeOficial;
-	private String numero;
-	private String complemento;
-	private String bairro;
-	private String cidade;
-	private String uf;
-	private String cep;
-	private double valorCobrado = 100.00;
-	private double desconto;
 	private String endereco;
+	private double valorCobrado;
+	private double desconto;
 	
 	public Festa(int id, String tema, String cliente, String dataFesta, String horarioInicio, String horarioFinal, String endereco, double valorCobrado) {
 		this.id = id;
@@ -79,73 +71,13 @@ public class Festa {
 		this.horarioFinal = horarioFinal;
 	}
 	
-	// Endereco da festa
-	
-	public String getLogradouro() {
-		return logradouro;
+	public String getEndereco() {
+		return endereco;
 	}
 
-	public void setLogradouro(String logradouro) {
-		this.logradouro = logradouro;
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
 	}
-
-	public String getNomeOficial() {
-		return nomeOficial;
-	}
-
-	public void setNomeOficial(String nomeOficial) {
-		this.nomeOficial = nomeOficial;
-	}
-
-	public String getNumero() {
-		return numero;
-	}
-
-	public void setNumero(String numero) {
-		this.numero = numero;
-	}
-
-	public String getComplemento() {
-		return complemento;
-	}
-
-	public void setComplemento(String complemento) {
-		this.complemento = complemento;
-	}
-
-	public String getBairro() {
-		return bairro;
-	}
-
-	public void setBairro(String bairro) {
-		this.bairro = bairro;
-	}
-
-	public String getCidade() {
-		return cidade;
-	}
-
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
-	}
-
-	public String getUf() {
-		return uf;
-	}
-
-	public void setUf(String uf) {
-		this.uf = uf;
-	}
-
-	public String getCep() {
-		return cep;
-	}
-
-	public void setCep(String cep) {
-		this.cep = cep;
-	}
-	
-	// Fim Endereco da festa
 	
 	public double getValorCobrado() {
 		return valorCobrado;
@@ -162,11 +94,5 @@ public class Festa {
 	public void setDesconto(double desconto) {
 		this.desconto = desconto;
 	}
-	
-	@Override
-	public String toString() {
-		endereco = getLogradouro() + " " + getNomeOficial() + ", " + getNumero() + " - " + getComplemento() + " - "
-				+ getBairro() + ", " + getCidade() + " - " + getUf() + ", " + getCep();
-		return endereco;
-	}
+
 }
