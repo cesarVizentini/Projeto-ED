@@ -47,7 +47,7 @@ public class FestaController implements ActionListener {
 		this.tfNomeOficial = tfNomeOficial;
 		this.tfNumero = tfNumero;
 		this.tfComplemento = tfComplemento;
-		this.tfBairro = tfComplemento;
+		this.tfBairro = tfBairro;
 		this.tfCidade = tfCidade;
 		this.cbUF = cbUF;
 		this.tfCEP = tfCEP;
