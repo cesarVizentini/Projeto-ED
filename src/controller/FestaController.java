@@ -84,6 +84,12 @@ public class FestaController implements ActionListener {
 					TelaFestaPrincipal telaFestaPrincipal = new TelaFestaPrincipal();
 					telaFestaPrincipal.setVisible(false);
 					telaFestaPrincipal.dispose();
+				} else {
+					try {
+						lista.sort();
+					} catch (ParseException e1) {
+						e1.printStackTrace();
+					}
 				}
 				FestaTableModel festaTableModel = new FestaTableModel(lista);
 				festaTableModel.addRow();

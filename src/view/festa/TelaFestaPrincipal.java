@@ -37,6 +37,9 @@ public class TelaFestaPrincipal extends JFrame {
 		ArquivosDiretorios arquivosDiretorios = new ArquivosDiretorios();
 		try {
 			lista = arquivosDiretorios.getFestas(lista);
+			if (lista != null) {
+				lista.sort();
+			}
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		} catch (ParseException e1) {

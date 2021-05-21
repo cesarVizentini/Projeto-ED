@@ -1,6 +1,9 @@
 package persistence;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.swing.JOptionPane;
 
@@ -153,8 +156,8 @@ public class FestaDao {
 				buffer.append("Codigo: " + aux.getFesta().getId() + " |Tema: " + aux.getFesta().getTema()
 						+ " |Cliente: " + aux.getFesta().getCliente() + " |Data da festa: "
 						+ aux.getFesta().getDataFesta() + " |Horário de inicio: " + aux.getFesta().getDataFesta()
-						+ " |Horário de término: " + aux.getFesta().getDataFesta() + " |Endereço: " + aux.getFesta().toString() + " |Valor Cobrado R$: "
-						+ aux.getFesta().getValorCobrado() + "\n");
+						+ " |Horário de término: " + aux.getFesta().getDataFesta() + " |Endereço: "
+						+ aux.getFesta().toString() + " |Valor Cobrado R$: " + aux.getFesta().getValorCobrado() + "\n");
 				aux = aux.getProximo();
 			}
 			mostra = buffer.toString();
@@ -203,4 +206,46 @@ public class FestaDao {
 		return aux.getFesta();
 	}
 
+	public void sort() throws ParseException {
+		quickSort(0, tamanho());
+	}
+
+	private void quickSort(int start, int end) throws ParseException {
+		if (start < end) {
+			int pivo = partition(start, end);
+			quickSort(start, pivo - 1);
+			quickSort(pivo + 1, end);
+		}
+	}
+
+	private int partition(int start, int end) throws ParseException {
+		int i = start;
+		for (int j = start; j < end; j++) {
+			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+			Date data1 = new Date(format.parse(encontrar(j).getFesta().getDataFesta()).getTime());
+			Date data2 = new Date(format.parse(encontrar(end).getFesta().getDataFesta()).getTime());
+			if (data1.before(data2)) {
+				trocar(i++, j);
+			}
+		}
+		trocar(i, end);
+		return i;
+	}
+	
+	private void trocar(int i, int j) {
+		FestaNo auxi = encontrar(i);
+		Festa festai = auxi.getFesta();
+		FestaNo auxj = encontrar(j);
+		Festa festaj = auxj.getFesta();
+		auxi.setFesta(festaj);
+		auxj.setFesta(festai);
+	}
+
+	private FestaNo encontrar(int j) {
+		FestaNo aux = this.inicio;
+		for (int i = 0; i < j; i++) {
+			aux = aux.getProximo();
+		}
+		return aux;
+	}
 }
