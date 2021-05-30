@@ -31,6 +31,7 @@ import javax.swing.text.MaskFormatter;
 
 import controller.ArquivosDiretorios;
 import controller.TemaController;
+import model.Tema;
 import model.TemaTableModel;
 import persistence.TemaDao;
 
@@ -129,7 +130,7 @@ public class TelaTemaAlterar extends JFrame {
 		MaskFormatter valor = null;
 
 		try {
-			valor = new MaskFormatter("R$ ##.###,##");
+			valor = new MaskFormatter("#######");
 			valor.setPlaceholderCharacter('_');
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -218,9 +219,37 @@ public class TelaTemaAlterar extends JFrame {
 		btnAlterarTema.setBounds(1136, 626, 198, 23);
 		telaTemaAlterar.add(btnAlterarTema);
 
-		TemaController temaController = new TemaController(tfNome, taDescricao, jftfPreco);
+		btnAlterarTema.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (tableListTemas.isColumnSelected(4)) {
+					String s = tableListTemas.getValueAt(tableListTemas.getSelectedRow(), 0).toString();
+					int id = Integer.parseInt(s);
 
-		btnAlterarTema.addActionListener(temaController);
+					try {
+						Tema temaAtt = new Tema(id, tfNome.getText(), taDescricao.getText(),
+								Double.parseDouble(jftfPreco.getText()));
+						arquivosDiretorios.atualizarTema(lista, temaAtt, id);
+
+						tfNome.setText("");
+						taDescricao.setText("");
+						jftfPreco.setText("");
+
+						if (lista.getTema(0) == null) {
+							TelaTemaDeletar telaTemaDeletar = new TelaTemaDeletar();
+							telaTemaDeletar.setVisible(true);
+							dispose();
+						} else {
+							temaTableModel.addRow();
+						}
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "Selecione uma linha na coluna opções", "Error", 0);
+				}
+			}
+		});
+		
 	}
 
 }

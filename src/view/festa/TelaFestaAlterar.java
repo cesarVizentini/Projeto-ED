@@ -39,6 +39,7 @@ import model.TemaComboBoxModel;
 import persistence.ClienteDao;
 import persistence.FestaDao;
 import persistence.TemaDao;
+import view.cliente.TelaClienteDeletar;
 
 public class TelaFestaAlterar extends JFrame {
 
@@ -460,26 +461,29 @@ public class TelaFestaAlterar extends JFrame {
 
 				if (tableListFestas.isColumnSelected(8)) {
 					
-					String endereco = tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 1).toString();
+					String endereco = tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 6).toString();
 					
-					cbLogradouro.setSelectedItem("");
-					tfNomeOficial.setText("");
-					tfNumero.setText("");
-					tfComplemento.setText("");
-					tfBairro.setText("");
-					tfCidade.setText("");
-					cbUF.setSelectedItem("");
-					tfCEP.setText("");
+					String[] enderecoSeparado = endereco.split(",");
+					String[] logradouro = enderecoSeparado[0].split(" ");
+					String[] numero = enderecoSeparado[1].split(" ");
+					String[] cidade = enderecoSeparado[2].split(" ");
+					
+					System.out.println(enderecoSeparado[0]);
+					
+					cbLogradouro.setSelectedItem(logradouro[0]);
+					tfNomeOficial.setText(logradouro[1]);
+					tfNumero.setText(numero[1]);
+					tfComplemento.setText(numero[3]);
+					tfBairro.setText(numero[5]);
+					tfCidade.setText(cidade[1]);
+					cbUF.setSelectedItem(cidade[2]);
+					tfCEP.setText(enderecoSeparado[3]);
 					cbTema.setSelectedItem(tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 1).toString());
 					cbCliente.setSelectedItem(tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 2).toString());
-					
-					String data = tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 1).toString();
-					
-
 					dcData.setDateFormatString(tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 3).toString());
 					tfHorarioInicial.setText(tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 4).toString());
 					tfHorarioFinal.setText(tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 5).toString());
-					tfValorCobrado.setText("");
+					tfValorCobrado.setText(tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 7).toString());
 					
 				} else {
 					JOptionPane.showMessageDialog(null, "Selecione uma linha na coluna opções", "Error", 0);
@@ -526,6 +530,7 @@ public class TelaFestaAlterar extends JFrame {
 								cbCliente.getSelectedItem().toString(), data, tfHorarioInicial.getText(),
 								tfHorarioFinal.getText(), endereco.toString(),
 								Double.parseDouble(tfValorCobrado.getText()));
+						festaAtt.setId(id);
 						festaAtt.setTema(cbTema.getSelectedItem().toString());
 						festaAtt.setCliente(cbCliente.getSelectedItem().toString());
 						festaAtt.setDataFesta(data);
@@ -533,24 +538,30 @@ public class TelaFestaAlterar extends JFrame {
 						festaAtt.setHorarioFinal(tfHorarioFinal.getText());
 						festaAtt.setEndereco(endereco.toString());
 						festaAtt.setValorCobrado(Double.parseDouble(tfValorCobrado.getText()));
-
 						arquivosDiretorios.atualizarFesta(lista, festaAtt, id);
 						
-						cbLogradouro.setSelectedItem("");
+						cbLogradouro.setSelectedItem(null);
 						tfNomeOficial.setText("");
 						tfNumero.setText("");
 						tfComplemento.setText("");
 						tfBairro.setText("");
 						tfCidade.setText("");
-						cbUF.setSelectedItem("");
+						cbUF.setSelectedItem(null);
 						tfCEP.setText("");
-						cbTema.setSelectedItem("");
-						cbCliente.setSelectedItem("");
+						cbTema.setSelectedItem(null);
+						cbCliente.setSelectedItem(null);
 						dcData.setDate(null);
 						tfHorarioInicial.setText("");
 						tfHorarioFinal.setText("");
 						tfValorCobrado.setText("");
 						
+						if (lista.getFesta(0) == null) {
+							TelaFestaDeletar telaFestaDeletar = new TelaFestaDeletar();
+							telaFestaDeletar.setVisible(true);
+							dispose();
+						} else {
+							festaTableModel.addRow();
+						}
 						
 					} catch (IOException e1) {
 						e1.printStackTrace();

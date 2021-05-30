@@ -144,7 +144,6 @@ public class ArquivosDiretorios {
 		String preparo= "";
 		int posicao = 0;
 		Cliente cliente = clienteDao.getCliente(posicao);
-		System.out.println(id);
 		if (id > 1) {
 			do {
 				buffer.append(cliente.getId() + ";" + cliente.getNome() + ";" + cliente.getDocumentoCPF() + ";"
@@ -278,12 +277,15 @@ public class ArquivosDiretorios {
 		}
 	}
 
-	public void atualizarTema(TemaDao temaDao, Festa festaAtt, int id) throws IOException {
+	public void atualizarTema(TemaDao temaDao, Tema temaAtt, int id) throws IOException {
 		verificaDiretorio();
 		String path = "C:\\DatabaseBuffetRafaela\\tema.csv";
 		File file = new File(path);
-		String salvar = "Id;Nome;Descrição;Valor Aluguel (R$)\n";
-		salvar += prepararTema(temaDao);
+		String salvar = "Id;Nome;Documento CPF;Telefone\n";
+		salvar += prepararAttTemaAntes(temaDao, id);
+		salvar += temaAtt.getId() + ";" + temaAtt.getNome() + ";" + temaAtt.getDescricao() + ";"
+				+ temaAtt.getValor() + "\n";
+		salvar += prepararAttTemaDepois(temaDao, id);
 		FileWriter writer = new FileWriter(file);
 		PrintWriter printer = new PrintWriter(writer);
 		printer.write(salvar);
@@ -291,6 +293,43 @@ public class ArquivosDiretorios {
 		printer.close();
 		writer.close();
 	}
+	
+	private String prepararAttTemaAntes(TemaDao temaDao, int id) {
+		StringBuffer buffer = new StringBuffer();
+		String preparo= "";
+		int posicao = 0;
+		Tema temaAtt = temaDao.getTema(posicao);
+		if (id > 1) {
+			do {
+				buffer.append(temaAtt.getId() + ";" + temaAtt.getNome() + ";" + temaAtt.getDescricao() + ";"
+						+ temaAtt.getValor());
+				buffer.append("\n");
+				posicao++;
+				temaAtt = temaDao.getTema(posicao);
+			} while (posicao <= id - 2);
+			preparo = buffer.toString();
+		}
+		return preparo;
+	}
+	
+	private String prepararAttTemaDepois(TemaDao temaDao, int id) {
+		StringBuffer buffer = new StringBuffer();
+		String preparo;
+		int posicao = id;
+		Tema temaAtt = temaDao.getTema(posicao);
+		if (temaAtt != null) {
+			do {
+				buffer.append(temaAtt.getId() + ";" + temaAtt.getNome() + ";" + temaAtt.getDescricao() + ";"
+						+ temaAtt.getValor());
+				buffer.append("\n");
+				posicao++;
+				temaAtt = temaDao.getTema(posicao);
+			} while (temaAtt != null);
+		}
+		preparo = buffer.toString();
+		return preparo;
+	}
+
 
 	private String prepararTema(TemaDao temaDao) {
 		StringBuffer buffer = new StringBuffer();
@@ -397,16 +436,55 @@ public class ArquivosDiretorios {
 
 	public void atualizarFesta(FestaDao festaDao, Festa festa, int id) throws IOException {
 		verificaDiretorio();
-		String path = "C:\\DatabaseBuffetRafaela\\tema.csv";
+		String path = "C:\\DatabaseBuffetRafaela\\festa.csv";
 		File file = new File(path);
 		String salvar = "Id;Tema;Cliente;Data;Horário de início;Horário de término;Endereço;Valor Total (R$)\n";
-		salvar += prepararFesta(festaDao);
+		salvar += prepararAttFestaAntes(festaDao, id);
+		salvar += id + ";" + festa.getTema() + ";" + festa.getCliente() + ";"
+				+ festa.getDataFesta() + festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";" + festa.getEndereco() + ";" + festa.getValorCobrado() + "\n";
+		salvar += prepararAttFestaDepois(festaDao, id);
 		FileWriter writer = new FileWriter(file);
 		PrintWriter printer = new PrintWriter(writer);
 		printer.write(salvar);
 		printer.flush();
 		printer.close();
 		writer.close();
+	}
+	
+	private String prepararAttFestaAntes(FestaDao festaDao, int id) {
+		StringBuffer buffer = new StringBuffer();
+		String preparo= "";
+		int posicao = 0;
+		Festa festa = festaDao.getFesta(posicao);
+		if (id > 1) {
+			do {
+				buffer.append(festa.getId() + festa.getTema() + ";" + festa.getCliente() + ";"
+						+ festa.getDataFesta() + festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";" + festa.getEndereco() + ";" + festa.getValorCobrado());
+				buffer.append("\n");
+				posicao++;
+				festa = festaDao.getFesta(posicao);
+			} while (posicao <= id - 2);
+			preparo = buffer.toString();
+		}
+		return preparo;
+	}
+	
+	private String prepararAttFestaDepois(FestaDao festaDao, int id) {
+		StringBuffer buffer = new StringBuffer();
+		String preparo;
+		int posicao = id;
+		Festa festa = festaDao.getFesta(posicao);
+		if (festa != null) {
+			do {
+				buffer.append(festa.getId() + festa.getTema() + ";" + festa.getCliente() + ";"
+						+ festa.getDataFesta() + festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";" + festa.getEndereco() + ";" + festa.getValorCobrado());
+				buffer.append("\n");
+				posicao++;
+				festa = festaDao.getFesta(posicao);
+			} while (festa != null);
+		}
+		preparo = buffer.toString();
+		return preparo;
 	}
 
 	private String prepararFesta(FestaDao festaDao) {

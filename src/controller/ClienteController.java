@@ -38,11 +38,6 @@ public class ClienteController implements ActionListener {
 		boolean valido = validaTela();
 		if (valido) {
 			String cmd = e.getActionCommand();
-			
-			if (cmd.equals("Alterar Cliente")) {
-				
-			}
-			
 			if (cmd.equals("Cadastrar Cliente")) {
 				boolean newTable = false;
 				if (lista == null) {
