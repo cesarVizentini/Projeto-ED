@@ -27,6 +27,8 @@ import javax.swing.table.JTableHeader;
 import javax.swing.text.MaskFormatter;
 
 import controller.ArquivosDiretorios;
+import controller.ClienteController;
+import model.Cliente;
 import model.ClienteTableModel;
 import persistence.ClienteDao;
 
@@ -50,6 +52,9 @@ public class TelaClienteAlterar extends JFrame {
 	private JLabel lblAlterarCliente;
 	private ClienteDao lista;
 	private JButton btnSelecionarCliente;
+	public String nome;
+	public String CPF;
+	public String telefone;
 
 	public TelaClienteAlterar() {
 		lista = new ClienteDao();
@@ -199,20 +204,9 @@ public class TelaClienteAlterar extends JFrame {
 		btnSelecionarCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (tableListClientes.isColumnSelected(4)) {
-//					String s = tableListClientes.getValueAt(tableListClientes.getSelectedRow(), 0).toString();
-//					int id = Integer.parseInt(s);
-//					try {
-//						arquivosDiretorios.removerCliente(lista, id);
-//						if (lista.getCliente(0) == null) {
-//							TelaClienteDeletar telaClienteDeletar = new TelaClienteDeletar();
-//							telaClienteDeletar.setVisible(true);
-//							dispose();
-//						} else {
-//							temaTableModel.addRow();
-//						}
-//					} catch (IOException e1) {
-//						e1.printStackTrace();
-//					}
+					tfNome.setText(tableListClientes.getValueAt(tableListClientes.getSelectedRow(), 1).toString());
+					jftfDocumentoCPF.setText(tableListClientes.getValueAt(tableListClientes.getSelectedRow(), 2).toString());
+					jftfTelefone.setText(tableListClientes.getValueAt(tableListClientes.getSelectedRow(), 3).toString());
 				} else {
 					JOptionPane.showMessageDialog(null, "Selecione uma linha na coluna opções", "Error", 0);
 				}
@@ -228,6 +222,37 @@ public class TelaClienteAlterar extends JFrame {
 		btnAlterarCliente.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 15));
 		btnAlterarCliente.setBounds(1118, 632, 198, 23);
 		telaClienteAlterar.add(btnAlterarCliente);
+
+		btnAlterarCliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (tableListClientes.isColumnSelected(4)) {
+					String s = tableListClientes.getValueAt(tableListClientes.getSelectedRow(), 0).toString();
+					int id = Integer.parseInt(s);
+
+					try {
+						Cliente clienteAtt = new Cliente(id, tfNome.getText(), jftfDocumentoCPF.getText(),
+								jftfTelefone.getText());
+						arquivosDiretorios.atualizarCliente(lista, clienteAtt, id);
+
+						tfNome.setText("");
+						jftfTelefone.setText("");
+						jftfDocumentoCPF.setText("");
+
+						if (lista.getCliente(0) == null) {
+							TelaClienteDeletar telaClienteDeletar = new TelaClienteDeletar();
+							telaClienteDeletar.setVisible(true);
+							dispose();
+						} else {
+							clienteTableModel.addRow();
+						}
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "Selecione uma linha na coluna opções", "Error", 0);
+				}
+			}
+		});
 	}
 
 }

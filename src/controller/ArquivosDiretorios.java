@@ -121,18 +121,59 @@ public class ArquivosDiretorios {
 		}
 	}
 
-	public void atualizarCliente(ClienteDao clienteDao) throws IOException {
+	public void atualizarCliente(ClienteDao clienteDao, Cliente clienteAtt, int id) throws IOException {
 		verificaDiretorio();
 		String path = "C:\\DatabaseBuffetRafaela\\cliente.csv";
 		File file = new File(path);
 		String salvar = "Id;Nome;Documento CPF;Telefone\n";
-		salvar += prepararCliente(clienteDao);
+		salvar += prepararAttClienteAntes(clienteDao, id);
+		salvar += clienteAtt.getId() + ";" + clienteAtt.getNome() + ";" + clienteAtt.getDocumentoCPF() + ";"
+				+ clienteAtt.getTelefone() + "\n";
+		salvar += prepararAttClienteDepois(clienteDao, id);
 		FileWriter writer = new FileWriter(file);
 		PrintWriter printer = new PrintWriter(writer);
 		printer.write(salvar);
 		printer.flush();
 		printer.close();
 		writer.close();
+	}
+	
+	
+	private String prepararAttClienteAntes(ClienteDao clienteDao, int id) {
+		StringBuffer buffer = new StringBuffer();
+		String preparo= "";
+		int posicao = 0;
+		Cliente cliente = clienteDao.getCliente(posicao);
+		System.out.println(id);
+		if (id > 1) {
+			do {
+				buffer.append(cliente.getId() + ";" + cliente.getNome() + ";" + cliente.getDocumentoCPF() + ";"
+						+ cliente.getTelefone());
+				buffer.append("\n");
+				posicao++;
+				cliente = clienteDao.getCliente(posicao);
+			} while (posicao <= id - 2);
+			preparo = buffer.toString();
+		}
+		return preparo;
+	}
+	
+	private String prepararAttClienteDepois(ClienteDao clienteDao, int id) {
+		StringBuffer buffer = new StringBuffer();
+		String preparo;
+		int posicao = id;
+		Cliente cliente = clienteDao.getCliente(posicao);
+		if (cliente != null) {
+			do {
+				buffer.append(cliente.getId() + ";" + cliente.getNome() + ";" + cliente.getDocumentoCPF() + ";"
+						+ cliente.getTelefone());
+				buffer.append("\n");
+				posicao++;
+				cliente = clienteDao.getCliente(posicao);
+			} while (cliente != null);
+		}
+		preparo = buffer.toString();
+		return preparo;
 	}
 
 	private String prepararCliente(ClienteDao clienteDao) {
@@ -237,7 +278,7 @@ public class ArquivosDiretorios {
 		}
 	}
 
-	public void atualizarTema(TemaDao temaDao) throws IOException {
+	public void atualizarTema(TemaDao temaDao, Festa festaAtt, int id) throws IOException {
 		verificaDiretorio();
 		String path = "C:\\DatabaseBuffetRafaela\\tema.csv";
 		File file = new File(path);
@@ -354,7 +395,7 @@ public class ArquivosDiretorios {
 		}
 	}
 
-	public void atualizarFesta(FestaDao festaDao) throws IOException {
+	public void atualizarFesta(FestaDao festaDao, Festa festa, int id) throws IOException {
 		verificaDiretorio();
 		String path = "C:\\DatabaseBuffetRafaela\\tema.csv";
 		File file = new File(path);

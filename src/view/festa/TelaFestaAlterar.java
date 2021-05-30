@@ -26,10 +26,15 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import javax.swing.text.MaskFormatter;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import com.toedter.calendar.JDateChooser;
 import controller.ArquivosDiretorios;
+import controller.FestaController;
 import model.ClienteComboBoxModel;
+import model.Endereco;
 import model.FestaTableModel;
+import model.Festa;
 import model.TemaComboBoxModel;
 import persistence.ClienteDao;
 import persistence.FestaDao;
@@ -108,13 +113,13 @@ public class TelaFestaAlterar extends JFrame {
 		telaFestaAlterar.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(telaFestaAlterar);
 		telaFestaAlterar.setLayout(null);
-		
+
 		lblAlterarFesta = new JLabel("Alterar Festa");
 		lblAlterarFesta.setForeground(new Color(53, 65, 171));
 		lblAlterarFesta.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 30));
 		lblAlterarFesta.setBounds(10, 11, 244, 36);
 		telaFestaAlterar.add(lblAlterarFesta);
-		
+
 		JSeparator separator = new JSeparator();
 		separator.setBackground(new Color(53, 65, 171));
 		separator.setBounds(10, 11, 1306, 2);
@@ -124,13 +129,13 @@ public class TelaFestaAlterar extends JFrame {
 		separator_1.setBackground(new Color(53, 65, 171));
 		separator_1.setBounds(10, 666, 1306, 2);
 		telaFestaAlterar.add(separator_1);
-		
+
 		lblTema = new JLabel("Tema");
 		lblTema.setForeground(new Color(81, 107, 153));
 		lblTema.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 13));
 		lblTema.setBounds(935, 161, 106, 24);
 		telaFestaAlterar.add(lblTema);
-		
+
 		cbTema = new JComboBox<Object>();
 		cbTema.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 12));
 		cbTema.setBounds(935, 184, 381, 22);
@@ -138,13 +143,13 @@ public class TelaFestaAlterar extends JFrame {
 
 		TemaComboBoxModel temaComboBoxModel = new TemaComboBoxModel(listaTema);
 		cbTema.setModel(temaComboBoxModel);
-		
+
 		lblCliente = new JLabel("Cliente");
 		lblCliente.setForeground(new Color(81, 107, 153));
 		lblCliente.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 13));
 		lblCliente.setBounds(935, 105, 106, 24);
 		telaFestaAlterar.add(lblCliente);
-		
+
 		cbCliente = new JComboBox<Object>();
 		cbCliente.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 12));
 		cbCliente.setBounds(935, 128, 381, 22);
@@ -152,24 +157,24 @@ public class TelaFestaAlterar extends JFrame {
 
 		ClienteComboBoxModel clienteComboBoxModel = new ClienteComboBoxModel(listaCliente);
 		cbCliente.setModel(clienteComboBoxModel);
-		
+
 		lblData = new JLabel("Data");
 		lblData.setForeground(new Color(81, 107, 153));
 		lblData.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 13));
 		lblData.setBounds(935, 216, 106, 24);
 		telaFestaAlterar.add(lblData);
-		
+
 		dcData = new JDateChooser();
 		dcData.getCalendarButton().setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 14));
 		dcData.setBounds(935, 241, 150, 20);
 		telaFestaAlterar.add(dcData);
-		
+
 		lblHorarioInicial = new JLabel("Hor\u00E1rio Inicial");
 		lblHorarioInicial.setForeground(new Color(81, 107, 153));
 		lblHorarioInicial.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 13));
 		lblHorarioInicial.setBounds(1095, 218, 120, 20);
 		telaFestaAlterar.add(lblHorarioInicial);
-		
+
 		MaskFormatter HorarioInicial = null;
 		try {
 			HorarioInicial = new MaskFormatter("##:##");
@@ -177,13 +182,13 @@ public class TelaFestaAlterar extends JFrame {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		
+
 		tfHorarioInicial = new JFormattedTextField(HorarioInicial);
 		tfHorarioInicial.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 12));
 		tfHorarioInicial.setBounds(1095, 241, 63, 20);
 		telaFestaAlterar.add(tfHorarioInicial);
 		tfHorarioInicial.setColumns(10);
-		
+
 		lblHorarioFinal = new JLabel("Hor\u00E1rio Final");
 		lblHorarioFinal.setForeground(new Color(81, 107, 153));
 		lblHorarioFinal.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 13));
@@ -197,19 +202,19 @@ public class TelaFestaAlterar extends JFrame {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		
+
 		tfHorarioFinal = new JFormattedTextField(HorarioFinal);
 		tfHorarioFinal.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 12));
 		tfHorarioFinal.setColumns(10);
 		tfHorarioFinal.setBounds(1224, 241, 63, 20);
 		telaFestaAlterar.add(tfHorarioFinal);
-		
+
 		lblLogradouro = new JLabel("Logradouro");
 		lblLogradouro.setForeground(new Color(81, 107, 153));
 		lblLogradouro.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 13));
 		lblLogradouro.setBounds(935, 272, 86, 23);
 		telaFestaAlterar.add(lblLogradouro);
-		
+
 		// Logradouro é constituído pelo tipo de logradouro e pelo nome oficial.
 
 		cbLogradouro = new JComboBox<String>();
@@ -265,54 +270,54 @@ public class TelaFestaAlterar extends JFrame {
 		cbLogradouro.addItem("Viaduto");
 		cbLogradouro.addItem("Viela");
 		cbLogradouro.addItem("Vila");
-		
+
 		lblNomeOficial = new JLabel("Nome Oficial");
 		lblNomeOficial.setForeground(new Color(81, 107, 153));
 		lblNomeOficial.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 13));
 		lblNomeOficial.setBounds(1095, 270, 106, 23);
 		telaFestaAlterar.add(lblNomeOficial);
-		
+
 		tfNomeOficial = new JTextField();
 		tfNomeOficial.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 12));
 		tfNomeOficial.setBounds(1095, 295, 221, 20);
 		telaFestaAlterar.add(tfNomeOficial);
-		
+
 		lblNumero = new JLabel("N\u00FAmero");
 		lblNumero.setForeground(new Color(81, 107, 153));
 		lblNumero.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 13));
 		lblNumero.setBounds(935, 329, 63, 13);
 		telaFestaAlterar.add(lblNumero);
-		
+
 		tfNumero = new JTextField();
 		tfNumero.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 11));
 		tfNumero.setColumns(10);
 		tfNumero.setBounds(935, 346, 59, 20);
 		telaFestaAlterar.add(tfNumero);
-		
+
 		lblComplemento = new JLabel("Complemento");
 		lblComplemento.setForeground(new Color(81, 107, 153));
 		lblComplemento.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 13));
 		lblComplemento.setBounds(1004, 327, 98, 17);
 		telaFestaAlterar.add(lblComplemento);
-		
+
 		tfComplemento = new JTextField();
 		tfComplemento.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 12));
 		tfComplemento.setColumns(10);
 		tfComplemento.setBounds(1004, 346, 150, 20);
 		telaFestaAlterar.add(tfComplemento);
-		
+
 		lblBairro = new JLabel("Bairro");
 		lblBairro.setForeground(new Color(81, 107, 153));
 		lblBairro.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 13));
 		lblBairro.setBounds(1166, 327, 54, 17);
 		telaFestaAlterar.add(lblBairro);
-		
+
 		tfBairro = new JTextField();
 		tfBairro.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 12));
 		tfBairro.setColumns(10);
 		tfBairro.setBounds(1164, 346, 152, 20);
 		telaFestaAlterar.add(tfBairro);
-		
+
 		lblCidade = new JLabel("Cidade");
 		lblCidade.setForeground(new Color(81, 107, 153));
 		lblCidade.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 13));
@@ -324,13 +329,13 @@ public class TelaFestaAlterar extends JFrame {
 		tfCidade.setColumns(10);
 		tfCidade.setBounds(935, 397, 186, 20);
 		telaFestaAlterar.add(tfCidade);
-		
+
 		lblUF = new JLabel("UF");
 		lblUF.setForeground(new Color(81, 107, 153));
 		lblUF.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 13));
 		lblUF.setBounds(1131, 379, 24, 17);
 		telaFestaAlterar.add(lblUF);
-		
+
 		cbUF = new JComboBox<String>();
 		cbUF.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 12));
 		cbUF.setBounds(1131, 397, 55, 20);
@@ -369,7 +374,7 @@ public class TelaFestaAlterar extends JFrame {
 		lblCEP.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 13));
 		lblCEP.setBounds(1196, 379, 33, 17);
 		telaFestaAlterar.add(lblCEP);
-		
+
 		MaskFormatter CEP = null;
 		try {
 			CEP = new MaskFormatter("#####-###");
@@ -377,7 +382,7 @@ public class TelaFestaAlterar extends JFrame {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		
+
 		tfCEP = new JFormattedTextField(CEP);
 		tfCEP.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 12));
 		tfCEP.setColumns(10);
@@ -389,7 +394,7 @@ public class TelaFestaAlterar extends JFrame {
 		lblValorCobrado.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 13));
 		lblValorCobrado.setBounds(1236, 445, 64, 20);
 		telaFestaAlterar.add(lblValorCobrado);
-		
+
 		tfValorCobrado = new JTextField();
 		tfValorCobrado.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 12));
 		// tfValorCobrado.setEditable(false);
@@ -452,21 +457,30 @@ public class TelaFestaAlterar extends JFrame {
 		btnSelecionarFesta = new JButton("Selecionar Cliente");
 		btnSelecionarFesta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
 				if (tableListFestas.isColumnSelected(8)) {
-//					String s = tableListClientes.getValueAt(tableListClientes.getSelectedRow(), 0).toString();
-//					int id = Integer.parseInt(s);
-//					try {
-//						arquivosDiretorios.removerCliente(lista, id);
-//						if (lista.getCliente(0) == null) {
-//							TelaClienteDeletar telaClienteDeletar = new TelaClienteDeletar();
-//							telaClienteDeletar.setVisible(true);
-//							dispose();
-//						} else {
-//							temaTableModel.addRow();
-//						}
-//					} catch (IOException e1) {
-//						e1.printStackTrace();
-//					}
+					
+					String endereco = tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 1).toString();
+					
+					cbLogradouro.setSelectedItem("");
+					tfNomeOficial.setText("");
+					tfNumero.setText("");
+					tfComplemento.setText("");
+					tfBairro.setText("");
+					tfCidade.setText("");
+					cbUF.setSelectedItem("");
+					tfCEP.setText("");
+					cbTema.setSelectedItem(tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 1).toString());
+					cbCliente.setSelectedItem(tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 2).toString());
+					
+					String data = tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 1).toString();
+					
+
+					dcData.setDateFormatString(tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 3).toString());
+					tfHorarioInicial.setText(tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 4).toString());
+					tfHorarioFinal.setText(tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 5).toString());
+					tfValorCobrado.setText("");
+					
 				} else {
 					JOptionPane.showMessageDialog(null, "Selecione uma linha na coluna opções", "Error", 0);
 				}
@@ -482,6 +496,69 @@ public class TelaFestaAlterar extends JFrame {
 		btnAlterarFesta.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 15));
 		btnAlterarFesta.setBounds(1118, 632, 198, 23);
 		telaFestaAlterar.add(btnAlterarFesta);
-	}
 
+		btnAlterarFesta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (tableListFestas.isColumnSelected(8)) {
+					String s = tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 0).toString();
+					int id = Integer.parseInt(s);
+
+					Date in = dcData.getDate();
+					String formato = "dd/MM/yyyy";
+					SimpleDateFormat formatter = new SimpleDateFormat(formato);
+					String data = formatter.format(in);
+
+					try {
+						Endereco endereco = new Endereco(cbLogradouro.getSelectedItem().toString(),
+								tfNomeOficial.getText(), tfNumero.getText(), tfComplemento.getText(),
+								tfBairro.getText(), tfCidade.getText(), cbUF.getSelectedItem().toString(),
+								tfCEP.getText());
+						endereco.setLogradouro(cbLogradouro.getSelectedItem().toString());
+						endereco.setNomeOficial(tfNomeOficial.getText());
+						endereco.setNumero(tfNumero.getText());
+						endereco.setComplemento(tfComplemento.getText());
+						endereco.setBairro(tfBairro.getText());
+						endereco.setCidade(tfCidade.getText());
+						endereco.setUf(cbUF.getSelectedItem().toString());
+						endereco.setCep(tfCEP.getText());
+
+						Festa festaAtt = new Festa(id, cbTema.getSelectedItem().toString(),
+								cbCliente.getSelectedItem().toString(), data, tfHorarioInicial.getText(),
+								tfHorarioFinal.getText(), endereco.toString(),
+								Double.parseDouble(tfValorCobrado.getText()));
+						festaAtt.setTema(cbTema.getSelectedItem().toString());
+						festaAtt.setCliente(cbCliente.getSelectedItem().toString());
+						festaAtt.setDataFesta(data);
+						festaAtt.setHorarioInicio(tfHorarioInicial.getText());
+						festaAtt.setHorarioFinal(tfHorarioFinal.getText());
+						festaAtt.setEndereco(endereco.toString());
+						festaAtt.setValorCobrado(Double.parseDouble(tfValorCobrado.getText()));
+
+						arquivosDiretorios.atualizarFesta(lista, festaAtt, id);
+						
+						cbLogradouro.setSelectedItem("");
+						tfNomeOficial.setText("");
+						tfNumero.setText("");
+						tfComplemento.setText("");
+						tfBairro.setText("");
+						tfCidade.setText("");
+						cbUF.setSelectedItem("");
+						tfCEP.setText("");
+						cbTema.setSelectedItem("");
+						cbCliente.setSelectedItem("");
+						dcData.setDate(null);
+						tfHorarioInicial.setText("");
+						tfHorarioFinal.setText("");
+						tfValorCobrado.setText("");
+						
+						
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "Selecione uma linha na coluna opções", "Error", 0);
+				}
+			}
+		});
+	}
 }

@@ -106,9 +106,9 @@ public class TelaTemaCadastrar extends JFrame {
 		telaTemaCadastrar.add(lblPreco);
 
 		MaskFormatter valor = null;
-
+		
 		try {
-			valor = new MaskFormatter("#####.##");
+			valor = new MaskFormatter("##.###,##");
 			valor.setPlaceholderCharacter('_');
 		} catch (ParseException e) {
 			e.printStackTrace();
