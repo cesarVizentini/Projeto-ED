@@ -441,7 +441,7 @@ public class ArquivosDiretorios {
 		String salvar = "Id;Tema;Cliente;Data;Horário de início;Horário de término;Endereço;Valor Total (R$)\n";
 		salvar += prepararAttFestaAntes(festaDao, id);
 		salvar += id + ";" + festa.getTema() + ";" + festa.getCliente() + ";"
-				+ festa.getDataFesta() + festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";" + festa.getEndereco() + ";" + festa.getValorCobrado() + "\n";
+				+ festa.getDataFesta() + ";" + festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";" + festa.getEndereco() + ";" + festa.getValorCobrado() + "\n";
 		salvar += prepararAttFestaDepois(festaDao, id);
 		FileWriter writer = new FileWriter(file);
 		PrintWriter printer = new PrintWriter(writer);

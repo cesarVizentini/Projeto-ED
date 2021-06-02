@@ -11,6 +11,9 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
@@ -26,20 +29,16 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import javax.swing.text.MaskFormatter;
-import java.util.Date;
-import java.text.SimpleDateFormat;
 import com.toedter.calendar.JDateChooser;
 import controller.ArquivosDiretorios;
-import controller.FestaController;
 import model.ClienteComboBoxModel;
 import model.Endereco;
-import model.FestaTableModel;
 import model.Festa;
+import model.FestaTableModel;
 import model.TemaComboBoxModel;
 import persistence.ClienteDao;
 import persistence.FestaDao;
 import persistence.TemaDao;
-import view.cliente.TelaClienteDeletar;
 
 public class TelaFestaAlterar extends JFrame {
 
@@ -460,16 +459,16 @@ public class TelaFestaAlterar extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				if (tableListFestas.isColumnSelected(8)) {
-					
+
 					String endereco = tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 6).toString();
-					
+
 					String[] enderecoSeparado = endereco.split(",");
 					String[] logradouro = enderecoSeparado[0].split(" ");
 					String[] numero = enderecoSeparado[1].split(" ");
 					String[] cidade = enderecoSeparado[2].split(" ");
-					
-					System.out.println(enderecoSeparado[0]);
-					
+
+					enderecoSeparado[3] = enderecoSeparado[3].replaceAll("\\D+","");
+
 					cbLogradouro.setSelectedItem(logradouro[0]);
 					tfNomeOficial.setText(logradouro[1]);
 					tfNumero.setText(numero[1]);
@@ -478,13 +477,14 @@ public class TelaFestaAlterar extends JFrame {
 					tfCidade.setText(cidade[1]);
 					cbUF.setSelectedItem(cidade[2]);
 					tfCEP.setText(enderecoSeparado[3]);
-					cbTema.setSelectedItem(tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 1).toString());
-					cbCliente.setSelectedItem(tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 2).toString());
-					dcData.setDateFormatString(tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 3).toString());
-					tfHorarioInicial.setText(tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 4).toString());
+					cbTema.setSelectedItem(tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 1));
+					cbCliente.setSelectedItem(
+							tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 2).toString());
+					tfHorarioInicial
+							.setText(tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 4).toString());
 					tfHorarioFinal.setText(tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 5).toString());
 					tfValorCobrado.setText(tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 7).toString());
-					
+
 				} else {
 					JOptionPane.showMessageDialog(null, "Selecione uma linha na coluna opções", "Error", 0);
 				}
@@ -506,11 +506,10 @@ public class TelaFestaAlterar extends JFrame {
 				if (tableListFestas.isColumnSelected(8)) {
 					String s = tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 0).toString();
 					int id = Integer.parseInt(s);
-
+					
 					Date in = dcData.getDate();
 					String formato = "dd/MM/yyyy";
 					SimpleDateFormat formatter = new SimpleDateFormat(formato);
-					String data = formatter.format(in);
 
 					try {
 						Endereco endereco = new Endereco(cbLogradouro.getSelectedItem().toString(),
@@ -527,19 +526,19 @@ public class TelaFestaAlterar extends JFrame {
 						endereco.setCep(tfCEP.getText());
 
 						Festa festaAtt = new Festa(id, cbTema.getSelectedItem().toString(),
-								cbCliente.getSelectedItem().toString(), data, tfHorarioInicial.getText(),
+								cbCliente.getSelectedItem().toString(), dcData.getDate().toString(), tfHorarioInicial.getText(),
 								tfHorarioFinal.getText(), endereco.toString(),
 								Double.parseDouble(tfValorCobrado.getText()));
 						festaAtt.setId(id);
 						festaAtt.setTema(cbTema.getSelectedItem().toString());
 						festaAtt.setCliente(cbCliente.getSelectedItem().toString());
-						festaAtt.setDataFesta(data);
+						festaAtt.setDataFesta(formatter.format(in));
 						festaAtt.setHorarioInicio(tfHorarioInicial.getText());
 						festaAtt.setHorarioFinal(tfHorarioFinal.getText());
 						festaAtt.setEndereco(endereco.toString());
 						festaAtt.setValorCobrado(Double.parseDouble(tfValorCobrado.getText()));
 						arquivosDiretorios.atualizarFesta(lista, festaAtt, id);
-						
+
 						cbLogradouro.setSelectedItem(null);
 						tfNomeOficial.setText("");
 						tfNumero.setText("");
@@ -554,7 +553,7 @@ public class TelaFestaAlterar extends JFrame {
 						tfHorarioInicial.setText("");
 						tfHorarioFinal.setText("");
 						tfValorCobrado.setText("");
-						
+
 						if (lista.getFesta(0) == null) {
 							TelaFestaDeletar telaFestaDeletar = new TelaFestaDeletar();
 							telaFestaDeletar.setVisible(true);
@@ -562,7 +561,7 @@ public class TelaFestaAlterar extends JFrame {
 						} else {
 							festaTableModel.addRow();
 						}
-						
+
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
