@@ -217,6 +217,10 @@ public class FestaDao {
 			quickSort(pivo + 1, end);
 		}
 	}
+	
+	public FestaNo getPrimeiroElemento() {
+		return this.inicio;
+	}
 
 	private int partition(int start, int end) throws ParseException {
 		int i = start;
