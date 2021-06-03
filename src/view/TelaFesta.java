@@ -644,7 +644,7 @@ public class TelaFesta extends JFrame {
 					tfHorarioInicial
 							.setText(tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 4).toString());
 					tfHorarioFinal.setText(tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 5).toString());
-					tfValorCobrado.setText(tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 7).toString());
+					tfValorCobrado.setText(tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 8).toString());
 
 				} else {
 					JOptionPane.showMessageDialog(null, "Selecione uma linha na coluna opções", "Error", 0);
@@ -661,7 +661,7 @@ public class TelaFesta extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				boolean valido = validaTela();
 				if (valido) {
-					if (tableListFestas.isColumnSelected(9)) {
+					if (tableListFestas.isColumnSelected(8)) {
 						String s = tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 0).toString();
 						int id = Integer.parseInt(s);
 
@@ -683,11 +683,9 @@ public class TelaFesta extends JFrame {
 							endereco.setUf(cbUF.getSelectedItem().toString());
 							endereco.setCep(tfCEP.getText());
 
-							int qtd = 0;
 							Festa festaAtt = new Festa(id, cbTema.getSelectedItem().toString(),
 									cbCliente.getSelectedItem().toString(), dcData.getDate().toString(),
-									tfHorarioInicial.getText(), tfHorarioFinal.getText(), endereco.toString(),
-									qtd, Double.parseDouble(tfValorCobrado.getText()));
+									tfHorarioInicial.getText(), tfHorarioFinal.getText(), endereco.toString(), Double.parseDouble(tfValorCobrado.getText()));
 							festaAtt.setId(id);
 							festaAtt.setTema(cbTema.getSelectedItem().toString());
 							festaAtt.setCliente(cbCliente.getSelectedItem().toString());
@@ -741,7 +739,7 @@ public class TelaFesta extends JFrame {
 		btnDeletarFesta = new JButton("Deletar Festa");
 		btnDeletarFesta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (tableListFestas.isColumnSelected(9)) {
+				if (tableListFestas.isColumnSelected(8)) {
 					String s = tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 0).toString();
 					int id = Integer.parseInt(s);
 					try {

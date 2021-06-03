@@ -9,10 +9,9 @@ public class Festa {
 	private String horarioInicio;
 	private String horarioFinal;
 	private String endereco;
-	private int qtd;
 	private double valorCobrado;
 	
-	public Festa(int id, String tema, String cliente, String dataFesta, String horarioInicio, String horarioFinal, String endereco, int qtd, double valorCobrado) {
+	public Festa(int id, String tema, String cliente, String dataFesta, String horarioInicio, String horarioFinal, String endereco, double valorCobrado) {
 		this.id = id;
 		this.tema = tema;
 		this.cliente = cliente;
@@ -85,13 +84,5 @@ public class Festa {
 	
 	public void setValorCobrado(double valorCobrado) {
 		this.valorCobrado = valorCobrado;
-	}
-	
-	public int getQtd() {
-		return qtd;
-	}
-
-	public void setQtd(int qtd) {
-		this.qtd = qtd;
 	}
 }

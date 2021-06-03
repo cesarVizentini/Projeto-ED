@@ -45,9 +45,7 @@ public class FestaController {
 		endereco.setCidade(tfCidade);
 		endereco.setUf(cbUF);
 		endereco.setCep(tfCEP);
-		int qtd = 0;
-		Festa festa = new Festa(id, tema, cliente, dataFesta, horarioInicio, horarioFinal, endereco.toString(),
-				qtd, valorCobrado);
+		Festa festa = new Festa(id, tema, cliente, dataFesta, horarioInicio, horarioFinal, endereco.toString(), valorCobrado);
 		festa.setTema(tema);
 		festa.setCliente(cliente);
 		festa.setDataFesta(dataFesta);
