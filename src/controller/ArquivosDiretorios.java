@@ -48,7 +48,7 @@ public class ArquivosDiretorios {
 		File file = new File(path);
 		if (verificarSeExistemDados("cliente")) {
 			String salvar = cliente.getId() + ";" + cliente.getNome() + ";" + cliente.getDocumentoCPF() + ";"
-					+ cliente.getTelefone() + "\n";
+					+ cliente.getTelefone() + ";" + cliente.getFestasAlugadas() + "\n";
 			FileWriter writer = new FileWriter(file, true);
 			PrintWriter printer = new PrintWriter(writer);
 			printer.write(salvar);
@@ -56,9 +56,9 @@ public class ArquivosDiretorios {
 			printer.close();
 			writer.close();
 		} else {
-			String salvar = "Id;Nome;Documento CPF;Telefone\n";
+			String salvar = "Id;Nome;Documento CPF;Telefone;Sequencia de festas alugadas\n";
 			salvar += cliente.getId() + ";" + cliente.getNome() + ";" + cliente.getDocumentoCPF() + ";"
-					+ cliente.getTelefone() + "\n";
+					+ cliente.getTelefone() + ";" + cliente.getFestasAlugadas() + "\n";
 			FileWriter writer = new FileWriter(file);
 			PrintWriter printer = new PrintWriter(writer);
 			printer.write(salvar);
@@ -82,7 +82,7 @@ public class ArquivosDiretorios {
 			line = reader.readLine();
 			while (line != null) {
 				String[] auxs = line.split(";");
-				cliente = new Cliente(Integer.parseInt(auxs[0]), auxs[1], auxs[2], auxs[3]);
+				cliente = new Cliente(Integer.parseInt(auxs[0]), auxs[1], auxs[2], auxs[3], Integer.parseInt(auxs[4]));
 				clienteDao.adicionarCliente(cliente);
 				line = reader.readLine();
 			}
@@ -106,7 +106,7 @@ public class ArquivosDiretorios {
 			if (clienteDao.getCliente(0) == null) {
 				file.delete();
 			} else {
-				String salvar = "Id;Nome;Documento CPF;Telefone\n";
+				String salvar = "Id;Nome;Documento CPF;Telefone;Sequencia de festas alugadas\n";
 				salvar += prepararCliente(clienteDao);
 				FileWriter writer = new FileWriter(file);
 				PrintWriter printer = new PrintWriter(writer);
@@ -125,10 +125,10 @@ public class ArquivosDiretorios {
 		verificaDiretorio();
 		String path = "C:\\DatabaseBuffetRafaela\\cliente.csv";
 		File file = new File(path);
-		String salvar = "Id;Nome;Documento CPF;Telefone\n";
+		String salvar = "Id;Nome;Documento CPF;Telefone;Sequencia de festas alugadas\n";
 		salvar += prepararAttClienteAntes(clienteDao, id);
 		salvar += clienteAtt.getId() + ";" + clienteAtt.getNome() + ";" + clienteAtt.getDocumentoCPF() + ";"
-				+ clienteAtt.getTelefone() + "\n";
+				+ clienteAtt.getTelefone() + ";" + clienteAtt.getFestasAlugadas() + "\n";
 		salvar += prepararAttClienteDepois(clienteDao, id);
 		FileWriter writer = new FileWriter(file);
 		PrintWriter printer = new PrintWriter(writer);
@@ -146,7 +146,7 @@ public class ArquivosDiretorios {
 		if (id > 1) {
 			do {
 				buffer.append(cliente.getId() + ";" + cliente.getNome() + ";" + cliente.getDocumentoCPF() + ";"
-						+ cliente.getTelefone());
+						+ cliente.getTelefone() + ";" + cliente.getFestasAlugadas());
 				buffer.append("\n");
 				posicao++;
 				cliente = clienteDao.getCliente(posicao);
@@ -164,7 +164,7 @@ public class ArquivosDiretorios {
 		if (cliente != null) {
 			do {
 				buffer.append(cliente.getId() + ";" + cliente.getNome() + ";" + cliente.getDocumentoCPF() + ";"
-						+ cliente.getTelefone());
+						+ cliente.getTelefone() + ";" + cliente.getFestasAlugadas());
 				buffer.append("\n");
 				posicao++;
 				cliente = clienteDao.getCliente(posicao);
@@ -181,7 +181,7 @@ public class ArquivosDiretorios {
 		Cliente cliente = clienteDao.getCliente(posicao);
 		do {
 			buffer.append(cliente.getId() + ";" + cliente.getNome() + ";" + cliente.getDocumentoCPF() + ";"
-					+ cliente.getTelefone());
+					+ cliente.getTelefone() + ";" + cliente.getFestasAlugadas());
 			buffer.append("\n");
 			posicao++;
 			cliente = clienteDao.getCliente(posicao);
@@ -359,6 +359,7 @@ public class ArquivosDiretorios {
 			String salvar = festa.getId() + ";" + festa.getTema() + ";" + festa.getCliente() + ";"
 					+ festa.getDataFesta() + ";" + festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";"
 					+ festa.getEndereco().toString() + ";" + festa.getValorCobrado() + "\n";
+			
 			FileWriter writer = new FileWriter(file, true);
 			PrintWriter printer = new PrintWriter(writer);
 			printer.write(salvar);

@@ -355,13 +355,17 @@ public class TelaCliente extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				boolean valido = validaTela();
 				if (valido) {
-					if (tableListClientes.isColumnSelected(4)) {
+					
+					if (tableListClientes.isColumnSelected(5)) {
 						String s = tableListClientes.getValueAt(tableListClientes.getSelectedRow(), 0).toString();
 						int id = Integer.parseInt(s);
-
+						
+						String sFestas = tableListClientes.getValueAt(tableListClientes.getSelectedRow(), 4).toString();
+						int idFestas = Integer.parseInt(sFestas);
+						
 						try {
 							Cliente clienteAtt = new Cliente(id, tfNome.getText(), jftfDocumentoCPF.getText(),
-									jftfTelefone.getText());
+									jftfTelefone.getText(), idFestas);
 							arquivosDiretorios.atualizarCliente(lista, clienteAtt, id);
 
 							tfNome.setText("");
@@ -373,6 +377,7 @@ public class TelaCliente extends JFrame {
 								telaCliente.setVisible(true);
 								dispose();
 							} else {
+								ClienteTableModel clienteTableModel = new ClienteTableModel(lista);
 								clienteTableModel.addRow();
 								TelaCliente telaCliente = new TelaCliente();
 								telaCliente.setVisible(true);
@@ -385,8 +390,11 @@ public class TelaCliente extends JFrame {
 						JOptionPane.showMessageDialog(null,
 								"Selecione uma linha na coluna opções para alterar o cliente", "Error", 0);
 					}
+					
 				}
 			}
+
+			
 		});
 		btnAlterarCliente.setBackground(new Color(204, 255, 51));
 		btnAlterarCliente.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 15));
@@ -396,7 +404,7 @@ public class TelaCliente extends JFrame {
 		btnDeletarCliente = new JButton("Deletar Cliente");
 		btnDeletarCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (tableListClientes.isColumnSelected(4)) {
+				if (tableListClientes.isColumnSelected(5)) {
 					String s = tableListClientes.getValueAt(tableListClientes.getSelectedRow(), 0).toString();
 					int id = Integer.parseInt(s);
 					try {
@@ -445,4 +453,6 @@ public class TelaCliente extends JFrame {
 		}
 		return valida;
 	}
+	
+	
 }

@@ -3,6 +3,8 @@ package persistence;
 import java.io.IOException;
 import javax.swing.JOptionPane;
 import controller.ArquivosDiretorios;
+import model.Cliente;
+import model.ClienteNo;
 import model.Tema;
 import model.TemaNo;
 
@@ -163,5 +165,15 @@ public class TemaDao {
 			aux = aux.getProximo();
 		}
 		return aux.getTema();
+	}
+	
+	public Tema getByName(String nome) {
+		
+		TemaNo tema = this.inicio;
+		while (!tema.getTema().getNome().equals(nome)) {
+
+			tema = tema.getProximo();
+		}
+		return tema.getTema();
 	}
 }

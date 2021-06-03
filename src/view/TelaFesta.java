@@ -37,6 +37,7 @@ import model.ClienteComboBoxModel;
 import model.Endereco;
 import model.Festa;
 import model.FestaTableModel;
+import model.Tema;
 import model.TemaComboBoxModel;
 import persistence.ClienteDao;
 import persistence.FestaDao;
@@ -93,6 +94,7 @@ public class TelaFesta extends JFrame {
 	private JFormattedTextField tfCEP;
 	private JTextField tfValorCobrado;
 	private JButton btnSelecionarFesta;
+	private JButton btnCalcularPreco;
 
 	private void pegarResolucao() {
 		Toolkit t = Toolkit.getDefaultToolkit();
@@ -550,10 +552,10 @@ public class TelaFesta extends JFrame {
 		lblValorCobrado.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 13));
 		lblValorCobrado.setBounds(674, 763, 64, 16);
 		telaFesta.add(lblValorCobrado);
-
+		//#########################################################################################################################
 		tfValorCobrado = new JTextField();
 		tfValorCobrado.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 12));
-//		tfValorCobrado.setEditable(false);
+		tfValorCobrado.setEditable(false);
 		tfValorCobrado.setColumns(10);
 		tfValorCobrado.setBounds(750, 762, 76, 21);
 		telaFesta.add(tfValorCobrado);
@@ -566,6 +568,7 @@ public class TelaFesta extends JFrame {
 		btnCadastrarFesta.setBounds(1196, 486, 205, 27);
 		btnCadastrarFesta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				TelaCliente telaCliente = new TelaCliente();
 				boolean valido = validaTela();
 				if (valido) {
 					boolean newTable = false;
@@ -573,6 +576,8 @@ public class TelaFesta extends JFrame {
 						newTable = true;
 					}
 					FestaController festaController = new FestaController();
+//					telaCliente.atualizar(cbCliente.getSelectedItem().toString());
+					
 					festaController.cadastrar(cbTema.getSelectedItem().toString(),
 							cbCliente.getSelectedItem().toString(), converterData(dcData.getDate()),
 							tfHorarioInicial.getText(), tfHorarioFinal.getText(),
@@ -644,7 +649,7 @@ public class TelaFesta extends JFrame {
 					tfHorarioInicial
 							.setText(tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 4).toString());
 					tfHorarioFinal.setText(tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 5).toString());
-					tfValorCobrado.setText(tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 8).toString());
+					tfValorCobrado.setText(tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 7).toString());
 
 				} else {
 					JOptionPane.showMessageDialog(null, "Selecione uma linha na coluna opções", "Error", 0);
@@ -766,6 +771,21 @@ public class TelaFesta extends JFrame {
 		btnDeletarFesta.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 15));
 		btnDeletarFesta.setBounds(1196, 626, 205, 27);
 		telaFesta.add(btnDeletarFesta);
+		
+		btnCalcularPreco = new JButton("Calcular Valor");
+		btnCalcularPreco.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 15));
+		btnCalcularPreco.setBackground(new Color(60, 179, 113));
+		btnCalcularPreco.setBounds(1194, 675, 205, 27);
+		//#####################################################################################################################################
+		btnCalcularPreco.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FestaController festaController = new FestaController();
+				tfValorCobrado.setText(festaController.calcularValor(cbTema.getSelectedItem().toString(),
+						cbCliente.getSelectedItem().toString()));
+			}
+		});
+		
+		telaFesta.add(btnCalcularPreco);
 		// FIM BOTOES
 	}
 
@@ -843,4 +863,5 @@ public class TelaFesta extends JFrame {
 		}
 		return valida;
 	}
+	
 }
