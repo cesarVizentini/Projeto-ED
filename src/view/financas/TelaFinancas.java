@@ -11,6 +11,8 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -29,6 +31,7 @@ import com.toedter.calendar.JDateChooser;
 import controller.ArquivosDiretorios;
 import model.FestaTableModel;
 import persistence.FestaDao;
+import persistence.FinancasDao;
 import view.TelaMenuPrincipal;
 
 public class TelaFinancas extends JFrame {
@@ -43,8 +46,12 @@ public class TelaFinancas extends JFrame {
 	private JButton btnVoltar;
 	private JLabel lblEscolherData;
 	private JTable tableListFestas;
-	private FestaDao lista;
+	private static FestaDao lista;
 
+	public static FestaDao getLista() {
+		return lista;
+	}
+	
 	public TelaFinancas() {
 		lista = new FestaDao();
 		ArquivosDiretorios arquivosDiretorios = new ArquivosDiretorios();
@@ -140,6 +147,15 @@ public class TelaFinancas extends JFrame {
 		btnCalcular.setBackground(new Color(60, 179, 113));
 		btnCalcular.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 15));
 		btnCalcular.setBounds(1056, 178, 198, 23);
+		btnCalcular.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FinancasDao financasDao = new FinancasDao();
+				
+				Date dataInicial = dateChooserDataInicial.getDate();
+				Date dataFinal = dateChooserDataFinal.getDate();
+				tfLucro.setText(financasDao.calculaFinancas(dataInicial, dataFinal));
+			}
+		});
 		telaFinancas.add(btnCalcular);
 		
 		btnVoltar = new JButton("< Voltar");
