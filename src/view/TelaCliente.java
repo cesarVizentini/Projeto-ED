@@ -334,7 +334,7 @@ public class TelaCliente extends JFrame {
 		btnSelecionarCliente = new JButton("Selecionar Cliente");
 		btnSelecionarCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (tableListClientes.isColumnSelected(4)) {
+				if (tableListClientes.isColumnSelected(5)) {
 					tfNome.setText(tableListClientes.getValueAt(tableListClientes.getSelectedRow(), 1).toString());
 					jftfDocumentoCPF
 							.setText(tableListClientes.getValueAt(tableListClientes.getSelectedRow(), 2).toString());
