@@ -31,14 +31,27 @@ public class FinancasDao {
 			calculaFinancas(dataInicial, dataFinal);
 		}
 		
-		if (ultimaData.before(dataFinal)) {
+		if (ultimaData.before(dataFinal) && ultimo.getProximo() != null) {
 			ultimo = ultimo.getProximo();
 			calculaFinancas(dataInicial, dataFinal);
+		}
+		
+		if (ultimaData.after(dataFinal)) {
+			try {
+				ultimaData = formatter.parse(ultimo.getAnterior().getFesta().getDataFesta());
+				ultimo = ultimo.getAnterior();
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			
 		}
 		
 		while (!primeiro.equals(ultimo)) {
 			valor = valor + primeiro.getFesta().getValorCobrado();
 			primeiro = primeiro.getProximo();
+			if (primeiro.equals(ultimo)) {
+				valor = valor + primeiro.getFesta().getValorCobrado();
+			}
 		}
 		
 		return Double.toString(valor);
