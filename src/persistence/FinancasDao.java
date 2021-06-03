@@ -15,6 +15,7 @@ public class FinancasDao {
 	Date primeiraData = null;
 	Date ultimaData = null;
 	private double valor;
+	int i = 0;
 	
 	public String calculaFinancas(Date dataInicial, Date dataFinal) {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -42,16 +43,22 @@ public class FinancasDao {
 				ultimo = ultimo.getAnterior();
 			} catch (ParseException e) {
 				e.printStackTrace();
-			}
-			
+			}	
 		}
-		
+						
 		while (!primeiro.equals(ultimo)) {
 			valor = valor + primeiro.getFesta().getValorCobrado();
 			primeiro = primeiro.getProximo();
+			i++;
 			if (primeiro.equals(ultimo)) {
 				valor = valor + primeiro.getFesta().getValorCobrado();
+				i++;
 			}
+		}
+		
+		if (i == 0) {
+			valor = primeiro.getFesta().getValorCobrado();
+			i++;
 		}
 		
 		return Double.toString(valor);
