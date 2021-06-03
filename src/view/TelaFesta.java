@@ -553,7 +553,7 @@ public class TelaFesta extends JFrame {
 
 		tfValorCobrado = new JTextField();
 		tfValorCobrado.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 12));
-		tfValorCobrado.setEditable(false);
+//		tfValorCobrado.setEditable(false);
 		tfValorCobrado.setColumns(10);
 		tfValorCobrado.setBounds(750, 762, 76, 21);
 		telaFesta.add(tfValorCobrado);
@@ -599,14 +599,17 @@ public class TelaFesta extends JFrame {
 						telaFesta.setVisible(false);
 						telaFesta.dispose();
 					} else {
+						FestaTableModel festaTableModel = new FestaTableModel(lista);
+						festaTableModel.addRow();
+						TelaFesta telaFesta = new TelaFesta();
+						telaFesta.setVisible(true);
+						dispose();
 						try {
 							lista.sort();
 						} catch (ParseException e1) {
 							e1.printStackTrace();
 						}
 					}
-					FestaTableModel festaTableModel = new FestaTableModel(lista);
-					festaTableModel.addRow();
 				}
 			}
 		});
@@ -656,82 +659,89 @@ public class TelaFesta extends JFrame {
 		btnAlterarFesta = new JButton("Alterar Festa");
 		btnAlterarFesta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (tableListFestas.isColumnSelected(8)) {
-					String s = tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 0).toString();
-					int id = Integer.parseInt(s);
+				boolean valido = validaTela();
+				if (valido) {
+					if (tableListFestas.isColumnSelected(9)) {
+						String s = tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 0).toString();
+						int id = Integer.parseInt(s);
 
-					Date in = dcData.getDate();
-					String formato = "dd/MM/yyyy";
-					SimpleDateFormat formatter = new SimpleDateFormat(formato);
+						Date in = dcData.getDate();
+						String formato = "dd/MM/yyyy";
+						SimpleDateFormat formatter = new SimpleDateFormat(formato);
 
-					try {
-						Endereco endereco = new Endereco(cbLogradouro.getSelectedItem().toString(),
-								tfNomeOficial.getText(), tfNumero.getText(), tfComplemento.getText(),
-								tfBairro.getText(), tfCidade.getText(), cbUF.getSelectedItem().toString(),
-								tfCEP.getText());
-						endereco.setLogradouro(cbLogradouro.getSelectedItem().toString());
-						endereco.setNomeOficial(tfNomeOficial.getText());
-						endereco.setNumero(tfNumero.getText());
-						endereco.setComplemento(tfComplemento.getText());
-						endereco.setBairro(tfBairro.getText());
-						endereco.setCidade(tfCidade.getText());
-						endereco.setUf(cbUF.getSelectedItem().toString());
-						endereco.setCep(tfCEP.getText());
+						try {
+							Endereco endereco = new Endereco(cbLogradouro.getSelectedItem().toString(),
+									tfNomeOficial.getText(), tfNumero.getText(), tfComplemento.getText(),
+									tfBairro.getText(), tfCidade.getText(), cbUF.getSelectedItem().toString(),
+									tfCEP.getText());
+							endereco.setLogradouro(cbLogradouro.getSelectedItem().toString());
+							endereco.setNomeOficial(tfNomeOficial.getText());
+							endereco.setNumero(tfNumero.getText());
+							endereco.setComplemento(tfComplemento.getText());
+							endereco.setBairro(tfBairro.getText());
+							endereco.setCidade(tfCidade.getText());
+							endereco.setUf(cbUF.getSelectedItem().toString());
+							endereco.setCep(tfCEP.getText());
 
-						Festa festaAtt = new Festa(id, cbTema.getSelectedItem().toString(),
-								cbCliente.getSelectedItem().toString(), dcData.getDate().toString(),
-								tfHorarioInicial.getText(), tfHorarioFinal.getText(), endereco.toString(),
-								Double.parseDouble(tfValorCobrado.getText()));
-						festaAtt.setId(id);
-						festaAtt.setTema(cbTema.getSelectedItem().toString());
-						festaAtt.setCliente(cbCliente.getSelectedItem().toString());
-						festaAtt.setDataFesta(formatter.format(in));
-						festaAtt.setHorarioInicio(tfHorarioInicial.getText());
-						festaAtt.setHorarioFinal(tfHorarioFinal.getText());
-						festaAtt.setEndereco(endereco.toString());
-						festaAtt.setValorCobrado(Double.parseDouble(tfValorCobrado.getText()));
-						arquivosDiretorios.atualizarFesta(lista, festaAtt, id);
+							int qtd = 0;
+							Festa festaAtt = new Festa(id, cbTema.getSelectedItem().toString(),
+									cbCliente.getSelectedItem().toString(), dcData.getDate().toString(),
+									tfHorarioInicial.getText(), tfHorarioFinal.getText(), endereco.toString(),
+									qtd, Double.parseDouble(tfValorCobrado.getText()));
+							festaAtt.setId(id);
+							festaAtt.setTema(cbTema.getSelectedItem().toString());
+							festaAtt.setCliente(cbCliente.getSelectedItem().toString());
+							festaAtt.setDataFesta(formatter.format(in));
+							festaAtt.setHorarioInicio(tfHorarioInicial.getText());
+							festaAtt.setHorarioFinal(tfHorarioFinal.getText());
+							festaAtt.setEndereco(endereco.toString());
+							festaAtt.setValorCobrado(Double.parseDouble(tfValorCobrado.getText()));
+							arquivosDiretorios.atualizarFesta(lista, festaAtt, id);
 
-						cbLogradouro.setSelectedItem(null);
-						tfNomeOficial.setText("");
-						tfNumero.setText("");
-						tfComplemento.setText("");
-						tfBairro.setText("");
-						tfCidade.setText("");
-						cbUF.setSelectedItem(null);
-						tfCEP.setText("");
-						cbTema.setSelectedItem(null);
-						cbCliente.setSelectedItem(null);
-						dcData.setDate(null);
-						tfHorarioInicial.setText("");
-						tfHorarioFinal.setText("");
-						tfValorCobrado.setText("");
+							cbLogradouro.setSelectedItem(null);
+							tfNomeOficial.setText("");
+							tfNumero.setText("");
+							tfComplemento.setText("");
+							tfBairro.setText("");
+							tfCidade.setText("");
+							cbUF.setSelectedItem(null);
+							tfCEP.setText("");
+							cbTema.setSelectedItem(null);
+							cbCliente.setSelectedItem(null);
+							dcData.setDate(null);
+							tfHorarioInicial.setText("");
+							tfHorarioFinal.setText("");
+							tfValorCobrado.setText("");
 
-						if (lista.getFesta(0) == null) {
-							TelaFesta telaFesta = new TelaFesta();
-							telaFesta.setVisible(true);
-							dispose();
-						} else {
-							festaTableModel.addRow();
+							if (lista.getFesta(0) == null) {
+								TelaFesta telaFesta = new TelaFesta();
+								telaFesta.setVisible(true);
+								dispose();
+							} else {
+								festaTableModel.addRow();
+								TelaFesta telaFesta = new TelaFesta();
+								telaFesta.setVisible(true);
+								dispose();
+							}
+
+						} catch (IOException e1) {
+							e1.printStackTrace();
 						}
-
-					} catch (IOException e1) {
-						e1.printStackTrace();
+					} else {
+						JOptionPane.showMessageDialog(null, "Selecione uma linha na coluna opções", "Error", 0);
 					}
-				} else {
-					JOptionPane.showMessageDialog(null, "Selecione uma linha na coluna opções", "Error", 0);
 				}
 			}
 		});
 		btnAlterarFesta.setBackground(new Color(204, 255, 51));
 		btnAlterarFesta.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 15));
-		btnAlterarFesta.setBounds(1196, 546, 205, 27);
+		btnAlterarFesta.setBounds(1196, 580, 205, 27);
 		telaFesta.add(btnAlterarFesta);
 
 		btnDeletarFesta = new JButton("Deletar Festa");
 		btnDeletarFesta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (tableListFestas.isColumnSelected(8)) {
+				if (tableListFestas.isColumnSelected(9)) {
 					String s = tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 0).toString();
 					int id = Integer.parseInt(s);
 					try {
@@ -756,7 +766,7 @@ public class TelaFesta extends JFrame {
 		});
 		btnDeletarFesta.setBackground(new Color(255, 102, 102));
 		btnDeletarFesta.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 15));
-		btnDeletarFesta.setBounds(1196, 602, 205, 27);
+		btnDeletarFesta.setBounds(1196, 626, 205, 27);
 		telaFesta.add(btnDeletarFesta);
 		// FIM BOTOES
 	}
@@ -770,43 +780,37 @@ public class TelaFesta extends JFrame {
 
 	private boolean validaTela() {
 		boolean valida = true;
-		if (cbTema.getSelectedItem().toString().trim().equals("") &&
-				cbCliente.getSelectedItem().toString().trim().equals("") && 
-				dcData.getDate().toString().trim().equals("") &&
-				tfHorarioInicial.getText().trim().equals("") && 
-				tfHorarioFinal.getText().trim().equals("") && 
-				cbLogradouro.getSelectedItem().toString().trim().equals("") &&
-				tfNomeOficial.getText().trim().equals("") && 
-				tfNumero.getText().trim().equals("") && 
-				tfComplemento.getText().trim().equals("") &&
-				tfBairro.getText().trim().equals("") && 
-				tfCidade.getText().trim().equals("") && 
-				cbUF.getSelectedItem().toString().trim().equals("") &&
-				tfCEP.getText().trim().equals("")) {
+		if (cbTema.getSelectedItem() == null && cbCliente.getSelectedItem() == null && dcData.getDate() == null
+				&& tfHorarioInicial.getText().trim().equals("") && tfHorarioFinal.getText().trim().equals("")
+				&& cbLogradouro == null && tfNomeOficial.getText().trim().equals("")
+				&& tfNumero.getText().trim().equals("") && tfComplemento.getText().trim().equals("")
+				&& tfBairro.getText().trim().equals("") && tfCidade.getText().trim().equals("")
+				&& cbUF.getSelectedItem() == null && tfCEP.getText().trim().equals("")) {
 			JOptionPane.showMessageDialog(null, "Por favor, preencha todos os campos acima para realizar o cadastro",
 					"Informação", JOptionPane.INFORMATION_MESSAGE);
 			valida = false;
-		} else if (cbTema.getSelectedItem().toString().trim().equals("")) {
+		} else if (cbTema.getSelectedItem() == null) {
 			JOptionPane.showMessageDialog(null, "Por favor, selecione um tema para realizar o cadastro", "Informação",
 					JOptionPane.INFORMATION_MESSAGE);
 			valida = false;
-		} else if (cbCliente.getSelectedItem().toString().trim().equals("")) {
+		} else if (cbCliente.getSelectedItem() == null) {
 			JOptionPane.showMessageDialog(null, "Por favor, selecione um cliente para realizar o cadastro",
 					"Informação", JOptionPane.INFORMATION_MESSAGE);
 			valida = false;
-		} else if (dcData.getDate().toString().trim().equals("")) {
+		} else if (dcData.getDate() == null) {
 			JOptionPane.showMessageDialog(null, "Por favor, preencha a data da festa para realizar o cadastro",
 					"Informação", JOptionPane.INFORMATION_MESSAGE);
 			valida = false;
 		} else if (tfHorarioInicial.getText().trim().equals("")) {
-			JOptionPane.showMessageDialog(null, "Por favor, preencha o horário inicial da festa para realizar o cadastro", "Informação",
+			JOptionPane.showMessageDialog(null,
+					"Por favor, preencha o horário inicial da festa para realizar o cadastro", "Informação",
 					JOptionPane.INFORMATION_MESSAGE);
 			valida = false;
 		} else if (tfHorarioFinal.getText().trim().equals("")) {
 			JOptionPane.showMessageDialog(null, "Por favor, preencha o horário final da festa para realizar o cadastro",
 					"Informação", JOptionPane.INFORMATION_MESSAGE);
 			valida = false;
-		} else if (cbLogradouro.getSelectedItem().toString().trim().equals("")) {
+		} else if (cbLogradouro.getSelectedItem() == null) {
 			JOptionPane.showMessageDialog(null, "Por favor, selecione um logradouro para realizar o cadastro",
 					"Informação", JOptionPane.INFORMATION_MESSAGE);
 			valida = false;
@@ -815,28 +819,28 @@ public class TelaFesta extends JFrame {
 					"Informação", JOptionPane.INFORMATION_MESSAGE);
 			valida = false;
 		} else if (tfNumero.getText().trim().equals("")) {
-			JOptionPane.showMessageDialog(null, "Por favor, preencha o número para realizar o cadastro",
-					"Informação", JOptionPane.INFORMATION_MESSAGE);
-			valida = false;
-		} else if (tfComplemento.getText().trim().equals("")) {
-			JOptionPane.showMessageDialog(null, "Por favor, preencha o complemento para realizar o cadastro", "Informação",
+			JOptionPane.showMessageDialog(null, "Por favor, preencha o número para realizar o cadastro", "Informação",
 					JOptionPane.INFORMATION_MESSAGE);
 			valida = false;
-		} else if (tfBairro.getText().trim().equals("")) {
-			JOptionPane.showMessageDialog(null, "Por favor, preencha o bairro para realizar o cadastro",
+		} else if (tfComplemento.getText().trim().equals("")) {
+			JOptionPane.showMessageDialog(null, "Por favor, preencha o complemento para realizar o cadastro",
 					"Informação", JOptionPane.INFORMATION_MESSAGE);
+			valida = false;
+		} else if (tfBairro.getText().trim().equals("")) {
+			JOptionPane.showMessageDialog(null, "Por favor, preencha o bairro para realizar o cadastro", "Informação",
+					JOptionPane.INFORMATION_MESSAGE);
 			valida = false;
 		} else if (tfCidade.getText().trim().equals("")) {
-			JOptionPane.showMessageDialog(null, "Por favor, preencha a cidade para realizar o cadastro",
-					"Informação", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Por favor, preencha a cidade para realizar o cadastro", "Informação",
+					JOptionPane.INFORMATION_MESSAGE);
 			valida = false;
-		} else if (cbUF.getSelectedItem().toString().trim().equals("")) {
-			JOptionPane.showMessageDialog(null, "Por favor, selecione um UF para realizar o cadastro",
-					"Informação", JOptionPane.INFORMATION_MESSAGE);
+		} else if (cbUF.getSelectedItem() == null) {
+			JOptionPane.showMessageDialog(null, "Por favor, selecione um UF para realizar o cadastro", "Informação",
+					JOptionPane.INFORMATION_MESSAGE);
 			valida = false;
 		} else if (tfCEP.getText().trim().equals("")) {
-			JOptionPane.showMessageDialog(null, "Por favor, preencha o CEP para realizar o cadastro",
-					"Informação", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Por favor, preencha o CEP para realizar o cadastro", "Informação",
+					JOptionPane.INFORMATION_MESSAGE);
 			valida = false;
 		}
 		return valida;

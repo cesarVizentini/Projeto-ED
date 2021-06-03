@@ -60,7 +60,7 @@ public class TelaCliente extends JFrame {
 	private JLabel lblDocumentoCPF;
 	private JFormattedTextField jftfDocumentoCPF;
 	private JButton btnSelecionarCliente;
-	
+
 	private void pegarResolucao() {
 		Toolkit t = Toolkit.getDefaultToolkit();
 		Dimension dimensao = t.getScreenSize();
@@ -77,12 +77,12 @@ public class TelaCliente extends JFrame {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		
+
 		setTitle("Cliente");
 		URL url = this.getClass().getResource("/view/assets/icon.png");
 		Image iconeRafaelaBuffet = Toolkit.getDefaultToolkit().getImage(url);
 		setIconImage(iconeRafaelaBuffet);
-        setLocationRelativeTo(null);
+		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		pegarResolucao();
 		telaCliente = new JPanel();
@@ -90,7 +90,7 @@ public class TelaCliente extends JFrame {
 		telaCliente.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(telaCliente);
 		telaCliente.setLayout(null);
-		
+
 		// INICIO SIDE-MENU
 		sideMenu = new JPanel();
 		sideMenu.setBackground(new Color(173, 220, 253));
@@ -207,7 +207,7 @@ public class TelaCliente extends JFrame {
 		});
 		sideMenu.add(btnSMFinancas);
 		// FIM SIDE-MENU
-		
+
 		// INICIO TABLE
 		tableListClientes = new JTable();
 		tableListClientes.setLocation(20, 33);
@@ -242,7 +242,7 @@ public class TelaCliente extends JFrame {
 		scroll.setBounds(258, 11, 1141, 464);
 		telaCliente.add(scroll);
 		// FIM TABLE
-		
+
 		// INICIO FORMULARIO
 		lblNome = new JLabel("Nome");
 		lblNome.setForeground(new Color(81, 107, 153));
@@ -269,7 +269,7 @@ public class TelaCliente extends JFrame {
 		lblTelefone.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 20));
 		lblTelefone.setBounds(258, 560, 111, 25);
 		telaCliente.add(lblTelefone);
-		
+
 		jftfTelefone = new JFormattedTextField(telefone);
 		jftfTelefone.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 15));
 		jftfTelefone.setColumns(10);
@@ -281,7 +281,7 @@ public class TelaCliente extends JFrame {
 		lblDocumentoCPF.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 20));
 		lblDocumentoCPF.setBounds(258, 650, 176, 25);
 		telaCliente.add(lblDocumentoCPF);
-		
+
 		MaskFormatter CPF = null;
 		try {
 			CPF = new MaskFormatter("###.###.###-##");
@@ -297,7 +297,7 @@ public class TelaCliente extends JFrame {
 		telaCliente.add(jftfDocumentoCPF);
 		jftfDocumentoCPF.setColumns(10);
 		// FIM FORMULARIO
-		
+
 		// INICIO BOTOES
 		btnCadastrarCliente = new JButton("Cadastrar Cliente");
 		btnCadastrarCliente.setBackground(new Color(60, 179, 113));
@@ -312,8 +312,7 @@ public class TelaCliente extends JFrame {
 						newTable = true;
 					}
 					ClienteController clienteController = new ClienteController();
-					clienteController.cadastrar(tfNome.getText(), jftfTelefone.getText(),
-							jftfDocumentoCPF.getText());
+					clienteController.cadastrar(tfNome.getText(), jftfTelefone.getText(), jftfDocumentoCPF.getText());
 					tfNome.setText("");
 					jftfTelefone.setText("");
 					jftfDocumentoCPF.setText("");
@@ -330,16 +329,19 @@ public class TelaCliente extends JFrame {
 			}
 		});
 		telaCliente.add(btnCadastrarCliente);
-		
+
 		btnSelecionarCliente = new JButton("Selecionar Cliente");
 		btnSelecionarCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (tableListClientes.isColumnSelected(4)) {
 					tfNome.setText(tableListClientes.getValueAt(tableListClientes.getSelectedRow(), 1).toString());
-					jftfDocumentoCPF.setText(tableListClientes.getValueAt(tableListClientes.getSelectedRow(), 2).toString());
-					jftfTelefone.setText(tableListClientes.getValueAt(tableListClientes.getSelectedRow(), 3).toString());
+					jftfDocumentoCPF
+							.setText(tableListClientes.getValueAt(tableListClientes.getSelectedRow(), 2).toString());
+					jftfTelefone
+							.setText(tableListClientes.getValueAt(tableListClientes.getSelectedRow(), 3).toString());
 				} else {
-					JOptionPane.showMessageDialog(null, "Selecione uma linha na coluna opções para alterar o cliente", "Error", 0);
+					JOptionPane.showMessageDialog(null, "Selecione uma linha na coluna opções para alterar o cliente",
+							"Error", 0);
 				}
 			}
 		});
@@ -351,40 +353,44 @@ public class TelaCliente extends JFrame {
 		btnAlterarCliente = new JButton("Alterar Cliente");
 		btnAlterarCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (tableListClientes.isColumnSelected(4)) {
-					String s = tableListClientes.getValueAt(tableListClientes.getSelectedRow(), 0).toString();
-					int id = Integer.parseInt(s);
+				boolean valido = validaTela();
+				if (valido) {
+					if (tableListClientes.isColumnSelected(4)) {
+						String s = tableListClientes.getValueAt(tableListClientes.getSelectedRow(), 0).toString();
+						int id = Integer.parseInt(s);
 
-					try {
-						Cliente clienteAtt = new Cliente(id, tfNome.getText(), jftfDocumentoCPF.getText(),
-								jftfTelefone.getText());
-						arquivosDiretorios.atualizarCliente(lista, clienteAtt, id);
+						try {
+							Cliente clienteAtt = new Cliente(id, tfNome.getText(), jftfDocumentoCPF.getText(),
+									jftfTelefone.getText());
+							arquivosDiretorios.atualizarCliente(lista, clienteAtt, id);
 
-						tfNome.setText("");
-						jftfTelefone.setText("");
-						jftfDocumentoCPF.setText("");
+							tfNome.setText("");
+							jftfTelefone.setText("");
+							jftfDocumentoCPF.setText("");
 
-						if (lista.getCliente(0) == null) {
-							TelaCliente telaCliente = new TelaCliente();
-							telaCliente.setVisible(true);
-							dispose();
-						} else {
-							clienteTableModel.addRow();
-							TelaCliente telaCliente = new TelaCliente();
-							telaCliente.setVisible(true);
-							dispose();
+							if (lista.getCliente(0) == null) {
+								TelaCliente telaCliente = new TelaCliente();
+								telaCliente.setVisible(true);
+								dispose();
+							} else {
+								clienteTableModel.addRow();
+								TelaCliente telaCliente = new TelaCliente();
+								telaCliente.setVisible(true);
+								dispose();
+							}
+						} catch (IOException e1) {
+							e1.printStackTrace();
 						}
-					} catch (IOException e1) {
-						e1.printStackTrace();
+					} else {
+						JOptionPane.showMessageDialog(null,
+								"Selecione uma linha na coluna opções para alterar o cliente", "Error", 0);
 					}
-				} else {
-					JOptionPane.showMessageDialog(null, "Selecione uma linha na coluna opções para alterar o cliente", "Error", 0);
 				}
 			}
 		});
 		btnAlterarCliente.setBackground(new Color(204, 255, 51));
 		btnAlterarCliente.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 15));
-		btnAlterarCliente.setBounds(1196, 546, 205, 27);
+		btnAlterarCliente.setBounds(1196, 580, 205, 27);
 		telaCliente.add(btnAlterarCliente);
 
 		btnDeletarCliente = new JButton("Deletar Cliente");
@@ -412,25 +418,29 @@ public class TelaCliente extends JFrame {
 		});
 		btnDeletarCliente.setBackground(new Color(255, 102, 102));
 		btnDeletarCliente.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 15));
-		btnDeletarCliente.setBounds(1196, 602, 205, 27);
+		btnDeletarCliente.setBounds(1196, 626, 205, 27);
 		telaCliente.add(btnDeletarCliente);
 		// FIM BOTOES
 	}
-	
+
 	private boolean validaTela() {
 		boolean valida = true;
 		if (tfNome.getText().trim().equals("") && jftfTelefone.getText().trim().equals("(__) _____-____")
 				&& jftfDocumentoCPF.getText().trim().equals("___.___.___-__")) {
-			JOptionPane.showMessageDialog(null, "Por favor, preencha todos os campos acima para realizar o cadastro", "Informação", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Por favor, preencha todos os campos acima para realizar o cadastro",
+					"Informação", JOptionPane.INFORMATION_MESSAGE);
 			valida = false;
 		} else if (tfNome.getText().trim().equals("")) {
-			JOptionPane.showMessageDialog(null, "Por favor, preencha o nome do cliente para realizar o cadastro", "Informação", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Por favor, preencha o nome do cliente para realizar o cadastro",
+					"Informação", JOptionPane.INFORMATION_MESSAGE);
 			valida = false;
 		} else if (jftfDocumentoCPF.getText().trim().equals("___.___.___-__")) {
-			JOptionPane.showMessageDialog(null, "Por favor, preencha o documento do cliente para realizar o cadastro", "Informação", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Por favor, preencha o documento do cliente para realizar o cadastro",
+					"Informação", JOptionPane.INFORMATION_MESSAGE);
 			valida = false;
 		} else if (jftfTelefone.getText().trim().equals("(__) _____-____")) {
-			JOptionPane.showMessageDialog(null, "Por favor, preencha o telefone do cliente para realizar o cadastro", "Informação", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Por favor, preencha o telefone do cliente para realizar o cadastro",
+					"Informação", JOptionPane.INFORMATION_MESSAGE);
 			valida = false;
 		}
 		return valida;

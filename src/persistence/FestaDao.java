@@ -18,6 +18,10 @@ public class FestaDao {
 		this.inicio = null;
 	}
 
+	public FestaNo getPrimeiroElemento() {
+		return this.inicio;
+	}
+	
 	public int tamanho() {
 		FestaNo aux = this.inicio;
 		int cont = 0;
@@ -217,7 +221,7 @@ public class FestaDao {
 			quickSort(pivo + 1, end);
 		}
 	}
-
+	
 	private int partition(int start, int end) throws ParseException {
 		int i = start;
 		for (int j = start; j < end; j++) {

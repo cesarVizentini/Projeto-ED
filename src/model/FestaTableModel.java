@@ -7,7 +7,7 @@ import persistence.FestaDao;
 public class FestaTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 1L;
-	private String[] columns = { "Código", "Tema", "Cliente", "Data", "Horário de início", "Horário de término", "Endereço", "Valor Total (R$)", "Opções" };
+	private String[] columns = { "Código", "Tema", "Cliente", "Data", "Horário de início", "Horário de término", "Endereço", "Valor Total (R$)", "Qtd", "Opções" };
 	private FestaDao listar;
 	public FestaTableModel(FestaDao listar) {
 		this.listar = listar;
@@ -41,7 +41,8 @@ public class FestaTableModel extends AbstractTableModel {
 		case 4: return listar.getFesta(rowIndex).getHorarioInicio();
 		case 5: return listar.getFesta(rowIndex).getHorarioFinal();
 		case 6: return listar.getFesta(rowIndex).getEndereco().toString();
-		case 7: return listar.getFesta(rowIndex).getValorCobrado();
+		case 7: return listar.getFesta(rowIndex).getQtd();
+		case 8: return listar.getFesta(rowIndex).getValorCobrado();
 		}
 		return null;
 	}

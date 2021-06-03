@@ -26,9 +26,9 @@ public class ArquivosDiretorios {
 		if (!diretorio.exists() || !diretorio.isDirectory()) {
 			if (diretorio.mkdir()) {
 				System.out.println(
-						"O Diretório DatabaseBuffetRafaela foi criado com sucesso! Caminho para acessar => C:\\DatabaseBuffetRafaela\\");
+						"O Diretorio DatabaseBuffetRafaela foi criado com sucesso! Caminho para acessar => C:\\DatabaseBuffetRafaela\\");
 			} else {
-				System.err.println("Erro ao criar diretório");
+				System.err.println("Erro ao criar diretorio");
 			}
 		}
 	}
@@ -91,7 +91,7 @@ public class ArquivosDiretorios {
 			stream.close();
 			return clienteDao;
 		} else {
-			System.err.println("Não existem cadastros!");
+			System.err.println("Nao existem cadastros!");
 			return null;
 		}
 	}
@@ -117,7 +117,7 @@ public class ArquivosDiretorios {
 			}
 			System.out.println("Cliente removido com sucesso!");
 		} else {
-			System.out.println("Cliente não foi encontrado na base de dados");
+			System.out.println("Cliente nao foi encontrado na base de dados");
 		}
 	}
 
@@ -212,7 +212,7 @@ public class ArquivosDiretorios {
 			printer.close();
 			writer.close();
 		} else {
-			String salvar = "Id;Nome;Descrição;Valor Aluguel (R$)\n";
+			String salvar = "Id;Nome;Descricao;Valor Aluguel (R$)\n";
 			salvar += tema.getId() + ";" + tema.getNome() + ";" + tema.getDescricao() + ";" + tema.getValor() + "\n";
 			FileWriter writer = new FileWriter(file);
 			PrintWriter printer = new PrintWriter(writer);
@@ -246,7 +246,7 @@ public class ArquivosDiretorios {
 			stream.close();
 			return temaDao;
 		} else {
-			System.err.println("Não existem cadastros!");
+			System.err.println("Nao existem cadastros!");
 			return null;
 		}
 	}
@@ -261,7 +261,7 @@ public class ArquivosDiretorios {
 			if (temaDao.getTema(0) == null) {
 				file.delete();
 			} else {
-				String salvar = "Id;Nome;Descrição;Valor Aluguel (R$)\n";
+				String salvar = "Id;Nome;Descriï¿½ï¿½o;Valor Aluguel (R$)\n";
 				salvar += prepararTema(temaDao);
 				FileWriter writer = new FileWriter(file);
 				PrintWriter printer = new PrintWriter(writer);
@@ -272,7 +272,7 @@ public class ArquivosDiretorios {
 			}
 			System.out.println("Tema removido com sucesso!");
 		} else {
-			System.out.println("Tema não foi encontrado na base de dados");
+			System.out.println("Tema nao foi encontrado na base de dados");
 		}
 	}
 
@@ -366,7 +366,7 @@ public class ArquivosDiretorios {
 			printer.close();
 			writer.close();
 		} else {
-			String salvar = "Id;Tema;Cliente;Data;Horário de início;Horário de término;Endereço;Valor Total (R$)\n";
+			String salvar = "Id;Tema;Cliente;Data;Horario de inicio;Horario de termino;Endereco;Qtd;Valor Total (R$)\n";
 			salvar += festa.getId() + ";" + festa.getTema() + ";" + festa.getCliente() + ";" + festa.getDataFesta()
 					+ ";" + festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";"
 					+ festa.getEndereco().toString() + ";" + festa.getValorCobrado() + "\n";
@@ -394,7 +394,7 @@ public class ArquivosDiretorios {
 			while (line != null) {
 				String[] auxs = line.split(";");
 				festa = new Festa(Integer.parseInt(auxs[0]), auxs[1], auxs[2], auxs[3], auxs[4], auxs[5], auxs[6],
-						Double.parseDouble(auxs[7]));
+						Integer.parseInt(auxs[7]), Double.parseDouble(auxs[8]));
 				festaDao.adicionarFesta(festa);
 				line = reader.readLine();
 			}
@@ -403,7 +403,7 @@ public class ArquivosDiretorios {
 			stream.close();
 			return festaDao;
 		} else {
-			System.err.println("Não existem cadastros!");
+			System.err.println("Nao existem cadastros!");
 			return null;
 		}
 	}
@@ -418,7 +418,7 @@ public class ArquivosDiretorios {
 			if (festaDao.getFesta(0) == null) {
 				file.delete();
 			} else {
-				String salvar = "Id;Tema;Cliente;Data;Horário de início;Horário de término;Endereço;Valor Total (R$)\n";
+				String salvar = "Id;Tema;Cliente;Data;Horario de inicio;Horario de termino;Endereco;Qtd;Valor Total (R$)\n";
 				salvar += prepararFesta(festaDao);
 				FileWriter writer = new FileWriter(file);
 				PrintWriter printer = new PrintWriter(writer);
@@ -429,7 +429,7 @@ public class ArquivosDiretorios {
 			}
 			System.out.println("Festa removida com sucesso!");
 		} else {
-			System.out.println("Festa não foi encontrada na base de dados");
+			System.out.println("Festa nao foi encontrada na base de dados");
 		}
 	}
 
@@ -437,10 +437,10 @@ public class ArquivosDiretorios {
 		verificaDiretorio();
 		String path = "C:\\DatabaseBuffetRafaela\\festa.csv";
 		File file = new File(path);
-		String salvar = "Id;Tema;Cliente;Data;Horário de início;Horário de término;Endereço;Valor Total (R$)\n";
+		String salvar = "Id;Tema;Cliente;Data;Horario de inicio;Horario de termino;Endereco;Qtd;Valor Total (R$)\n";
 		salvar += prepararAttFestaAntes(festaDao, id);
 		salvar += id + ";" + festa.getTema() + ";" + festa.getCliente() + ";" + festa.getDataFesta() + ";"
-				+ festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";" + festa.getEndereco() + ";"
+				+ festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";" + festa.getEndereco() + ";" + festa.getQtd() + ";"
 				+ festa.getValorCobrado() + "\n";
 		salvar += prepararAttFestaDepois(festaDao, id);
 		FileWriter writer = new FileWriter(file);
@@ -459,8 +459,8 @@ public class ArquivosDiretorios {
 		if (id > 1) {
 			do {
 				buffer.append(festa.getId() + festa.getTema() + ";" + festa.getCliente() + ";" + festa.getDataFesta()
-						+ festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";" + festa.getEndereco() + ";"
-						+ festa.getValorCobrado());
+				+ festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";" + festa.getEndereco() + ";" + festa.getQtd() + ";"
+				+ festa.getValorCobrado());
 				buffer.append("\n");
 				posicao++;
 				festa = festaDao.getFesta(posicao);
@@ -478,8 +478,8 @@ public class ArquivosDiretorios {
 		if (festa != null) {
 			do {
 				buffer.append(festa.getId() + festa.getTema() + ";" + festa.getCliente() + ";" + festa.getDataFesta()
-						+ festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";" + festa.getEndereco() + ";"
-						+ festa.getValorCobrado());
+				+ festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";" + festa.getEndereco() + ";" + festa.getQtd() + ";"
+				+ festa.getValorCobrado());
 				buffer.append("\n");
 				posicao++;
 				festa = festaDao.getFesta(posicao);
@@ -495,9 +495,9 @@ public class ArquivosDiretorios {
 		int posicao = 0;
 		Festa festa = festaDao.getFesta(posicao);
 		do {
-			buffer.append(festa.getId() + ";" + festa.getTema() + ";" + festa.getCliente() + ";" + festa.getDataFesta()
-					+ ";" + festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";"
-					+ festa.getEndereco().toString() + ";" + festa.getValorCobrado());
+			buffer.append(festa.getId() + festa.getTema() + ";" + festa.getCliente() + ";" + festa.getDataFesta()
+			+ festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";" + festa.getEndereco() + ";" + festa.getQtd() + ";"
+			+ festa.getValorCobrado());
 			buffer.append("\n");
 			posicao++;
 			festa = festaDao.getFesta(posicao);
@@ -508,13 +508,4 @@ public class ArquivosDiretorios {
 	// --------------------------------------------------
 	// ---------------- END FESTA DATABASE --------------
 	// --------------------------------------------------
-
-	// --------------------------------------------------
-	// ---------------- FINANCAS DATABASE ---------------
-	// --------------------------------------------------
-
-	// -----------------------------------------------------
-	// ---------------- END FINANCAS DATABASE --------------
-	// -----------------------------------------------------
-
 }

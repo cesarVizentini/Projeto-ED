@@ -12,6 +12,8 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
+import java.util.Date;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -28,6 +30,7 @@ import com.toedter.calendar.JDateChooser;
 import controller.ArquivosDiretorios;
 import model.FestaTableModel;
 import persistence.FestaDao;
+import persistence.FinancasDao;
 
 public class TelaFinancas extends JFrame {
 
@@ -40,7 +43,7 @@ public class TelaFinancas extends JFrame {
 	private JButton btnCalcular;
 	private JLabel lblEscolherData;
 	private JTable tableListFestas;
-	private FestaDao lista;
+	private static FestaDao lista;
 	private JPanel sideMenu;
 	private JButton btnSMHome;
 	private JButton btnSMCliente;
@@ -52,6 +55,10 @@ public class TelaFinancas extends JFrame {
 	private JLabel lblEspaco2;
 	private JLabel lblEspaco3;
 	private JLabel lblEspaco4;
+	
+	public static FestaDao getLista() {
+		return lista;
+	}
 	
 	private void pegarResolucao() {
 		Toolkit t = Toolkit.getDefaultToolkit();
@@ -297,6 +304,14 @@ public class TelaFinancas extends JFrame {
 		
 		// INICIO BOTOES
 		btnCalcular = new JButton("Calcular");
+		btnCalcular.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FinancasDao financasDao = new FinancasDao();
+				Date dataInicial = dateChooserDataInicial.getDate();
+				Date dataFinal = dateChooserDataFinal.getDate();
+				tfLucro.setText(financasDao.calculaFinancas(dataInicial, dataFinal));
+			}
+		});
 		btnCalcular.setBackground(new Color(60, 179, 113));
 		btnCalcular.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 15));
 		btnCalcular.setBounds(330, 640, 198, 23);
