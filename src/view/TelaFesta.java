@@ -644,7 +644,7 @@ public class TelaFesta extends JFrame {
 					tfHorarioInicial
 							.setText(tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 4).toString());
 					tfHorarioFinal.setText(tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 5).toString());
-					tfValorCobrado.setText(tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 8).toString());
+					tfValorCobrado.setText(tableListFestas.getValueAt(tableListFestas.getSelectedRow(), 7).toString());
 
 				} else {
 					JOptionPane.showMessageDialog(null, "Selecione uma linha na coluna opções", "Error", 0);
