@@ -15,10 +15,12 @@ import controller.ArquivosDiretorios;
 import model.FestaTableModel;
 import persistence.FestaDao;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
@@ -36,6 +38,25 @@ public class TelaDashboard extends JFrame {
 	private JLabel lblProximasFestas;
 	private JTable tableListFestas;
 	private FestaDao lista;
+	private JPanel sideMenu;
+	private JLabel SDLogo;
+	private JButton btnSMHome;
+	private JLabel lblEspaco1;
+	private JButton btnSMTema;
+	private JLabel lblEspaco2;
+	private JButton btnSMCliente;
+	private JLabel lblEspaco3;
+	private JButton btnSMFesta;
+	private JLabel lblEspaco4;
+	private JButton btnSMFinancas;
+
+	private void pegarResolucao() {
+		Toolkit t = Toolkit.getDefaultToolkit();
+		Dimension dimensao = t.getScreenSize();
+		int larg = dimensao.width;
+		int alt = dimensao.height;
+		setBounds(0, 0, larg, alt);
+	}
 
 	public TelaDashboard() {
 		lista = new FestaDao();
@@ -50,56 +71,144 @@ public class TelaDashboard extends JFrame {
 		} catch (ParseException e1) {
 			e1.printStackTrace();
 		}
-		
+
 		setTitle("Dashboard");
-		setResizable(false);
 		URL url = this.getClass().getResource("/view/assets/icon.png");
-		Image iconeRafaelaBuffet  = Toolkit.getDefaultToolkit().getImage(url);
-		this.setIconImage(iconeRafaelaBuffet);
+		Image iconeRafaelaBuffet = Toolkit.getDefaultToolkit().getImage(url);
 		setIconImage(iconeRafaelaBuffet);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(10, 10, 1366, 720);
+        setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		pegarResolucao();
 		telaDashboard = new JPanel();
-		telaDashboard.setBackground(new Color(173, 220, 253));
+		telaDashboard.setBackground(new Color(135, 206, 235));
 		telaDashboard.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(telaDashboard);
 		telaDashboard.setLayout(null);
 
-		JButton btnMenuPrincipal = new JButton("+");
-		btnMenuPrincipal.setVerticalAlignment(SwingConstants.TOP);
-		btnMenuPrincipal.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 48));
-		btnMenuPrincipal.addActionListener(new ActionListener() {
+		// INICIO SIDE-MENU
+		sideMenu = new JPanel();
+		sideMenu.setBackground(new Color(173, 220, 253));
+		sideMenu.setBounds(0, 0, 240, 861);
+		telaDashboard.add(sideMenu);
+		sideMenu.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+
+		SDLogo = new JLabel("");
+		SDLogo.setIcon(new ImageIcon(TelaDashboard.class.getResource("/view/assets/SDLogo.png")));
+		SDLogo.setPreferredSize(new Dimension(240, 250));
+		sideMenu.add(SDLogo);
+
+		btnSMHome = new JButton("Home");
+		btnSMHome.setPressedIcon(new ImageIcon(TelaDashboard.class.getResource("/view/assets/pressed.png")));
+		btnSMHome.setSelectedIcon(new ImageIcon(TelaDashboard.class.getResource("/view/assets/selected.png")));
+		btnSMHome.setRolloverIcon(new ImageIcon(TelaDashboard.class.getResource("/view/assets/hover.png")));
+		btnSMHome.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnSMHome.setIcon(new ImageIcon(TelaDashboard.class.getResource("/view/assets/default.png")));
+		btnSMHome.setBackground(new Color(255, 255, 255));
+		btnSMHome.setPreferredSize(new Dimension(220, 40));
+		btnSMHome.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 16));
+		btnSMHome.setSelected(true);
+		sideMenu.add(btnSMHome);
+
+		lblEspaco1 = new JLabel("");
+		lblEspaco1.setPreferredSize(new Dimension(20, 20));
+		sideMenu.add(lblEspaco1);
+
+		btnSMTema = new JButton("Tema");
+		btnSMTema.setPressedIcon(new ImageIcon(TelaDashboard.class.getResource("/view/assets/pressed.png")));
+		btnSMTema.setIcon(new ImageIcon(TelaDashboard.class.getResource("/view/assets/default.png")));
+		btnSMTema.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnSMTema.setRolloverIcon(new ImageIcon(TelaDashboard.class.getResource("/view/assets/hover.png")));
+		btnSMTema.setSelectedIcon(new ImageIcon(TelaDashboard.class.getResource("/view/assets/selected.png")));
+		btnSMTema.setBackground(new Color(255, 255, 255));
+		btnSMTema.setPreferredSize(new Dimension(220, 40));
+		btnSMTema.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 16));
+		btnSMTema.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaMenuPrincipal telaMenuPrincipal = new TelaMenuPrincipal();
-				telaMenuPrincipal.setVisible(true);
+				TelaTema telaTema = new TelaTema();
+				telaTema.setVisible(true);
+				btnSMTema.setSelected(true);
 				dispose();
 			}
 		});
-		btnMenuPrincipal.setBounds(1217, 555, 80, 80);
-		telaDashboard.add(btnMenuPrincipal);
+		sideMenu.add(btnSMTema);
 
-		JButton btnSair = new JButton("Sair");
-		btnSair.addActionListener(new ActionListener() {
+		lblEspaco2 = new JLabel("");
+		lblEspaco2.setPreferredSize(new Dimension(20, 20));
+		sideMenu.add(lblEspaco2);
+
+		btnSMCliente = new JButton("Cliente");
+		btnSMCliente.setPressedIcon(new ImageIcon(TelaDashboard.class.getResource("/view/assets/pressed.png")));
+		btnSMCliente.setIcon(new ImageIcon(TelaDashboard.class.getResource("/view/assets/default.png")));
+		btnSMCliente.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnSMCliente.setRolloverIcon(new ImageIcon(TelaDashboard.class.getResource("/view/assets/hover.png")));
+		btnSMCliente.setSelectedIcon(new ImageIcon(TelaDashboard.class.getResource("/view/assets/selected.png")));
+		btnSMCliente.setBackground(new Color(255, 255, 255));
+		btnSMCliente.setPreferredSize(new Dimension(220, 40));
+		btnSMCliente.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 16));
+		btnSMCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
+				TelaCliente telaCliente = new TelaCliente();
+				telaCliente.setVisible(true);
+				btnSMCliente.setSelected(true);
+				dispose();
 			}
 		});
-		btnSair.setBackground(Color.RED);
-		btnSair.setForeground(Color.BLACK);
-		btnSair.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 11));
-		btnSair.setBounds(10, 646, 89, 23);
-		telaDashboard.add(btnSair);
+		sideMenu.add(btnSMCliente);
 
+		lblEspaco3 = new JLabel("");
+		lblEspaco3.setPreferredSize(new Dimension(20, 20));
+		sideMenu.add(lblEspaco3);
+
+		btnSMFesta = new JButton("Festa");
+		btnSMFesta.setPressedIcon(new ImageIcon(TelaDashboard.class.getResource("/view/assets/pressed.png")));
+		btnSMFesta.setIcon(new ImageIcon(TelaDashboard.class.getResource("/view/assets/default.png")));
+		btnSMFesta.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnSMFesta.setRolloverIcon(new ImageIcon(TelaDashboard.class.getResource("/view/assets/hover.png")));
+		btnSMFesta.setSelectedIcon(new ImageIcon(TelaDashboard.class.getResource("/view/assets/selected.png")));
+		btnSMFesta.setBackground(new Color(255, 255, 255));
+		btnSMFesta.setPreferredSize(new Dimension(220, 40));
+		btnSMFesta.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 16));
+		btnSMFesta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaFesta telaFesta = new TelaFesta();
+				telaFesta.setVisible(true);
+				btnSMFesta.setSelected(true);
+				dispose();
+			}
+		});
+		sideMenu.add(btnSMFesta);
+
+		lblEspaco4 = new JLabel("");
+		lblEspaco4.setPreferredSize(new Dimension(20, 20));
+		sideMenu.add(lblEspaco4);
+
+		btnSMFinancas = new JButton("Finanças");
+		btnSMFinancas.setPressedIcon(new ImageIcon(TelaDashboard.class.getResource("/view/assets/pressed.png")));
+		btnSMFinancas.setIcon(new ImageIcon(TelaDashboard.class.getResource("/view/assets/default.png")));
+		btnSMFinancas.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnSMFinancas.setRolloverIcon(new ImageIcon(TelaDashboard.class.getResource("/view/assets/hover.png")));
+		btnSMFinancas.setSelectedIcon(new ImageIcon(TelaDashboard.class.getResource("/view/assets/selected.png")));
+		btnSMFinancas.setBackground(new Color(255, 255, 255));
+		btnSMFinancas.setPreferredSize(new Dimension(220, 40));
+		btnSMFinancas.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 16));
+		btnSMFinancas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaFinancas telaFinancas = new TelaFinancas();
+				telaFinancas.setVisible(true);
+				btnSMFinancas.setSelected(true);
+				dispose();
+			}
+		});
+		sideMenu.add(btnSMFinancas);
+		// FIM SIDE-MENU
+
+		// INICIO TABELA
 		lblProximasFestas = new JLabel("Pr\u00F3ximas Festas:");
 		lblProximasFestas.setForeground(new Color(81, 107, 153));
 		lblProximasFestas.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 20));
-		lblProximasFestas.setBounds(10, 10, 213, 34);
+		lblProximasFestas.setBounds(266, 11, 213, 34);
 		telaDashboard.add(lblProximasFestas);
-		
-		JCalendar calendar = new JCalendar();
-		calendar.setBounds(1092, 51, 205, 153);
-		telaDashboard.add(calendar);
-		
+
 		tableListFestas = new JTable();
 		tableListFestas.setLocation(20, 33);
 		tableListFestas.setShowVerticalLines(false);
@@ -119,10 +228,10 @@ public class TelaDashboard extends JFrame {
 					boolean hasFocus, int row, int column) {
 				super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 				if (row % 2 == 0) {
-					setBackground(Color.LIGHT_GRAY);
+					setBackground(new Color(210, 228, 240));
 					setForeground(Color.BLACK);
 				} else {
-					setBackground(Color.WHITE);
+					setBackground(new Color(181, 212, 230));
 					setForeground(Color.BLACK);
 				}
 				return this;
@@ -130,7 +239,14 @@ public class TelaDashboard extends JFrame {
 		});
 		telaDashboard.add(tableListFestas);
 		JScrollPane scroll = new JScrollPane(tableListFestas);
-		scroll.setBounds(10, 51, 1025, 584);
+		scroll.setBounds(263, 56, 1121, 595);
 		telaDashboard.add(scroll);
+		// FIM TABELA
+
+		// INICIO CALENDARIO
+		JCalendar calendar = new JCalendar();
+		calendar.setBounds(1179, 662, 205, 124);
+		telaDashboard.add(calendar);
+		// FIM CALENDARIO
 	}
 }

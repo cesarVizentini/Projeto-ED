@@ -137,11 +137,10 @@ public class ArquivosDiretorios {
 		printer.close();
 		writer.close();
 	}
-	
-	
+
 	private String prepararAttClienteAntes(ClienteDao clienteDao, int id) {
 		StringBuffer buffer = new StringBuffer();
-		String preparo= "";
+		String preparo = "";
 		int posicao = 0;
 		Cliente cliente = clienteDao.getCliente(posicao);
 		if (id > 1) {
@@ -156,7 +155,7 @@ public class ArquivosDiretorios {
 		}
 		return preparo;
 	}
-	
+
 	private String prepararAttClienteDepois(ClienteDao clienteDao, int id) {
 		StringBuffer buffer = new StringBuffer();
 		String preparo;
@@ -283,8 +282,8 @@ public class ArquivosDiretorios {
 		File file = new File(path);
 		String salvar = "Id;Nome;Documento CPF;Telefone\n";
 		salvar += prepararAttTemaAntes(temaDao, id);
-		salvar += temaAtt.getId() + ";" + temaAtt.getNome() + ";" + temaAtt.getDescricao() + ";"
-				+ temaAtt.getValor() + "\n";
+		salvar += temaAtt.getId() + ";" + temaAtt.getNome() + ";" + temaAtt.getDescricao() + ";" + temaAtt.getValor()
+				+ "\n";
 		salvar += prepararAttTemaDepois(temaDao, id);
 		FileWriter writer = new FileWriter(file);
 		PrintWriter printer = new PrintWriter(writer);
@@ -293,10 +292,10 @@ public class ArquivosDiretorios {
 		printer.close();
 		writer.close();
 	}
-	
+
 	private String prepararAttTemaAntes(TemaDao temaDao, int id) {
 		StringBuffer buffer = new StringBuffer();
-		String preparo= "";
+		String preparo = "";
 		int posicao = 0;
 		Tema temaAtt = temaDao.getTema(posicao);
 		if (id > 1) {
@@ -311,7 +310,7 @@ public class ArquivosDiretorios {
 		}
 		return preparo;
 	}
-	
+
 	private String prepararAttTemaDepois(TemaDao temaDao, int id) {
 		StringBuffer buffer = new StringBuffer();
 		String preparo;
@@ -329,7 +328,6 @@ public class ArquivosDiretorios {
 		preparo = buffer.toString();
 		return preparo;
 	}
-
 
 	private String prepararTema(TemaDao temaDao) {
 		StringBuffer buffer = new StringBuffer();
@@ -369,8 +367,8 @@ public class ArquivosDiretorios {
 			writer.close();
 		} else {
 			String salvar = "Id;Tema;Cliente;Data;Horário de início;Horário de término;Endereço;Valor Total (R$)\n";
-			salvar += festa.getId() + ";" + festa.getTema() + ";" + festa.getCliente() + ";"
-					+ festa.getDataFesta() + ";" + festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";"
+			salvar += festa.getId() + ";" + festa.getTema() + ";" + festa.getCliente() + ";" + festa.getDataFesta()
+					+ ";" + festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";"
 					+ festa.getEndereco().toString() + ";" + festa.getValorCobrado() + "\n";
 			FileWriter writer = new FileWriter(file);
 			PrintWriter printer = new PrintWriter(writer);
@@ -394,8 +392,9 @@ public class ArquivosDiretorios {
 			String line = reader.readLine();
 			line = reader.readLine();
 			while (line != null) {
-				String[] auxs = line.split(";");				
-	            festa = new Festa(Integer.parseInt(auxs[0]), auxs[1], auxs[2], auxs[3], auxs[4], auxs[5], auxs[6], Double.parseDouble(auxs[7]));
+				String[] auxs = line.split(";");
+				festa = new Festa(Integer.parseInt(auxs[0]), auxs[1], auxs[2], auxs[3], auxs[4], auxs[5], auxs[6],
+						Double.parseDouble(auxs[7]));
 				festaDao.adicionarFesta(festa);
 				line = reader.readLine();
 			}
@@ -440,8 +439,9 @@ public class ArquivosDiretorios {
 		File file = new File(path);
 		String salvar = "Id;Tema;Cliente;Data;Horário de início;Horário de término;Endereço;Valor Total (R$)\n";
 		salvar += prepararAttFestaAntes(festaDao, id);
-		salvar += id + ";" + festa.getTema() + ";" + festa.getCliente() + ";"
-				+ festa.getDataFesta() + festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";" + festa.getEndereco() + ";" + festa.getValorCobrado() + "\n";
+		salvar += id + ";" + festa.getTema() + ";" + festa.getCliente() + ";" + festa.getDataFesta() + ";"
+				+ festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";" + festa.getEndereco() + ";"
+				+ festa.getValorCobrado() + "\n";
 		salvar += prepararAttFestaDepois(festaDao, id);
 		FileWriter writer = new FileWriter(file);
 		PrintWriter printer = new PrintWriter(writer);
@@ -450,16 +450,17 @@ public class ArquivosDiretorios {
 		printer.close();
 		writer.close();
 	}
-	
+
 	private String prepararAttFestaAntes(FestaDao festaDao, int id) {
 		StringBuffer buffer = new StringBuffer();
-		String preparo= "";
+		String preparo = "";
 		int posicao = 0;
 		Festa festa = festaDao.getFesta(posicao);
 		if (id > 1) {
 			do {
-				buffer.append(festa.getId() + festa.getTema() + ";" + festa.getCliente() + ";"
-						+ festa.getDataFesta() + festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";" + festa.getEndereco() + ";" + festa.getValorCobrado());
+				buffer.append(festa.getId() + festa.getTema() + ";" + festa.getCliente() + ";" + festa.getDataFesta()
+						+ festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";" + festa.getEndereco() + ";"
+						+ festa.getValorCobrado());
 				buffer.append("\n");
 				posicao++;
 				festa = festaDao.getFesta(posicao);
@@ -468,7 +469,7 @@ public class ArquivosDiretorios {
 		}
 		return preparo;
 	}
-	
+
 	private String prepararAttFestaDepois(FestaDao festaDao, int id) {
 		StringBuffer buffer = new StringBuffer();
 		String preparo;
@@ -476,8 +477,9 @@ public class ArquivosDiretorios {
 		Festa festa = festaDao.getFesta(posicao);
 		if (festa != null) {
 			do {
-				buffer.append(festa.getId() + festa.getTema() + ";" + festa.getCliente() + ";"
-						+ festa.getDataFesta() + festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";" + festa.getEndereco() + ";" + festa.getValorCobrado());
+				buffer.append(festa.getId() + festa.getTema() + ";" + festa.getCliente() + ";" + festa.getDataFesta()
+						+ festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";" + festa.getEndereco() + ";"
+						+ festa.getValorCobrado());
 				buffer.append("\n");
 				posicao++;
 				festa = festaDao.getFesta(posicao);
@@ -493,8 +495,8 @@ public class ArquivosDiretorios {
 		int posicao = 0;
 		Festa festa = festaDao.getFesta(posicao);
 		do {
-			buffer.append(festa.getId() + ";" + festa.getTema() + ";" + festa.getCliente() + ";"
-					+ festa.getDataFesta() + ";" + festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";"
+			buffer.append(festa.getId() + ";" + festa.getTema() + ";" + festa.getCliente() + ";" + festa.getDataFesta()
+					+ ";" + festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";"
 					+ festa.getEndereco().toString() + ";" + festa.getValorCobrado());
 			buffer.append("\n");
 			posicao++;

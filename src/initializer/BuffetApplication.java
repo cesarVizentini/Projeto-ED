@@ -1,6 +1,7 @@
 package initializer;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
@@ -35,23 +36,30 @@ public class BuffetApplication extends JFrame {
 			}
 		});
 	}
+	
+	private void pegarResolucao() {
+		Toolkit t = Toolkit.getDefaultToolkit();
+		Dimension dimensao = t.getScreenSize();
+		int larg = dimensao.width;
+		int alt = dimensao.height;
+		setBounds(0, 0, larg, alt);
+	}
 
 	public BuffetApplication() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Buffet Application");
-		setResizable(false);
-		setBounds(10, 10, 1024, 720);
 		URL url = this.getClass().getResource("/view/assets/icon.png");
 		Image iconeRafaelaBuffet  = Toolkit.getDefaultToolkit().getImage(url);
-		this.setIconImage(iconeRafaelaBuffet);
 		setIconImage(iconeRafaelaBuffet);
+        setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		pegarResolucao();
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(173, 220, 253));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
 		JLabel lblLogo = new JLabel("");
-		lblLogo.setBounds(262, 25, 434, 409);
+		lblLogo.setBounds(495, 99, 434, 409);
 		String path = new File("").getAbsolutePath();
 		contentPane.setLayout(null);
 		lblLogo.setIcon(new ImageIcon(path + "\\src\\view\\assets\\logotipo.png"));
@@ -59,12 +67,12 @@ public class BuffetApplication extends JFrame {
 		
 		JLabel lblBemVindo = new JLabel("Seja bem-vindo");
 		lblBemVindo.setForeground(Color.BLACK);
-		lblBemVindo.setBounds(334, 458, 347, 71);
+		lblBemVindo.setBounds(541, 516, 347, 71);
 		lblBemVindo.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 40));
 		contentPane.add(lblBemVindo);
 		
 		JButton btnEntrar = new JButton("Entrar");
-		btnEntrar.setBounds(440, 540, 138, 36);
+		btnEntrar.setBounds(647, 598, 138, 36);
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				TelaDashboard telaDashboard = new TelaDashboard();
