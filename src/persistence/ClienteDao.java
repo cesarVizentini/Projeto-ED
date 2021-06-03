@@ -116,30 +116,7 @@ public class ClienteDao {
 			JOptionPane.showMessageDialog(null, "Erro ao excluir cliente", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
-
-	public void alterarCliente() {
-
-	}
-
-//	public boolean AtualizaDado(T dadoProcurado) {
-//		boolean atualizou = false;
-//		if (VerificaListaVazia()) {
-//			return atualizou;
-//		} else {
-//			Node<T> aux;
-//			aux = primeiro;
-//			while (aux.getProximo() != null) {
-//				if (aux.getDado().equals(dadoProcurado)) {
-//					T novoDado = null;
-//					aux.setDado(novoDado);
-//					// atualizar no BD
-//					atualizou = true;
-//				}
-//			}
-//		}
-//		return atualizou;
-//	}
-
+	
 	public String mostraCliente() {
 		String mostra;
 		if (this.inicio == null) {
@@ -157,17 +134,6 @@ public class ClienteDao {
 		}
 		return mostra;
 	}
-
-//	private ClienteNo getClienteNo(int clienteNo) {
-//		ClienteNo aux = this.inicio;
-//		for (int i = 0; i < clienteNo; i++) {
-//			aux = aux.getProximo();
-//		}
-//		if (aux == null) {
-//			return null;
-//		}
-//		return aux;
-//	}
 
 	public int getIndex(int id) {
 		ClienteNo aux = this.inicio;

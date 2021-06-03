@@ -553,7 +553,7 @@ public class TelaFesta extends JFrame {
 
 		tfValorCobrado = new JTextField();
 		tfValorCobrado.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 12));
-//		tfValorCobrado.setEditable(false);
+		tfValorCobrado.setEditable(false);
 		tfValorCobrado.setColumns(10);
 		tfValorCobrado.setBounds(750, 762, 76, 21);
 		telaFesta.add(tfValorCobrado);
