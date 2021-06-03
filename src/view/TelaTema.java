@@ -60,13 +60,13 @@ public class TelaTema extends JFrame {
 	private JTextField tfPreco;
 	private JButton btnSelecionarTema;
 
-	private void pegarResolucao() {
-		Toolkit t = Toolkit.getDefaultToolkit();
-		Dimension dimensao = t.getScreenSize();
-		int larg = dimensao.width;
-		int alt = dimensao.height;
-		setBounds(0, 0, larg, alt);
-	}
+//	private void pegarResolucao() {
+//		Toolkit t = Toolkit.getDefaultToolkit();
+//		Dimension dimensao = t.getScreenSize();
+//		int larg = dimensao.width;
+//		int alt = dimensao.height;
+//		setBounds(0, 0, larg, alt);
+//	}
 
 	public TelaTema() {
 		lista = new TemaDao();
@@ -83,7 +83,8 @@ public class TelaTema extends JFrame {
 		setIconImage(iconeRafaelaBuffet);
         setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		pegarResolucao();
+//		pegarResolucao();
+		setBounds(0, 0, 1680, 1050);
 		telaTema = new JPanel();
 		telaTema.setBackground(new Color(135, 206, 235));
 		telaTema.setBorder(new EmptyBorder(5, 5, 5, 5));

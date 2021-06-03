@@ -95,13 +95,13 @@ public class TelaFesta extends JFrame {
 	private JButton btnSelecionarFesta;
 	private JButton btnCalcularPreco;
 
-	private void pegarResolucao() {
-		Toolkit t = Toolkit.getDefaultToolkit();
-		Dimension dimensao = t.getScreenSize();
-		int larg = dimensao.width;
-		int alt = dimensao.height;
-		setBounds(0, 0, larg, alt);
-	}
+//	private void pegarResolucao() {
+//		Toolkit t = Toolkit.getDefaultToolkit();
+//		Dimension dimensao = t.getScreenSize();
+//		int larg = dimensao.width;
+//		int alt = dimensao.height;
+//		setBounds(0, 0, larg, alt);
+//	}
 
 	public TelaFesta() {
 		lista = new FestaDao();
@@ -127,7 +127,8 @@ public class TelaFesta extends JFrame {
 		setIconImage(iconeRafaelaBuffet);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		pegarResolucao();
+//		pegarResolucao();
+		setBounds(0, 0, 1680, 1050);
 		telaFesta = new JPanel();
 		telaFesta.setBackground(new Color(135, 206, 235));
 		telaFesta.setBorder(new EmptyBorder(5, 5, 5, 5));

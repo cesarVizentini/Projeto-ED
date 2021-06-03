@@ -60,13 +60,13 @@ public class TelaFinancas extends JFrame {
 		return lista;
 	}
 	
-	private void pegarResolucao() {
-		Toolkit t = Toolkit.getDefaultToolkit();
-		Dimension dimensao = t.getScreenSize();
-		int larg = dimensao.width;
-		int alt = dimensao.height;
-		setBounds(0, 0, larg, alt);
-	}
+//	private void pegarResolucao() {
+//		Toolkit t = Toolkit.getDefaultToolkit();
+//		Dimension dimensao = t.getScreenSize();
+//		int larg = dimensao.width;
+//		int alt = dimensao.height;
+//		setBounds(0, 0, larg, alt);
+//	}
 
 	public TelaFinancas() {
 		lista = new FestaDao();
@@ -88,7 +88,8 @@ public class TelaFinancas extends JFrame {
 		setIconImage(iconeRafaelaBuffet);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		pegarResolucao();
+//		pegarResolucao();
+		setBounds(0, 0, 1680, 1050);
 		telaFinancas = new JPanel();
 		telaFinancas.setBackground(new Color(135, 206, 235));
 		telaFinancas.setBorder(new EmptyBorder(5, 5, 5, 5));
