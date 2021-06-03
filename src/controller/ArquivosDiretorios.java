@@ -433,16 +433,15 @@ public class ArquivosDiretorios {
 			System.out.println("Festa não foi encontrada na base de dados");
 		}
 	}
-
+	
 	public void atualizarFesta(FestaDao festaDao, Festa festa, int id) throws IOException {
 		verificaDiretorio();
 		String path = "C:\\DatabaseBuffetRafaela\\festa.csv";
 		File file = new File(path);
 		String salvar = "Id;Tema;Cliente;Data;Horário de início;Horário de término;Endereço;Valor Total (R$)\n";
 		salvar += prepararAttFestaAntes(festaDao, id);
-		salvar += id + ";" + festa.getTema() + ";" + festa.getCliente() + ";" + festa.getDataFesta() + ";"
-				+ festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";" + festa.getEndereco() + ";"
-				+ festa.getValorCobrado() + "\n";
+		salvar += id + ";" + festa.getTema() + ";" + festa.getCliente() + ";"
+				+ festa.getDataFesta() + ";" + festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";" + festa.getEndereco() + ";" + festa.getValorCobrado() + "\n";
 		salvar += prepararAttFestaDepois(festaDao, id);
 		FileWriter writer = new FileWriter(file);
 		PrintWriter printer = new PrintWriter(writer);
@@ -451,17 +450,16 @@ public class ArquivosDiretorios {
 		printer.close();
 		writer.close();
 	}
-
+	
 	private String prepararAttFestaAntes(FestaDao festaDao, int id) {
 		StringBuffer buffer = new StringBuffer();
-		String preparo = "";
+		String preparo= "";
 		int posicao = 0;
 		Festa festa = festaDao.getFesta(posicao);
 		if (id > 1) {
 			do {
-				buffer.append(festa.getId() + festa.getTema() + ";" + festa.getCliente() + ";" + festa.getDataFesta()
-						+ festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";" + festa.getEndereco() + ";"
-						+ festa.getValorCobrado());
+				buffer.append(festa.getId() + ";" + festa.getTema() + ";" + festa.getCliente() + ";"
+						+ festa.getDataFesta() + ";" + festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";" + festa.getEndereco() + ";" + festa.getValorCobrado());
 				buffer.append("\n");
 				posicao++;
 				festa = festaDao.getFesta(posicao);
@@ -470,7 +468,7 @@ public class ArquivosDiretorios {
 		}
 		return preparo;
 	}
-
+	
 	private String prepararAttFestaDepois(FestaDao festaDao, int id) {
 		StringBuffer buffer = new StringBuffer();
 		String preparo;
@@ -478,9 +476,8 @@ public class ArquivosDiretorios {
 		Festa festa = festaDao.getFesta(posicao);
 		if (festa != null) {
 			do {
-				buffer.append(festa.getId() + festa.getTema() + ";" + festa.getCliente() + ";" + festa.getDataFesta()
-						+ festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";" + festa.getEndereco() + ";"
-						+ festa.getValorCobrado());
+				buffer.append(festa.getId() + ";" + festa.getTema() + ";" + festa.getCliente() + ";"
+						+ festa.getDataFesta() + ";" + festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";" + festa.getEndereco() + ";" + festa.getValorCobrado());
 				buffer.append("\n");
 				posicao++;
 				festa = festaDao.getFesta(posicao);

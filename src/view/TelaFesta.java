@@ -599,20 +599,13 @@ public class TelaFesta extends JFrame {
 					tfValorCobrado.setText("");
 					if (newTable) {
 						TelaFesta telaFesta = new TelaFesta();
-						telaFesta.setVisible(false);
-						telaFesta.dispose();
-					} else {
-						FestaTableModel festaTableModel = new FestaTableModel(lista);
-						festaTableModel.addRow();
-						TelaFesta telaFesta = new TelaFesta();
 						telaFesta.setVisible(true);
-						dispose();
-						try {
-							lista.sort();
-						} catch (ParseException e1) {
-							e1.printStackTrace();
-						}
-					}
+						telaFesta.dispose();
+					} 
+					festaTableModel.addRow();
+					TelaFesta telaFesta = new TelaFesta();
+					telaFesta.setVisible(true);
+					dispose();
 				}
 			}
 		});
