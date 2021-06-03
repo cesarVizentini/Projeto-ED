@@ -1,7 +1,6 @@
 package initializer;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
@@ -37,13 +36,13 @@ public class BuffetApplication extends JFrame {
 		});
 	}
 	
-	private void pegarResolucao() {
-		Toolkit t = Toolkit.getDefaultToolkit();
-		Dimension dimensao = t.getScreenSize();
-		int larg = dimensao.width;
-		int alt = dimensao.height;
-		setBounds(0, 0, larg, alt);
-	}
+//	private void pegarResolucao() {
+//		Toolkit t = Toolkit.getDefaultToolkit();
+//		Dimension dimensao = t.getScreenSize();
+//		int larg = dimensao.width;
+//		int alt = dimensao.height;
+//		setBounds(0, 0, larg, alt);
+//	}
 
 	public BuffetApplication() {
 		setTitle("Buffet Application");
@@ -52,7 +51,8 @@ public class BuffetApplication extends JFrame {
 		setIconImage(iconeRafaelaBuffet);
         setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		pegarResolucao();
+//		pegarResolucao();
+		setBounds(0, 0, 1680, 1050);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(173, 220, 253));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
