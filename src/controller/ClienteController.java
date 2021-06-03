@@ -22,6 +22,7 @@ public class ClienteController {
 	public void cadastrar(String nome, String documentoCPF, String telefone) {
 		Cliente ultimo;
 		int id = 0;
+		int festasAlugadas = 0;
 		if (lista != null) {
 			ultimo = lista.getUltimoElemento();
 			id = ultimo.getId() + 1;
@@ -29,7 +30,7 @@ public class ClienteController {
 			id = 1;
 			lista = new ClienteDao();
 		}
-		Cliente cliente = new Cliente(id, nome, documentoCPF, telefone);
+		Cliente cliente = new Cliente(id, nome, documentoCPF, telefone, festasAlugadas);
 		cliente.setNome(nome);
 		cliente.setDocumentoCPF(documentoCPF);
 		cliente.setTelefone(telefone);

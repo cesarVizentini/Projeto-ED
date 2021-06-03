@@ -93,6 +93,7 @@ public class TelaFesta extends JFrame {
 	private JFormattedTextField tfCEP;
 	private JTextField tfValorCobrado;
 	private JButton btnSelecionarFesta;
+	private JButton btnCalcularPreco;
 
 	private void pegarResolucao() {
 		Toolkit t = Toolkit.getDefaultToolkit();
@@ -550,7 +551,7 @@ public class TelaFesta extends JFrame {
 		lblValorCobrado.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 13));
 		lblValorCobrado.setBounds(674, 763, 64, 16);
 		telaFesta.add(lblValorCobrado);
-
+		// #########################################################################################################################
 		tfValorCobrado = new JTextField();
 		tfValorCobrado.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 12));
 		tfValorCobrado.setEditable(false);
@@ -573,6 +574,7 @@ public class TelaFesta extends JFrame {
 						newTable = true;
 					}
 					FestaController festaController = new FestaController();
+
 					festaController.cadastrar(cbTema.getSelectedItem().toString(),
 							cbCliente.getSelectedItem().toString(), converterData(dcData.getDate()),
 							tfHorarioInicial.getText(), tfHorarioFinal.getText(),
@@ -685,7 +687,8 @@ public class TelaFesta extends JFrame {
 
 							Festa festaAtt = new Festa(id, cbTema.getSelectedItem().toString(),
 									cbCliente.getSelectedItem().toString(), dcData.getDate().toString(),
-									tfHorarioInicial.getText(), tfHorarioFinal.getText(), endereco.toString(), Double.parseDouble(tfValorCobrado.getText()));
+									tfHorarioInicial.getText(), tfHorarioFinal.getText(), endereco.toString(),
+									Double.parseDouble(tfValorCobrado.getText()));
 							festaAtt.setId(id);
 							festaAtt.setTema(cbTema.getSelectedItem().toString());
 							festaAtt.setCliente(cbCliente.getSelectedItem().toString());
@@ -766,6 +769,20 @@ public class TelaFesta extends JFrame {
 		btnDeletarFesta.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 15));
 		btnDeletarFesta.setBounds(1196, 626, 205, 27);
 		telaFesta.add(btnDeletarFesta);
+
+		btnCalcularPreco = new JButton("Calcular Valor");
+		btnCalcularPreco.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 15));
+		btnCalcularPreco.setBackground(new Color(60, 179, 113));
+		btnCalcularPreco.setBounds(1194, 675, 205, 27);
+		btnCalcularPreco.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FestaController festaController = new FestaController();
+				tfValorCobrado.setText(festaController.calcularValor(cbTema.getSelectedItem().toString(),
+						cbCliente.getSelectedItem().toString()));
+			}
+		});
+
+		telaFesta.add(btnCalcularPreco);
 		// FIM BOTOES
 	}
 
@@ -843,4 +860,5 @@ public class TelaFesta extends JFrame {
 		}
 		return valida;
 	}
+
 }

@@ -164,4 +164,14 @@ public class TemaDao {
 		}
 		return aux.getTema();
 	}
+	
+	public Tema getByName(String nome) {
+		
+		TemaNo tema = this.inicio;
+		while (!tema.getTema().getNome().equals(nome)) {
+
+			tema = tema.getProximo();
+		}
+		return tema.getTema();
+	}
 }

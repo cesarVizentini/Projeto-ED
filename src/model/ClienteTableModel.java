@@ -7,7 +7,7 @@ import persistence.ClienteDao;
 public class ClienteTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 1L;
-	private String[] columns = { "Código", "Nome", "Documento CPF", "Telefone", "Opções" };
+	private String[] columns = { "Código", "Nome", "Documento CPF", "Telefone", "Sequencia de festas alugadas", "Opções" };
 	private ClienteDao listar;
 	public ClienteTableModel(ClienteDao listar) {
 		this.listar = listar;
@@ -38,6 +38,7 @@ public class ClienteTableModel extends AbstractTableModel {
 		case 1: return listar.getCliente(rowIndex).getNome();
 		case 2: return listar.getCliente(rowIndex).getDocumentoCPF();
 		case 3: return listar.getCliente(rowIndex).getTelefone();
+		case 4: return listar.getCliente(rowIndex).getFestasAlugadas();
 		}
 		return null;
 	}

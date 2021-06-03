@@ -61,13 +61,13 @@ public class TelaCliente extends JFrame {
 	private JFormattedTextField jftfDocumentoCPF;
 	private JButton btnSelecionarCliente;
 
-	private void pegarResolucao() {
-		Toolkit t = Toolkit.getDefaultToolkit();
-		Dimension dimensao = t.getScreenSize();
-		int larg = dimensao.width;
-		int alt = dimensao.height;
-		setBounds(0, 0, larg, alt);
-	}
+//	private void pegarResolucao() {
+//		Toolkit t = Toolkit.getDefaultToolkit();
+//		Dimension dimensao = t.getScreenSize();
+//		int larg = dimensao.width;
+//		int alt = dimensao.height;
+//		setBounds(0, 0, larg, alt);
+//	}
 
 	public TelaCliente() {
 		lista = new ClienteDao();
@@ -84,7 +84,8 @@ public class TelaCliente extends JFrame {
 		setIconImage(iconeRafaelaBuffet);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		pegarResolucao();
+//		pegarResolucao();
+		setBounds(0, 0, 1680, 1050);
 		telaCliente = new JPanel();
 		telaCliente.setBackground(new Color(135, 206, 235));
 		telaCliente.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -355,13 +356,17 @@ public class TelaCliente extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				boolean valido = validaTela();
 				if (valido) {
-					if (tableListClientes.isColumnSelected(4)) {
+					
+					if (tableListClientes.isColumnSelected(5)) {
 						String s = tableListClientes.getValueAt(tableListClientes.getSelectedRow(), 0).toString();
 						int id = Integer.parseInt(s);
-
+						
+						String sFestas = tableListClientes.getValueAt(tableListClientes.getSelectedRow(), 4).toString();
+						int idFestas = Integer.parseInt(sFestas);
+						
 						try {
 							Cliente clienteAtt = new Cliente(id, tfNome.getText(), jftfDocumentoCPF.getText(),
-									jftfTelefone.getText());
+									jftfTelefone.getText(), idFestas);
 							arquivosDiretorios.atualizarCliente(lista, clienteAtt, id);
 
 							tfNome.setText("");
@@ -373,6 +378,7 @@ public class TelaCliente extends JFrame {
 								telaCliente.setVisible(true);
 								dispose();
 							} else {
+								ClienteTableModel clienteTableModel = new ClienteTableModel(lista);
 								clienteTableModel.addRow();
 								TelaCliente telaCliente = new TelaCliente();
 								telaCliente.setVisible(true);
@@ -385,8 +391,11 @@ public class TelaCliente extends JFrame {
 						JOptionPane.showMessageDialog(null,
 								"Selecione uma linha na coluna opções para alterar o cliente", "Error", 0);
 					}
+					
 				}
 			}
+
+			
 		});
 		btnAlterarCliente.setBackground(new Color(204, 255, 51));
 		btnAlterarCliente.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 15));
@@ -396,7 +405,7 @@ public class TelaCliente extends JFrame {
 		btnDeletarCliente = new JButton("Deletar Cliente");
 		btnDeletarCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (tableListClientes.isColumnSelected(4)) {
+				if (tableListClientes.isColumnSelected(5)) {
 					String s = tableListClientes.getValueAt(tableListClientes.getSelectedRow(), 0).toString();
 					int id = Integer.parseInt(s);
 					try {
@@ -445,4 +454,6 @@ public class TelaCliente extends JFrame {
 		}
 		return valida;
 	}
+	
+	
 }
