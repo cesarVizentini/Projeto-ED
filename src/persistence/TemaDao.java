@@ -117,29 +117,6 @@ public class TemaDao {
 		}
 	}
 
-	public void alterarTema() {
-
-	}
-
-//	public boolean AtualizaDado(T dadoProcurado) {
-//		boolean atualizou = false;
-//		if (VerificaListaVazia()) {
-//			return atualizou;
-//		} else {
-//			Node<T> aux;
-//			aux = primeiro;
-//			while (aux.getProximo() != null) {
-//				if (aux.getDado().equals(dadoProcurado)) {
-//					T novoDado = null;
-//					aux.setDado(novoDado);
-//					// atualizar no BD
-//					atualizou = true;
-//				}
-//			}
-//		}
-//		return atualizou;
-//	}
-
 	public String mostraTema() {
 		String mostra;
 		if (this.inicio == null) {
@@ -157,17 +134,6 @@ public class TemaDao {
 		}
 		return mostra;
 	}
-
-//	private TemaNo getTemaNo(int temaNo) {
-//		TemaNo aux = this.inicio;
-//		for (int i = 0; i < temaNo; i++) {
-//			aux = aux.getProximo();
-//		}
-//		if (aux == null) {
-//			return null;
-//		}
-//		return aux;
-//	}
 
 	public int getIndex(int id) {
 		TemaNo aux = this.inicio;
@@ -198,5 +164,14 @@ public class TemaDao {
 		}
 		return aux.getTema();
 	}
+	
+	public Tema getByName(String nome) {
+		
+		TemaNo tema = this.inicio;
+		while (!tema.getTema().getNome().equals(nome)) {
 
+			tema = tema.getProximo();
+		}
+		return tema.getTema();
+	}
 }

@@ -10,7 +10,6 @@ public class Festa {
 	private String horarioFinal;
 	private String endereco;
 	private double valorCobrado;
-	private double desconto;
 	
 	public Festa(int id, String tema, String cliente, String dataFesta, String horarioInicio, String horarioFinal, String endereco, double valorCobrado) {
 		this.id = id;
@@ -86,13 +85,4 @@ public class Festa {
 	public void setValorCobrado(double valorCobrado) {
 		this.valorCobrado = valorCobrado;
 	}
-	
-	public double getDesconto() {
-		return desconto;
-	}
-	
-	public void setDesconto(double desconto) {
-		this.desconto = desconto;
-	}
-
 }

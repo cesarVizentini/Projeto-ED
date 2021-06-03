@@ -18,6 +18,10 @@ public class FestaDao {
 		this.inicio = null;
 	}
 
+	public FestaNo getPrimeiroElemento() {
+		return this.inicio;
+	}
+	
 	public int tamanho() {
 		FestaNo aux = this.inicio;
 		int cont = 0;
@@ -122,29 +126,6 @@ public class FestaDao {
 		}
 	}
 
-	public void alterarFesta() {
-
-	}
-
-//	public boolean AtualizaDado(T dadoProcurado) {
-//		boolean atualizou = false;
-//		if (VerificaListaVazia()) {
-//			return atualizou;
-//		} else {
-//			Node<T> aux;
-//			aux = primeiro;
-//			while (aux.getProximo() != null) {
-//				if (aux.getDado().equals(dadoProcurado)) {
-//					T novoDado = null;
-//					aux.setDado(novoDado);
-//					// atualizar no BD
-//					atualizou = true;
-//				}
-//			}
-//		}
-//		return atualizou;
-//	}
-
 	public String mostraFesta() {
 		String mostra;
 		if (this.inicio == null) {
@@ -164,17 +145,6 @@ public class FestaDao {
 		}
 		return mostra;
 	}
-
-//	private FestaNo getFestaNo(int festaNo) {
-//		FestaNo aux = this.inicio;
-//		for (int i = 0; i < festaNo; i++) {
-//			aux = aux.getProximo();
-//		}
-//		if (aux == null) {
-//			return null;
-//		}
-//		return aux;
-//	}
 
 	public int getIndex(int id) {
 		FestaNo aux = this.inicio;
@@ -218,10 +188,6 @@ public class FestaDao {
 		}
 	}
 	
-	public FestaNo getPrimeiroElemento() {
-		return this.inicio;
-	}
-
 	private int partition(int start, int end) throws ParseException {
 		int i = start;
 		for (int j = start; j < end; j++) {

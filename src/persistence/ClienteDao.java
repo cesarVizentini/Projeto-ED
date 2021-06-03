@@ -72,7 +72,7 @@ public class ClienteDao {
 
 	public void removerClienteInicio() {
 		if (this.inicio == null) {
-			JOptionPane.showMessageDialog(null, "Não há clientes para excluir, a lista está vazia!", "Error",
+			JOptionPane.showMessageDialog(null, "Nï¿½o hï¿½ clientes para excluir, a lista estï¿½ vazia!", "Error",
 					JOptionPane.ERROR_MESSAGE);
 		} else {
 			this.inicio = this.inicio.getProximo();
@@ -84,7 +84,7 @@ public class ClienteDao {
 
 	public void removerClienteFinal() {
 		if (this.inicio == null) {
-			JOptionPane.showMessageDialog(null, "Não há clientes para excluir, a lista está vazia!", "Error",
+			JOptionPane.showMessageDialog(null, "Nï¿½o hï¿½ clientes para excluir, a lista estï¿½ vazia!", "Error",
 					JOptionPane.ERROR_MESSAGE);
 		} else if (this.inicio.getProximo() == null) {
 			this.inicio = null;
@@ -116,34 +116,10 @@ public class ClienteDao {
 			JOptionPane.showMessageDialog(null, "Erro ao excluir cliente", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
-
-	public void alterarCliente() {
-
-	}
-
-//	public boolean AtualizaDado(T dadoProcurado) {
-//		boolean atualizou = false;
-//		if (VerificaListaVazia()) {
-//			return atualizou;
-//		} else {
-//			Node<T> aux;
-//			aux = primeiro;
-//			while (aux.getProximo() != null) {
-//				if (aux.getDado().equals(dadoProcurado)) {
-//					T novoDado = null;
-//					aux.setDado(novoDado);
-//					// atualizar no BD
-//					atualizou = true;
-//				}
-//			}
-//		}
-//		return atualizou;
-//	}
-
 	public String mostraCliente() {
 		String mostra;
 		if (this.inicio == null) {
-			mostra = "Não há clientes para mostrar, a lista está vazia!";
+			mostra = "Nï¿½o hï¿½ clientes para mostrar, a lista estï¿½ vazia!";
 		} else {
 			StringBuffer buffer = new StringBuffer();
 			ClienteNo aux = this.inicio;
@@ -157,17 +133,6 @@ public class ClienteDao {
 		}
 		return mostra;
 	}
-
-//	private ClienteNo getClienteNo(int clienteNo) {
-//		ClienteNo aux = this.inicio;
-//		for (int i = 0; i < clienteNo; i++) {
-//			aux = aux.getProximo();
-//		}
-//		if (aux == null) {
-//			return null;
-//		}
-//		return aux;
-//	}
 
 	public int getIndex(int id) {
 		ClienteNo aux = this.inicio;
@@ -197,6 +162,16 @@ public class ClienteDao {
 			aux = aux.getProximo();
 		}
 		return aux.getCliente();
+	}
+	
+	public Cliente getByName(String nome) {
+		
+		ClienteNo cliente = this.inicio;
+		while (!cliente.getCliente().getNome().equals(nome)) {
+
+			cliente = cliente.getProximo();
+		}
+		return cliente.getCliente();
 	}
 
 }

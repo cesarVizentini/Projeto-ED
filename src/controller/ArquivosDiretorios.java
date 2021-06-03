@@ -26,9 +26,9 @@ public class ArquivosDiretorios {
 		if (!diretorio.exists() || !diretorio.isDirectory()) {
 			if (diretorio.mkdir()) {
 				System.out.println(
-						"O Diretório DatabaseBuffetRafaela foi criado com sucesso! Caminho para acessar => C:\\DatabaseBuffetRafaela\\");
+						"O Diretorio DatabaseBuffetRafaela foi criado com sucesso! Caminho para acessar => C:\\DatabaseBuffetRafaela\\");
 			} else {
-				System.err.println("Erro ao criar diretório");
+				System.err.println("Erro ao criar diretorio");
 			}
 		}
 	}
@@ -48,7 +48,7 @@ public class ArquivosDiretorios {
 		File file = new File(path);
 		if (verificarSeExistemDados("cliente")) {
 			String salvar = cliente.getId() + ";" + cliente.getNome() + ";" + cliente.getDocumentoCPF() + ";"
-					+ cliente.getTelefone() + "\n";
+					+ cliente.getTelefone() + ";" + cliente.getFestasAlugadas() + "\n";
 			FileWriter writer = new FileWriter(file, true);
 			PrintWriter printer = new PrintWriter(writer);
 			printer.write(salvar);
@@ -56,9 +56,9 @@ public class ArquivosDiretorios {
 			printer.close();
 			writer.close();
 		} else {
-			String salvar = "Id;Nome;Documento CPF;Telefone\n";
+			String salvar = "Id;Nome;Documento CPF;Telefone;Sequencia de festas alugadas\n";
 			salvar += cliente.getId() + ";" + cliente.getNome() + ";" + cliente.getDocumentoCPF() + ";"
-					+ cliente.getTelefone() + "\n";
+					+ cliente.getTelefone() + ";" + cliente.getFestasAlugadas() + "\n";
 			FileWriter writer = new FileWriter(file);
 			PrintWriter printer = new PrintWriter(writer);
 			printer.write(salvar);
@@ -82,7 +82,7 @@ public class ArquivosDiretorios {
 			line = reader.readLine();
 			while (line != null) {
 				String[] auxs = line.split(";");
-				cliente = new Cliente(Integer.parseInt(auxs[0]), auxs[1], auxs[2], auxs[3]);
+				cliente = new Cliente(Integer.parseInt(auxs[0]), auxs[1], auxs[2], auxs[3], Integer.parseInt(auxs[4]));
 				clienteDao.adicionarCliente(cliente);
 				line = reader.readLine();
 			}
@@ -91,7 +91,7 @@ public class ArquivosDiretorios {
 			stream.close();
 			return clienteDao;
 		} else {
-			System.err.println("Não existem cadastros!");
+			System.err.println("Nao existem cadastros!");
 			return null;
 		}
 	}
@@ -106,7 +106,7 @@ public class ArquivosDiretorios {
 			if (clienteDao.getCliente(0) == null) {
 				file.delete();
 			} else {
-				String salvar = "Id;Nome;Documento CPF;Telefone\n";
+				String salvar = "Id;Nome;Documento CPF;Telefone;Sequencia de festas alugadas\n";
 				salvar += prepararCliente(clienteDao);
 				FileWriter writer = new FileWriter(file);
 				PrintWriter printer = new PrintWriter(writer);
@@ -117,7 +117,7 @@ public class ArquivosDiretorios {
 			}
 			System.out.println("Cliente removido com sucesso!");
 		} else {
-			System.out.println("Cliente não foi encontrado na base de dados");
+			System.out.println("Cliente nao foi encontrado na base de dados");
 		}
 	}
 
@@ -125,10 +125,10 @@ public class ArquivosDiretorios {
 		verificaDiretorio();
 		String path = "C:\\DatabaseBuffetRafaela\\cliente.csv";
 		File file = new File(path);
-		String salvar = "Id;Nome;Documento CPF;Telefone\n";
+		String salvar = "Id;Nome;Documento CPF;Telefone;Sequencia de festas alugadas\n";
 		salvar += prepararAttClienteAntes(clienteDao, id);
 		salvar += clienteAtt.getId() + ";" + clienteAtt.getNome() + ";" + clienteAtt.getDocumentoCPF() + ";"
-				+ clienteAtt.getTelefone() + "\n";
+				+ clienteAtt.getTelefone() + ";" + clienteAtt.getFestasAlugadas() + "\n";
 		salvar += prepararAttClienteDepois(clienteDao, id);
 		FileWriter writer = new FileWriter(file);
 		PrintWriter printer = new PrintWriter(writer);
@@ -137,17 +137,16 @@ public class ArquivosDiretorios {
 		printer.close();
 		writer.close();
 	}
-	
-	
+
 	private String prepararAttClienteAntes(ClienteDao clienteDao, int id) {
 		StringBuffer buffer = new StringBuffer();
-		String preparo= "";
+		String preparo = "";
 		int posicao = 0;
 		Cliente cliente = clienteDao.getCliente(posicao);
 		if (id > 1) {
 			do {
 				buffer.append(cliente.getId() + ";" + cliente.getNome() + ";" + cliente.getDocumentoCPF() + ";"
-						+ cliente.getTelefone());
+						+ cliente.getTelefone() + ";" + cliente.getFestasAlugadas());
 				buffer.append("\n");
 				posicao++;
 				cliente = clienteDao.getCliente(posicao);
@@ -156,7 +155,7 @@ public class ArquivosDiretorios {
 		}
 		return preparo;
 	}
-	
+
 	private String prepararAttClienteDepois(ClienteDao clienteDao, int id) {
 		StringBuffer buffer = new StringBuffer();
 		String preparo;
@@ -165,7 +164,7 @@ public class ArquivosDiretorios {
 		if (cliente != null) {
 			do {
 				buffer.append(cliente.getId() + ";" + cliente.getNome() + ";" + cliente.getDocumentoCPF() + ";"
-						+ cliente.getTelefone());
+						+ cliente.getTelefone() + ";" + cliente.getFestasAlugadas());
 				buffer.append("\n");
 				posicao++;
 				cliente = clienteDao.getCliente(posicao);
@@ -182,7 +181,7 @@ public class ArquivosDiretorios {
 		Cliente cliente = clienteDao.getCliente(posicao);
 		do {
 			buffer.append(cliente.getId() + ";" + cliente.getNome() + ";" + cliente.getDocumentoCPF() + ";"
-					+ cliente.getTelefone());
+					+ cliente.getTelefone() + ";" + cliente.getFestasAlugadas());
 			buffer.append("\n");
 			posicao++;
 			cliente = clienteDao.getCliente(posicao);
@@ -213,7 +212,7 @@ public class ArquivosDiretorios {
 			printer.close();
 			writer.close();
 		} else {
-			String salvar = "Id;Nome;Descrição;Valor Aluguel (R$)\n";
+			String salvar = "Id;Nome;Descricao;Valor Aluguel (R$)\n";
 			salvar += tema.getId() + ";" + tema.getNome() + ";" + tema.getDescricao() + ";" + tema.getValor() + "\n";
 			FileWriter writer = new FileWriter(file);
 			PrintWriter printer = new PrintWriter(writer);
@@ -247,7 +246,7 @@ public class ArquivosDiretorios {
 			stream.close();
 			return temaDao;
 		} else {
-			System.err.println("Não existem cadastros!");
+			System.err.println("Nao existem cadastros!");
 			return null;
 		}
 	}
@@ -262,7 +261,7 @@ public class ArquivosDiretorios {
 			if (temaDao.getTema(0) == null) {
 				file.delete();
 			} else {
-				String salvar = "Id;Nome;Descrição;Valor Aluguel (R$)\n";
+				String salvar = "Id;Nome;Descriï¿½ï¿½o;Valor Aluguel (R$)\n";
 				salvar += prepararTema(temaDao);
 				FileWriter writer = new FileWriter(file);
 				PrintWriter printer = new PrintWriter(writer);
@@ -273,7 +272,7 @@ public class ArquivosDiretorios {
 			}
 			System.out.println("Tema removido com sucesso!");
 		} else {
-			System.out.println("Tema não foi encontrado na base de dados");
+			System.out.println("Tema nao foi encontrado na base de dados");
 		}
 	}
 
@@ -283,8 +282,8 @@ public class ArquivosDiretorios {
 		File file = new File(path);
 		String salvar = "Id;Nome;Documento CPF;Telefone\n";
 		salvar += prepararAttTemaAntes(temaDao, id);
-		salvar += temaAtt.getId() + ";" + temaAtt.getNome() + ";" + temaAtt.getDescricao() + ";"
-				+ temaAtt.getValor() + "\n";
+		salvar += temaAtt.getId() + ";" + temaAtt.getNome() + ";" + temaAtt.getDescricao() + ";" + temaAtt.getValor()
+				+ "\n";
 		salvar += prepararAttTemaDepois(temaDao, id);
 		FileWriter writer = new FileWriter(file);
 		PrintWriter printer = new PrintWriter(writer);
@@ -293,10 +292,10 @@ public class ArquivosDiretorios {
 		printer.close();
 		writer.close();
 	}
-	
+
 	private String prepararAttTemaAntes(TemaDao temaDao, int id) {
 		StringBuffer buffer = new StringBuffer();
-		String preparo= "";
+		String preparo = "";
 		int posicao = 0;
 		Tema temaAtt = temaDao.getTema(posicao);
 		if (id > 1) {
@@ -311,7 +310,7 @@ public class ArquivosDiretorios {
 		}
 		return preparo;
 	}
-	
+
 	private String prepararAttTemaDepois(TemaDao temaDao, int id) {
 		StringBuffer buffer = new StringBuffer();
 		String preparo;
@@ -329,7 +328,6 @@ public class ArquivosDiretorios {
 		preparo = buffer.toString();
 		return preparo;
 	}
-
 
 	private String prepararTema(TemaDao temaDao) {
 		StringBuffer buffer = new StringBuffer();
@@ -361,6 +359,7 @@ public class ArquivosDiretorios {
 			String salvar = festa.getId() + ";" + festa.getTema() + ";" + festa.getCliente() + ";"
 					+ festa.getDataFesta() + ";" + festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";"
 					+ festa.getEndereco().toString() + ";" + festa.getValorCobrado() + "\n";
+			
 			FileWriter writer = new FileWriter(file, true);
 			PrintWriter printer = new PrintWriter(writer);
 			printer.write(salvar);
@@ -369,8 +368,8 @@ public class ArquivosDiretorios {
 			writer.close();
 		} else {
 			String salvar = "Id;Tema;Cliente;Data;Horário de início;Horário de término;Endereço;Valor Total (R$)\n";
-			salvar += festa.getId() + ";" + festa.getTema() + ";" + festa.getCliente() + ";"
-					+ festa.getDataFesta() + ";" + festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";"
+			salvar += festa.getId() + ";" + festa.getTema() + ";" + festa.getCliente() + ";" + festa.getDataFesta()
+					+ ";" + festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";"
 					+ festa.getEndereco().toString() + ";" + festa.getValorCobrado() + "\n";
 			FileWriter writer = new FileWriter(file);
 			PrintWriter printer = new PrintWriter(writer);
@@ -394,8 +393,9 @@ public class ArquivosDiretorios {
 			String line = reader.readLine();
 			line = reader.readLine();
 			while (line != null) {
-				String[] auxs = line.split(";");				
-	            festa = new Festa(Integer.parseInt(auxs[0]), auxs[1], auxs[2], auxs[3], auxs[4], auxs[5], auxs[6], Double.parseDouble(auxs[7]));
+				String[] auxs = line.split(";");
+				festa = new Festa(Integer.parseInt(auxs[0]), auxs[1], auxs[2], auxs[3], auxs[4], auxs[5], auxs[6],
+						Double.parseDouble(auxs[7]));
 				festaDao.adicionarFesta(festa);
 				line = reader.readLine();
 			}
@@ -440,8 +440,9 @@ public class ArquivosDiretorios {
 		File file = new File(path);
 		String salvar = "Id;Tema;Cliente;Data;Horário de início;Horário de término;Endereço;Valor Total (R$)\n";
 		salvar += prepararAttFestaAntes(festaDao, id);
-		salvar += id + ";" + festa.getTema() + ";" + festa.getCliente() + ";"
-				+ festa.getDataFesta() + ";" + festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";" + festa.getEndereco() + ";" + festa.getValorCobrado() + "\n";
+		salvar += id + ";" + festa.getTema() + ";" + festa.getCliente() + ";" + festa.getDataFesta() + ";"
+				+ festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";" + festa.getEndereco() + ";"
+				+ festa.getValorCobrado() + "\n";
 		salvar += prepararAttFestaDepois(festaDao, id);
 		FileWriter writer = new FileWriter(file);
 		PrintWriter printer = new PrintWriter(writer);
@@ -450,16 +451,17 @@ public class ArquivosDiretorios {
 		printer.close();
 		writer.close();
 	}
-	
+
 	private String prepararAttFestaAntes(FestaDao festaDao, int id) {
 		StringBuffer buffer = new StringBuffer();
-		String preparo= "";
+		String preparo = "";
 		int posicao = 0;
 		Festa festa = festaDao.getFesta(posicao);
 		if (id > 1) {
 			do {
-				buffer.append(festa.getId() + festa.getTema() + ";" + festa.getCliente() + ";"
-						+ festa.getDataFesta() + festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";" + festa.getEndereco() + ";" + festa.getValorCobrado());
+				buffer.append(festa.getId() + festa.getTema() + ";" + festa.getCliente() + ";" + festa.getDataFesta()
+						+ festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";" + festa.getEndereco() + ";"
+						+ festa.getValorCobrado());
 				buffer.append("\n");
 				posicao++;
 				festa = festaDao.getFesta(posicao);
@@ -468,7 +470,7 @@ public class ArquivosDiretorios {
 		}
 		return preparo;
 	}
-	
+
 	private String prepararAttFestaDepois(FestaDao festaDao, int id) {
 		StringBuffer buffer = new StringBuffer();
 		String preparo;
@@ -476,8 +478,9 @@ public class ArquivosDiretorios {
 		Festa festa = festaDao.getFesta(posicao);
 		if (festa != null) {
 			do {
-				buffer.append(festa.getId() + festa.getTema() + ";" + festa.getCliente() + ";"
-						+ festa.getDataFesta() + festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";" + festa.getEndereco() + ";" + festa.getValorCobrado());
+				buffer.append(festa.getId() + festa.getTema() + ";" + festa.getCliente() + ";" + festa.getDataFesta()
+						+ festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";" + festa.getEndereco() + ";"
+						+ festa.getValorCobrado());
 				buffer.append("\n");
 				posicao++;
 				festa = festaDao.getFesta(posicao);
@@ -493,8 +496,8 @@ public class ArquivosDiretorios {
 		int posicao = 0;
 		Festa festa = festaDao.getFesta(posicao);
 		do {
-			buffer.append(festa.getId() + ";" + festa.getTema() + ";" + festa.getCliente() + ";"
-					+ festa.getDataFesta() + ";" + festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";"
+			buffer.append(festa.getId() + ";" + festa.getTema() + ";" + festa.getCliente() + ";" + festa.getDataFesta()
+					+ ";" + festa.getHorarioInicio() + ";" + festa.getHorarioFinal() + ";"
 					+ festa.getEndereco().toString() + ";" + festa.getValorCobrado());
 			buffer.append("\n");
 			posicao++;
@@ -506,13 +509,4 @@ public class ArquivosDiretorios {
 	// --------------------------------------------------
 	// ---------------- END FESTA DATABASE --------------
 	// --------------------------------------------------
-
-	// --------------------------------------------------
-	// ---------------- FINANCAS DATABASE ---------------
-	// --------------------------------------------------
-
-	// -----------------------------------------------------
-	// ---------------- END FINANCAS DATABASE --------------
-	// -----------------------------------------------------
-
 }

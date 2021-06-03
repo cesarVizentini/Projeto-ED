@@ -6,12 +6,14 @@ public class Cliente {
 	private String nome;
 	private String documentoCPF;
 	private String telefone;
+	private int festasAlugadas;
 
-	public Cliente(int id, String nome, String documentoCPF, String telefone) {
+	public Cliente(int id, String nome, String documentoCPF, String telefone, int festasAlugadas) {
 		this.id = id;
 		this.nome = nome;
 		this.documentoCPF = documentoCPF;
 		this.telefone = telefone;
+		this.festasAlugadas = festasAlugadas;
 	}
 	
 	public int getId() {
@@ -49,6 +51,14 @@ public class Cliente {
 	@Override
 	public String toString() {
 		return getNome();
+	}
+	
+	public int getFestasAlugadas() {
+		return festasAlugadas;
+	}
+
+	public void setFestasAlugadas(int festasAlugadas) {
+		this.festasAlugadas = festasAlugadas;
 	}
 
 }
