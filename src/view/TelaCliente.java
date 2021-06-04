@@ -313,7 +313,7 @@ public class TelaCliente extends JFrame {
 						newTable = true;
 					}
 					ClienteController clienteController = new ClienteController();
-					clienteController.cadastrar(tfNome.getText(), jftfTelefone.getText(), jftfDocumentoCPF.getText());
+					clienteController.cadastrar(tfNome.getText(), jftfDocumentoCPF.getText(), jftfTelefone.getText());
 					tfNome.setText("");
 					jftfTelefone.setText("");
 					jftfDocumentoCPF.setText("");

@@ -18,6 +18,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -307,10 +308,20 @@ public class TelaFinancas extends JFrame {
 		btnCalcular = new JButton("Calcular");
 		btnCalcular.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FinancasDao financasDao = new FinancasDao();
-				Date dataInicial = dateChooserDataInicial.getDate();
-				Date dataFinal = dateChooserDataFinal.getDate();
-				tfLucro.setText(financasDao.calculaFinancas(dataInicial, dataFinal));
+				try {
+					FinancasDao financasDao = new FinancasDao();
+					Date dataInicial = dateChooserDataInicial.getDate();
+					Date dataFinal = dateChooserDataFinal.getDate();
+					if (dataInicial.after(dataFinal)) {
+						JOptionPane.showMessageDialog(null, "Escolha uma data inicial menor que a data final.");
+					}
+					tfLucro.setText(financasDao.calculaFinancas(dataInicial, dataFinal));
+				} catch (NullPointerException ex) {
+					System.err.println("A data incial é maior que a data final.");
+				}
+				
+				
+				
 			}
 		});
 		btnCalcular.setBackground(new Color(60, 179, 113));
